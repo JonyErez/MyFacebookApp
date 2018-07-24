@@ -13,10 +13,13 @@ namespace MyFacebookApp
 {
 	public partial class FacebookApp : Form
 	{
-		private AppSettings m_AppSettings;
+        private FormLogin r_login;
+        private AppSettings m_AppSettings;
 		private User m_LoggedInUser;
-		private string m_AccessToken;
-		private bool m_RememberUser;
+        // i used the values that we have in AppSettings because otherwise we need to synch between all of the members
+        // of them both and thats why we use desirialize ->
+		//private string m_AccessToken; 
+		//private bool m_RememberUser;
 
 		public FacebookApp()
 		{
@@ -27,27 +30,35 @@ namespace MyFacebookApp
 		{
 			m_AppSettings = AppSettings.LoadAppSettings();
 			Location = m_AppSettings.Location;
-			if (!m_AppSettings.RememberUser)
+            r_login = new FormLogin();          
+
+            if (!m_AppSettings.RememberUser)
+            {              
+                r_login.ShowDialog();
+            }
+            else
 			{
-				FormLogin login = new FormLogin();
-				login.ShowDialog();
-				m_RememberUser = login.RememberUser;
-				m_LoggedInUser = login.LoggedInUser;
-				m_AccessToken = login.AccessToken;
-			}
-			else
-			{
-				m_AccessToken = m_AppSettings.LastAccessToken;
-				LoginResult loginResult = FacebookService.Connect(m_AccessToken);
-				m_LoggedInUser = loginResult.LoggedInUser;
-				m_RememberUser = m_AppSettings.RememberUser;
-			}
-			fetchUserInfo();
+				LoginResult loginResult = FacebookService.Connect(m_AppSettings.LastAccessToken);
+
+                m_LoggedInUser = loginResult.LoggedInUser;
+            }
+            fetchUserInfo();
 		}
 
-		private void fetchUserInfo()
-		{
+        private void onLoginEvent()
+        {
+            m_AppSettings.RememberUser = r_login.RememberUser;
+            m_LoggedInUser = r_login.LoggedInUser;
+            m_AppSettings.LastAccessToken = r_login.AccessToken;
+        }
 
+        private void loginFormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void fetchUserInfo()
+		{
 			populateFields();
 		}
 
@@ -86,7 +97,7 @@ namespace MyFacebookApp
 
 		private void FacebookApp_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			m_AppSettings.LastAccessToken = m_RememberUser ? m_AccessToken : String.Empty;
+			m_AppSettings.LastAccessToken = m_AppSettings.RememberUser ? m_AppSettings.LastAccessToken : String.Empty;
 			m_AppSettings.SaveAppSettings();
 		}
 
@@ -97,5 +108,12 @@ namespace MyFacebookApp
 				m_AppSettings.Location = Location;
 			}
 		}
-	}
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            //this.Visible = false;
+            //loginByForm();
+            //this.Visible = true;
+        }
+    }
 }

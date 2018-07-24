@@ -44,17 +44,14 @@ namespace MyFacebookApp
 
 			currentLocation += "\\appSettings.xml";
 
-			if (File.Exists(currentLocation))
+			if (File.Exists(currentLocation) && new FileInfo(currentLocation).Length > 0)
 			{
 				using (Stream stream = new FileStream(currentLocation, FileMode.Open))
 				{
 					XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
-					appSettings = serializer.Deserialize(stream) as AppSettings;
+
+                    appSettings = serializer.Deserialize(stream) as AppSettings;
 				}
-			}
-			else
-			{
-				
 			}
 
 			return appSettings;
@@ -73,9 +70,6 @@ namespace MyFacebookApp
 				XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
 				serializer.Serialize(stream, this);
 			}
-
-
 		}
-
 	}
 }
