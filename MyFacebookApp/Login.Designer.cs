@@ -34,7 +34,7 @@
 			// 
 			// buttonLogin
 			// 
-			this.buttonLogin.Location = new System.Drawing.Point(66, 55);
+			this.buttonLogin.Location = new System.Drawing.Point(70, 12);
 			this.buttonLogin.Name = "buttonLogin";
 			this.buttonLogin.Size = new System.Drawing.Size(75, 23);
 			this.buttonLogin.TabIndex = 0;
@@ -45,11 +45,11 @@
 			// checkBoxRememberUser
 			// 
 			this.checkBoxRememberUser.AutoSize = true;
-			this.checkBoxRememberUser.Location = new System.Drawing.Point(66, 119);
+			this.checkBoxRememberUser.Location = new System.Drawing.Point(70, 52);
 			this.checkBoxRememberUser.Name = "checkBoxRememberUser";
-			this.checkBoxRememberUser.Size = new System.Drawing.Size(95, 17);
+			this.checkBoxRememberUser.Size = new System.Drawing.Size(101, 17);
 			this.checkBoxRememberUser.TabIndex = 1;
-			this.checkBoxRememberUser.Text = "Remember Me";
+			this.checkBoxRememberUser.Text = "Remember Me?";
 			this.checkBoxRememberUser.UseVisualStyleBackColor = true;
 			this.checkBoxRememberUser.CheckedChanged += new System.EventHandler(this.checkBoxRememberUser_CheckedChanged);
 			// 
@@ -57,7 +57,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(210, 160);
+			this.ClientSize = new System.Drawing.Size(225, 81);
 			this.Controls.Add(this.checkBoxRememberUser);
 			this.Controls.Add(this.buttonLogin);
 			this.Name = "FormLogin";

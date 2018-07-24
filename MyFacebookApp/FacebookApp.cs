@@ -6,15 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
 namespace MyFacebookApp
 {
 	public partial class FacebookApp : Form
 	{
-		private readonly FormLogin r_Login = new FormLogin();
+		private AppSettings m_AppSettings;
 		private User m_LoggedInUser;
 		private string m_AccessToken;
+		private bool m_RememberUser;
 
 		public FacebookApp()
 		{
@@ -23,14 +25,29 @@ namespace MyFacebookApp
 
 		private void FacebookApp_Load(object sender, EventArgs e)
 		{
-			r_Login.ShowDialog();
+			m_AppSettings = AppSettings.LoadAppSettings();
+			Location = m_AppSettings.Location;
+			if (!m_AppSettings.RememberUser)
+			{
+				FormLogin login = new FormLogin();
+				login.ShowDialog();
+				m_RememberUser = login.RememberUser;
+				m_LoggedInUser = login.LoggedInUser;
+				m_AccessToken = login.AccessToken;
+			}
+			else
+			{
+				m_AccessToken = m_AppSettings.LastAccessToken;
+				LoginResult loginResult = FacebookService.Connect(m_AccessToken);
+				m_LoggedInUser = loginResult.LoggedInUser;
+				m_RememberUser = m_AppSettings.RememberUser;
+			}
 			fetchUserInfo();
 		}
 
 		private void fetchUserInfo()
 		{
-			m_AccessToken = r_Login.AccessToken;
-			m_LoggedInUser = r_Login.LoggedInUser;
+
 			populateFields();
 		}
 
@@ -54,15 +71,30 @@ namespace MyFacebookApp
 
 		private void listBoxFriends_SelectedValueChanged(object sender, EventArgs e)
 		{
-			User selectedUser = listBoxFriends.SelectedItem as User;
-
-			if (selectedUser.PictureNormalURL != null)
+			if (listBoxFriends.SelectedItem is User selectedUser)
 			{
-				pictureBoxSelectedFriend.LoadAsync(selectedUser.PictureNormalURL);
+				if (selectedUser.PictureNormalURL != null)
+				{
+					pictureBoxSelectedFriend.LoadAsync(selectedUser.PictureNormalURL);
+				}
+				else
+				{
+					pictureBoxSelectedFriend.Image = pictureBoxSelectedFriend.ErrorImage;
+				}
 			}
-			else
+		}
+
+		private void FacebookApp_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			m_AppSettings.LastAccessToken = m_RememberUser ? m_AccessToken : String.Empty;
+			m_AppSettings.SaveAppSettings();
+		}
+
+		private void FacebookApp_LocationChanged(object sender, EventArgs e)
+		{
+			if (m_AppSettings != null)
 			{
-				pictureBoxSelectedFriend.Image = pictureBoxSelectedFriend.ErrorImage;
+				m_AppSettings.Location = Location;
 			}
 		}
 	}

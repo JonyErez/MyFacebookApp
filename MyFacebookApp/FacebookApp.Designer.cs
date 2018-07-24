@@ -30,22 +30,23 @@
 		{
 			this.tabControlGeneral = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.pictureBoxProfilePicture = new System.Windows.Forms.PictureBox();
-			this.listBoxFriends = new System.Windows.Forms.ListBox();
-			this.pictureBoxSelectedFriend = new System.Windows.Forms.PictureBox();
+			this.buttonLogout = new System.Windows.Forms.Button();
 			this.labelFriends = new System.Windows.Forms.Label();
+			this.pictureBoxSelectedFriend = new System.Windows.Forms.PictureBox();
+			this.listBoxFriends = new System.Windows.Forms.ListBox();
+			this.pictureBoxProfilePicture = new System.Windows.Forms.PictureBox();
+			this.tabPageBuisnesses = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabControlGeneral.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelectedFriend)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControlGeneral
 			// 
 			this.tabControlGeneral.Controls.Add(this.tabPageGeneral);
-			this.tabControlGeneral.Controls.Add(this.tabPage1);
+			this.tabControlGeneral.Controls.Add(this.tabPageBuisnesses);
 			this.tabControlGeneral.Controls.Add(this.tabPage2);
 			this.tabControlGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControlGeneral.Location = new System.Drawing.Point(0, 0);
@@ -56,6 +57,7 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.Controls.Add(this.buttonLogout);
 			this.tabPageGeneral.Controls.Add(this.labelFriends);
 			this.tabPageGeneral.Controls.Add(this.pictureBoxSelectedFriend);
 			this.tabPageGeneral.Controls.Add(this.listBoxFriends);
@@ -68,24 +70,42 @@
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// buttonLogout
 			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(574, 442);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.buttonLogout.Location = new System.Drawing.Point(673, 459);
+			this.buttonLogout.Name = "buttonLogout";
+			this.buttonLogout.Size = new System.Drawing.Size(75, 23);
+			this.buttonLogout.TabIndex = 4;
+			this.buttonLogout.Text = "Logout";
+			this.buttonLogout.UseVisualStyleBackColor = true;
 			// 
-			// tabPage1
+			// labelFriends
 			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(574, 442);
-			this.tabPage1.TabIndex = 2;
-			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.labelFriends.AutoSize = true;
+			this.labelFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.labelFriends.Location = new System.Drawing.Point(8, 118);
+			this.labelFriends.Name = "labelFriends";
+			this.labelFriends.Size = new System.Drawing.Size(72, 13);
+			this.labelFriends.TabIndex = 3;
+			this.labelFriends.Text = "Friends List";
+			// 
+			// pictureBoxSelectedFriend
+			// 
+			this.pictureBoxSelectedFriend.Location = new System.Drawing.Point(156, 137);
+			this.pictureBoxSelectedFriend.Name = "pictureBoxSelectedFriend";
+			this.pictureBoxSelectedFriend.Size = new System.Drawing.Size(50, 50);
+			this.pictureBoxSelectedFriend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBoxSelectedFriend.TabIndex = 2;
+			this.pictureBoxSelectedFriend.TabStop = false;
+			// 
+			// listBoxFriends
+			// 
+			this.listBoxFriends.FormattingEnabled = true;
+			this.listBoxFriends.Location = new System.Drawing.Point(7, 137);
+			this.listBoxFriends.Name = "listBoxFriends";
+			this.listBoxFriends.Size = new System.Drawing.Size(142, 160);
+			this.listBoxFriends.TabIndex = 1;
+			this.listBoxFriends.SelectedValueChanged += new System.EventHandler(this.listBoxFriends_SelectedValueChanged);
 			// 
 			// pictureBoxProfilePicture
 			// 
@@ -97,33 +117,24 @@
 			this.pictureBoxProfilePicture.TabIndex = 0;
 			this.pictureBoxProfilePicture.TabStop = false;
 			// 
-			// listBoxFriends
+			// tabPageBuisnesses
 			// 
-			this.listBoxFriends.FormattingEnabled = true;
-			this.listBoxFriends.Location = new System.Drawing.Point(8, 136);
-			this.listBoxFriends.Name = "listBoxFriends";
-			this.listBoxFriends.Size = new System.Drawing.Size(142, 160);
-			this.listBoxFriends.TabIndex = 1;
-			this.listBoxFriends.SelectedValueChanged += new System.EventHandler(this.listBoxFriends_SelectedValueChanged);
+			this.tabPageBuisnesses.Location = new System.Drawing.Point(4, 22);
+			this.tabPageBuisnesses.Name = "tabPageBuisnesses";
+			this.tabPageBuisnesses.Size = new System.Drawing.Size(756, 490);
+			this.tabPageBuisnesses.TabIndex = 2;
+			this.tabPageBuisnesses.Text = "Buisnesses";
+			this.tabPageBuisnesses.UseVisualStyleBackColor = true;
 			// 
-			// pictureBoxSelectedFriend
+			// tabPage2
 			// 
-			this.pictureBoxSelectedFriend.Location = new System.Drawing.Point(157, 136);
-			this.pictureBoxSelectedFriend.Name = "pictureBoxSelectedFriend";
-			this.pictureBoxSelectedFriend.Size = new System.Drawing.Size(50, 50);
-			this.pictureBoxSelectedFriend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.pictureBoxSelectedFriend.TabIndex = 2;
-			this.pictureBoxSelectedFriend.TabStop = false;
-			// 
-			// labelFriends
-			// 
-			this.labelFriends.AutoSize = true;
-			this.labelFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.labelFriends.Location = new System.Drawing.Point(9, 117);
-			this.labelFriends.Name = "labelFriends";
-			this.labelFriends.Size = new System.Drawing.Size(72, 13);
-			this.labelFriends.TabIndex = 3;
-			this.labelFriends.Text = "Friends List";
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(756, 490);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "tabPage2";
+			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// FacebookApp
 			// 
@@ -131,14 +142,18 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(764, 516);
 			this.Controls.Add(this.tabControlGeneral);
+			this.Location = new System.Drawing.Point(10, 10);
 			this.Name = "FacebookApp";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "FacebookApp";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FacebookApp_FormClosing);
 			this.Load += new System.EventHandler(this.FacebookApp_Load);
+			this.LocationChanged += new System.EventHandler(this.FacebookApp_LocationChanged);
 			this.tabControlGeneral.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelectedFriend)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -147,11 +162,12 @@
 
 		private System.Windows.Forms.TabControl tabControlGeneral;
 		private System.Windows.Forms.TabPage tabPageGeneral;
-		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabPage tabPageBuisnesses;
 		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.PictureBox pictureBoxProfilePicture;
 		private System.Windows.Forms.PictureBox pictureBoxSelectedFriend;
 		private System.Windows.Forms.ListBox listBoxFriends;
 		private System.Windows.Forms.Label labelFriends;
+		private System.Windows.Forms.Button buttonLogout;
 	}
 }

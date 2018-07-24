@@ -43,7 +43,7 @@ namespace MyFacebookApp
 
 		private void loginAndInit()
 		{
-			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes");
+			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "publish_pages");
 
 			if (!string.IsNullOrEmpty(m_LoginResult.AccessToken))
 			{
