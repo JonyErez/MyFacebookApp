@@ -43,7 +43,6 @@ namespace MyFacebookApp
 				m_LoggedInUser = loginResult.LoggedInUser;
 				m_RememberUser = m_AppSettings.RememberUser;
 			}
-			fetchUserInfo();
 		}
 
 		private void fetchUserInfo()
