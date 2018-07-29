@@ -14,13 +14,10 @@ namespace MyFacebookApp
 {
 	public partial class FacebookApp : Form
 	{
-        private FormLogin r_login;
-        private AppSettings m_AppSettings;
+		private AppSettings m_AppSettings;
 		private User m_LoggedInUser;
-        // i used the values that we have in AppSettings because otherwise we need to synch between all of the members
-        // of them both and thats why we use desirialize ->
-		//private string m_AccessToken; 
-		//private bool m_RememberUser;
+		private string m_AccessToken;
+		private bool m_RememberUser;
 
 		public FacebookApp()
 		{
@@ -31,13 +28,15 @@ namespace MyFacebookApp
 		{
 			m_AppSettings = AppSettings.LoadAppSettings();
 			Location = m_AppSettings.Location;
-            r_login = new FormLogin();          
-
-            if (!m_AppSettings.RememberUser)
-            {              
-                r_login.ShowDialog();
-            }
-            else
+			if (!m_AppSettings.RememberUser)
+			{
+				FormLogin login = new FormLogin();
+				login.ShowDialog();
+				m_RememberUser = login.RememberUser;
+				m_LoggedInUser = login.LoggedInUser;
+				m_AccessToken = login.AccessToken;
+			}
+			else
 			{
 				m_AccessToken = m_AppSettings.LastAccessToken;
 				LoginResult loginResult = FacebookService.Connect(m_AccessToken);
@@ -47,20 +46,9 @@ namespace MyFacebookApp
 			fetchUserInfo();
 		}
 
-        private void onLoginEvent()
-        {
-            m_AppSettings.RememberUser = r_login.RememberUser;
-            m_LoggedInUser = r_login.LoggedInUser;
-            m_AppSettings.LastAccessToken = r_login.AccessToken;
-        }
-
-        private void loginFormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void fetchUserInfo()
+		private void fetchUserInfo()
 		{
+
 			populateFields();
 		}
 
@@ -98,7 +86,7 @@ namespace MyFacebookApp
 
 		private void FacebookApp_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			m_AppSettings.LastAccessToken = m_AppSettings.RememberUser ? m_AppSettings.LastAccessToken : String.Empty;
+			m_AppSettings.LastAccessToken = m_RememberUser ? m_AccessToken : String.Empty;
 			m_AppSettings.SaveAppSettings();
 		}
 
