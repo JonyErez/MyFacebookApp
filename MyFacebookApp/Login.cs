@@ -13,7 +13,7 @@ namespace MyFacebookApp
 {
 	public partial class FormLogin : Form
 	{
-		private LoginResult m_LoginResult;
+        private LoginResult m_LoginResult;
 		private bool m_RememberUser = false;
 
 		public User LoggedInUser
@@ -38,16 +38,16 @@ namespace MyFacebookApp
 
 		private void buttonLogin_Click(object sender, EventArgs e)
 		{
-			loginAndInit();
-		}
+			onButtonLoginClicked();
+        }
 
-		private void loginAndInit()
+		private void onButtonLoginClicked()
 		{
 			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "publish_pages", "user_events");
 
 			if (!string.IsNullOrEmpty(m_LoginResult.AccessToken))
 			{
-				Close();
+                this.Close();
 			}
 			else
 			{
@@ -59,5 +59,5 @@ namespace MyFacebookApp
 		{
 			m_RememberUser = !m_RememberUser;
 		}
-	}
+    }
 }
