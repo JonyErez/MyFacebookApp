@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -42,12 +43,10 @@ namespace MyFacebookApp
 				m_LoggedInUser = loginResult.LoggedInUser;
 				m_RememberUser = m_AppSettings.RememberUser;
 			}
-			fetchUserInfo();
 		}
 
 		private void fetchUserInfo()
 		{
-
 			populateFields();
 		}
 
@@ -56,32 +55,31 @@ namespace MyFacebookApp
 			Text = "Welcome " + m_LoggedInUser.FirstName + " " + m_LoggedInUser.LastName + "!";
 			pictureBoxProfilePicture.LoadAsync(m_LoggedInUser.PictureNormalURL);
 			populateFriendList();
+			populateEventsList();
+			populateAlbums();
+		}
+
+		private void populateAlbums()
+		{
+			bindingSourceAlbums.DataSource = m_LoggedInUser.Albums;
+		}
+
+		private void populateEventsList()
+		{
+			try
+			{
+				bindingSourceEvents.DataSource = m_LoggedInUser.Events;
+			}
+			catch (Exception ex)
+			{
+				//Throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
+				MessageBox.Show("Couldn't fetch user events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		private void populateFriendList()
 		{
-			listBoxFriends.Items.Clear();
-			listBoxFriends.DisplayMember = "Name";
-
-			foreach (User friend in m_LoggedInUser.Friends)
-			{
-				listBoxFriends.Items.Add(friend);
-			}
-		}
-
-		private void listBoxFriends_SelectedValueChanged(object sender, EventArgs e)
-		{
-			if (listBoxFriends.SelectedItem is User selectedUser)
-			{
-				if (selectedUser.PictureNormalURL != null)
-				{
-					pictureBoxSelectedFriend.LoadAsync(selectedUser.PictureNormalURL);
-				}
-				else
-				{
-					pictureBoxSelectedFriend.Image = pictureBoxSelectedFriend.ErrorImage;
-				}
-			}
+			bindingSourceUser.DataSource = m_LoggedInUser.Friends;
 		}
 
 		private void FacebookApp_FormClosing(object sender, FormClosingEventArgs e)
@@ -96,6 +94,16 @@ namespace MyFacebookApp
 			{
 				m_AppSettings.Location = Location;
 			}
+		}
+
+		private void FacebookApp_Shown(object sender, EventArgs e)
+		{
+			fetchUserInfo();
+		}
+
+		private void bindingNavigator1_RefreshItems(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

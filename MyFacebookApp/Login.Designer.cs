@@ -61,6 +61,7 @@
 			this.Controls.Add(this.checkBoxRememberUser);
 			this.Controls.Add(this.buttonLogin);
 			this.Name = "FormLogin";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Login";
 			this.ResumeLayout(false);
 			this.PerformLayout();
