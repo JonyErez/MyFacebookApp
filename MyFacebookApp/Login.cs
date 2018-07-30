@@ -50,9 +50,6 @@ namespace MyFacebookApp
 				"user_posts", 
 				"user_tagged_places", 
 				"user_location", 
-				"publish_actions", 
-				"user_relationships", 
-				"user_relationship_details", 
 				"user_tagged_places");
 
 
