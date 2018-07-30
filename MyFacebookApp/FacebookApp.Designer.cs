@@ -86,6 +86,7 @@
 			this.imageAlbumPictureBox = new System.Windows.Forms.PictureBox();
 			this.labelAlbums = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.labelTest = new System.Windows.Forms.Label();
 			birthdayLabel = new System.Windows.Forms.Label();
 			emailLabel = new System.Windows.Forms.Label();
 			descriptionLabel = new System.Windows.Forms.Label();
@@ -463,6 +464,7 @@
 			// 
 			// tabPageAlbums
 			// 
+			this.tabPageAlbums.Controls.Add(this.labelTest);
 			this.tabPageAlbums.Controls.Add(this.labelPictures);
 			this.tabPageAlbums.Controls.Add(this.bindingNavigatorPictures);
 			this.tabPageAlbums.Controls.Add(this.pictureBox1);
@@ -666,6 +668,15 @@
 			this.comboBox1.Size = new System.Drawing.Size(121, 21);
 			this.comboBox1.TabIndex = 0;
 			// 
+			// labelTest
+			// 
+			this.labelTest.AutoSize = true;
+			this.labelTest.Location = new System.Drawing.Point(645, 121);
+			this.labelTest.Name = "labelTest";
+			this.labelTest.Size = new System.Drawing.Size(35, 13);
+			this.labelTest.TabIndex = 13;
+			this.labelTest.Text = "label1";
+			// 
 			// FacebookApp
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -747,5 +758,6 @@
 		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label labelPictures;
+		private System.Windows.Forms.Label labelTest;
 	}
 }

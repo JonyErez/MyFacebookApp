@@ -102,11 +102,6 @@ namespace MyFacebookApp
 			fetchUserInfo();
 		}
 
-		private void bindingNavigator1_RefreshItems(object sender, EventArgs e)
-		{
-
-		}
-
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             //this.Visible = false;
