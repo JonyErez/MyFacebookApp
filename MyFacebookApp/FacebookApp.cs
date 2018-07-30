@@ -76,9 +76,12 @@ namespace MyFacebookApp
 			populateWallPosts();
 			populateFriendList();
 			populateLikedPages();
+            ////////////
 		}
 
-		private void populateLikedPages()
+       
+
+        private void populateLikedPages()
 		{
 			try
 			{
@@ -213,5 +216,99 @@ namespace MyFacebookApp
 			m_WallPostAgeInMonths = comboBoxWallPostAge.SelectedIndex + 1;
 			populateWallPosts();
 		}
-	}
+
+
+        private void tabControlGeneral_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControlGeneral.SelectedTab == tabControlGeneral.TabPages["tabPageFriendOverview"])
+            {
+                populateTabFriendOverview();
+            }
+        }
+
+        private void populateTabFriendOverview()
+        {
+            bindingSourceFriendOverview.DataSource = m_LoggedInUser.Friends;
+        }
+
+        private void comboBoxChooseAFriend_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            User selectedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
+            populatePersonalInfo(selectedFriend);
+          //  populateMutualPictures(selectedFriend);
+            populateSubTabFriendEvents(selectedFriend);
+            populateSubTabFriendCheckins(selectedFriend);
+            populateSubTabFriendPosts(selectedFriend);
+            populateSubTabFriendGroups(selectedFriend);
+        }
+
+        //private void populateMutualPictures(User i_selectedFriend)
+        //{
+        //    bindingSourceFriendOverviewMutualPictures.Clear();
+
+        //    Type enumOfTypes = null;
+        //    PicturesColleciton mutualPicturesData = new PicturesColleciton(i_selectedFriend, enumOfTypes, true);
+        //  //  bindingSourceFriendOverviewMutualPictures.DataSource = i_selectedFriend.Pictures;
+            
+            
+            
+        //}
+
+        private void populatePersonalInfo(User i_selectedFriend)
+        {
+            bindingSourceFriendOverviewPersonalInfo.Clear();
+            bindingSourceFriendOverviewPersonalInfo.DataSource = i_selectedFriend;
+        }
+
+        private void populateSubTabFriendGroups(User i_selectedFriend)
+        {
+            bindingSourceFriendOverviewGroups.Clear();
+            bindingSourceFriendOverviewGroups.DataSource = i_selectedFriend.Groups;
+        }
+
+        private void populateSubTabFriendPosts(User i_selectedFriend)
+        {
+            bindingSourceFriendOverviewPosts.Clear();
+            bindingSourceFriendOverviewPosts.DataSource = i_selectedFriend.Posts;
+        }
+
+        private void populateSubTabFriendCheckins(User i_selectedFriend)
+        {
+            bindingSourceFriendOverviewCheckins.Clear();
+
+            if (i_selectedFriend.Checkins != null) // TODO: throws an exception at the end of the program
+            {
+                bindingSourceFriendOverviewCheckins.DataSource = i_selectedFriend.Checkins;
+            }
+        }
+
+        private void populateSubTabFriendEvents(User i_selectedFriend)// TODO: messageBox pops only after exiting the program
+        {
+            bindingSourceFriendOverviewEvents.Clear();
+
+            try
+            {
+                bindingSourceFriendOverviewEvents.DataSource = i_selectedFriend.Events;           
+            }
+            catch (Exception ex)
+            {
+                //Always throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
+                MessageBox.Show("Couldn't fetch user events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // TODO: not working yet
+        private void comboBoxChooseAFriend_TextChanged(object sender, EventArgs e)
+        {
+            if (comboBoxChooseAFriend.SelectedIndex < 0)
+            {
+                comboBoxChooseAFriend.Text = "Choose a friend to overview";
+            }
+            else
+            {
+                comboBoxChooseAFriend.Text = comboBoxChooseAFriend.SelectedText;
+            }
+        }
+    }
 }
