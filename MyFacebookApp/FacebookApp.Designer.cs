@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.Label birthdayLabel;
 			System.Windows.Forms.Label emailLabel;
 			System.Windows.Forms.Label descriptionLabel;
 			System.Windows.Forms.Label endTimeLabel;
@@ -42,6 +41,7 @@
 			System.Windows.Forms.Label createdTimeLabel;
 			System.Windows.Forms.Label descriptionLabel1;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacebookApp));
+			System.Windows.Forms.Label birthdayLabel;
 			this.tabControlGeneral = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
 			this.nameLabel2 = new System.Windows.Forms.Label();
@@ -54,7 +54,6 @@
 			this.eventImagePictureBox1 = new System.Windows.Forms.PictureBox();
 			this.startTimeDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.listBoxEvents = new System.Windows.Forms.ListBox();
-			this.birthdayLabel1 = new System.Windows.Forms.Label();
 			this.bindingSourceUser = new System.Windows.Forms.BindingSource(this.components);
 			this.emailLabel1 = new System.Windows.Forms.Label();
 			this.imageNormalPictureBox = new System.Windows.Forms.PictureBox();
@@ -86,8 +85,12 @@
 			this.imageAlbumPictureBox = new System.Windows.Forms.PictureBox();
 			this.labelAlbums = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.labelTest = new System.Windows.Forms.Label();
-			birthdayLabel = new System.Windows.Forms.Label();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.birthdayDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ImageSmall = new System.Windows.Forms.DataGridViewImageColumn();
+			this.labelBirthdays = new System.Windows.Forms.Label();
+			this.birthdayDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			emailLabel = new System.Windows.Forms.Label();
 			descriptionLabel = new System.Windows.Forms.Label();
 			endTimeLabel = new System.Windows.Forms.Label();
@@ -99,6 +102,7 @@
 			countLabel = new System.Windows.Forms.Label();
 			createdTimeLabel = new System.Windows.Forms.Label();
 			descriptionLabel1 = new System.Windows.Forms.Label();
+			birthdayLabel = new System.Windows.Forms.Label();
 			this.tabControlGeneral.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceEvents)).BeginInit();
@@ -113,21 +117,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// birthdayLabel
-			// 
-			birthdayLabel.AutoSize = true;
-			birthdayLabel.Location = new System.Drawing.Point(155, 194);
-			birthdayLabel.Name = "birthdayLabel";
-			birthdayLabel.Size = new System.Drawing.Size(48, 13);
-			birthdayLabel.TabIndex = 10;
-			birthdayLabel.Text = "Birthday:";
 			// 
 			// emailLabel
 			// 
 			emailLabel.AutoSize = true;
-			emailLabel.Location = new System.Drawing.Point(155, 217);
+			emailLabel.Location = new System.Drawing.Point(154, 202);
 			emailLabel.Name = "emailLabel";
 			emailLabel.Size = new System.Drawing.Size(35, 13);
 			emailLabel.TabIndex = 12;
@@ -212,9 +208,9 @@
 			createdTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			createdTimeLabel.Location = new System.Drawing.Point(11, 97);
 			createdTimeLabel.Name = "createdTimeLabel";
-			createdTimeLabel.Size = new System.Drawing.Size(86, 13);
+			createdTimeLabel.Size = new System.Drawing.Size(89, 13);
 			createdTimeLabel.TabIndex = 4;
-			createdTimeLabel.Text = "Created Time:";
+			createdTimeLabel.Text = "Creation Time:";
 			// 
 			// descriptionLabel1
 			// 
@@ -242,6 +238,10 @@
 			// tabPageGeneral
 			// 
 			this.tabPageGeneral.AutoScroll = true;
+			this.tabPageGeneral.Controls.Add(birthdayLabel);
+			this.tabPageGeneral.Controls.Add(this.birthdayDateTimePicker);
+			this.tabPageGeneral.Controls.Add(this.labelBirthdays);
+			this.tabPageGeneral.Controls.Add(this.dataGridView1);
 			this.tabPageGeneral.Controls.Add(locationLabel1);
 			this.tabPageGeneral.Controls.Add(this.nameLabel2);
 			this.tabPageGeneral.Controls.Add(cityLabel);
@@ -258,8 +258,6 @@
 			this.tabPageGeneral.Controls.Add(startTimeLabel);
 			this.tabPageGeneral.Controls.Add(this.startTimeDateTimePicker);
 			this.tabPageGeneral.Controls.Add(this.listBoxEvents);
-			this.tabPageGeneral.Controls.Add(birthdayLabel);
-			this.tabPageGeneral.Controls.Add(this.birthdayLabel1);
 			this.tabPageGeneral.Controls.Add(emailLabel);
 			this.tabPageGeneral.Controls.Add(this.emailLabel1);
 			this.tabPageGeneral.Controls.Add(this.imageNormalPictureBox);
@@ -361,15 +359,6 @@
 			this.listBoxEvents.Size = new System.Drawing.Size(142, 316);
 			this.listBoxEvents.TabIndex = 19;
 			// 
-			// birthdayLabel1
-			// 
-			this.birthdayLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceUser, "Birthday", true));
-			this.birthdayLabel1.Location = new System.Drawing.Point(209, 194);
-			this.birthdayLabel1.Name = "birthdayLabel1";
-			this.birthdayLabel1.Size = new System.Drawing.Size(100, 23);
-			this.birthdayLabel1.TabIndex = 11;
-			this.birthdayLabel1.Text = "label1";
-			// 
 			// bindingSourceUser
 			// 
 			this.bindingSourceUser.DataSource = typeof(FacebookWrapper.ObjectModel.User);
@@ -377,7 +366,7 @@
 			// emailLabel1
 			// 
 			this.emailLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceUser, "Email", true));
-			this.emailLabel1.Location = new System.Drawing.Point(209, 217);
+			this.emailLabel1.Location = new System.Drawing.Point(208, 202);
 			this.emailLabel1.Name = "emailLabel1";
 			this.emailLabel1.Size = new System.Drawing.Size(100, 23);
 			this.emailLabel1.TabIndex = 13;
@@ -464,7 +453,6 @@
 			// 
 			// tabPageAlbums
 			// 
-			this.tabPageAlbums.Controls.Add(this.labelTest);
 			this.tabPageAlbums.Controls.Add(this.labelPictures);
 			this.tabPageAlbums.Controls.Add(this.bindingNavigatorPictures);
 			this.tabPageAlbums.Controls.Add(this.pictureBox1);
@@ -668,14 +656,76 @@
 			this.comboBox1.Size = new System.Drawing.Size(121, 21);
 			this.comboBox1.TabIndex = 0;
 			// 
-			// labelTest
+			// dataGridView1
 			// 
-			this.labelTest.AutoSize = true;
-			this.labelTest.Location = new System.Drawing.Point(645, 121);
-			this.labelTest.Name = "labelTest";
-			this.labelTest.Size = new System.Drawing.Size(35, 13);
-			this.labelTest.TabIndex = 13;
-			this.labelTest.Text = "label1";
+			this.dataGridView1.AllowUserToAddRows = false;
+			this.dataGridView1.AllowUserToDeleteRows = false;
+			this.dataGridView1.AllowUserToResizeColumns = false;
+			this.dataGridView1.AllowUserToResizeRows = false;
+			this.dataGridView1.AutoGenerateColumns = false;
+			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.birthdayDataGridViewTextBoxColumn,
+            this.ImageSmall});
+			this.dataGridView1.DataSource = this.bindingSourceUser;
+			this.dataGridView1.Location = new System.Drawing.Point(559, 137);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.Size = new System.Drawing.Size(345, 150);
+			this.dataGridView1.TabIndex = 34;
+			// 
+			// nameDataGridViewTextBoxColumn
+			// 
+			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			// 
+			// birthdayDataGridViewTextBoxColumn
+			// 
+			this.birthdayDataGridViewTextBoxColumn.DataPropertyName = "Birthday";
+			this.birthdayDataGridViewTextBoxColumn.HeaderText = "Birthday";
+			this.birthdayDataGridViewTextBoxColumn.Name = "birthdayDataGridViewTextBoxColumn";
+			this.birthdayDataGridViewTextBoxColumn.ReadOnly = true;
+			this.birthdayDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			// 
+			// ImageSmall
+			// 
+			this.ImageSmall.DataPropertyName = "ImageSmall";
+			this.ImageSmall.HeaderText = "Image";
+			this.ImageSmall.Name = "ImageSmall";
+			this.ImageSmall.ReadOnly = true;
+			this.ImageSmall.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			// 
+			// labelBirthdays
+			// 
+			this.labelBirthdays.AutoSize = true;
+			this.labelBirthdays.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.labelBirthdays.Location = new System.Drawing.Point(556, 118);
+			this.labelBirthdays.Name = "labelBirthdays";
+			this.labelBirthdays.Size = new System.Drawing.Size(119, 13);
+			this.labelBirthdays.TabIndex = 35;
+			this.labelBirthdays.Text = "Upcoming Birthdays";
+			// 
+			// birthdayLabel
+			// 
+			birthdayLabel.AutoSize = true;
+			birthdayLabel.Location = new System.Drawing.Point(155, 227);
+			birthdayLabel.Name = "birthdayLabel";
+			birthdayLabel.Size = new System.Drawing.Size(48, 13);
+			birthdayLabel.TabIndex = 35;
+			birthdayLabel.Text = "Birthday:";
+			// 
+			// birthdayDateTimePicker
+			// 
+			this.birthdayDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSourceUser, "Birthday", true));
+			this.birthdayDateTimePicker.Enabled = false;
+			this.birthdayDateTimePicker.Location = new System.Drawing.Point(209, 223);
+			this.birthdayDateTimePicker.Name = "birthdayDateTimePicker";
+			this.birthdayDateTimePicker.Size = new System.Drawing.Size(200, 20);
+			this.birthdayDateTimePicker.TabIndex = 36;
 			// 
 			// FacebookApp
 			// 
@@ -708,6 +758,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -724,7 +775,6 @@
 		private System.Windows.Forms.Button buttonLogout;
 		private System.Windows.Forms.BindingSource bindingSourceUser;
 		private System.Windows.Forms.Label labelEvents;
-		private System.Windows.Forms.Label birthdayLabel1;
 		private System.Windows.Forms.Label emailLabel1;
 		private System.Windows.Forms.PictureBox imageNormalPictureBox;
 		private System.Windows.Forms.BindingSource bindingSourceEvents;
@@ -758,6 +808,11 @@
 		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label labelPictures;
-		private System.Windows.Forms.Label labelTest;
+		private System.Windows.Forms.Label labelBirthdays;
+		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn birthdayDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewImageColumn ImageSmall;
+		private System.Windows.Forms.DateTimePicker birthdayDateTimePicker;
 	}
 }
