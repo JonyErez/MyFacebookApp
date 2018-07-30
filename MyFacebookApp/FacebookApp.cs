@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -47,17 +49,39 @@ namespace MyFacebookApp
 
 		private void fetchUserInfo()
 		{
-
-			populateFields();
+			Thread fieldPopulation = new Thread(populateFields);
+			Text = "Welcome " + m_LoggedInUser.FirstName + " " + m_LoggedInUser.LastName + "!";
+			pictureBoxProfilePicture.LoadAsync(m_LoggedInUser.PictureNormalURL);
+			fieldPopulation.Start();
+			populateFriendList();
 		}
 
 		private void populateFields()
 		{
-			Text = "Welcome " + m_LoggedInUser.FirstName + " " + m_LoggedInUser.LastName + "!";
-			pictureBoxProfilePicture.LoadAsync(m_LoggedInUser.PictureNormalURL);
-			populateFriendList();
-			populateEventsList();
 			populateAlbums();
+			populateBirthdays();
+			populateEventsList();
+		}
+
+		private void populateBirthdays()
+		{
+			foreach (User friend in m_LoggedInUser.Friends)
+			{
+				string formattedBirthday = friend.Birthday;
+				if (formattedBirthday.Length <= 5)
+				{
+					formattedBirthday += "/" + DateTime.Now.Year;
+				}
+				DateTime.TryParseExact(formattedBirthday,"MM/dd/yyyy", new DateTimeFormatInfo(),DateTimeStyles.AdjustToUniversal ,out DateTime birthday);
+				if (birthday != null)
+				{
+					birthday.AddYears(DateTime.Now.Year - birthday.Year);
+					if (birthday <= DateTime.Now.AddDays(7) && birthday >= DateTime.Now)
+					{
+						bindingSourceBirthdays.Add(friend);
+					}
+				}
+			}
 		}
 
 		private void populateAlbums()
@@ -80,7 +104,7 @@ namespace MyFacebookApp
 
 		private void populateFriendList()
 		{
-			bindingSourceUser.DataSource = m_LoggedInUser.Friends;
+			bindingSourceFriends.DataSource = m_LoggedInUser.Friends;
 		}
 
 		private void FacebookApp_FormClosing(object sender, FormClosingEventArgs e)
