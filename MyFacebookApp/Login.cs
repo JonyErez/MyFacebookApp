@@ -14,7 +14,6 @@ namespace MyFacebookApp
 	public partial class FormLogin : Form
 	{
         private LoginResult m_LoginResult;
-		private bool m_RememberUser = false;
 
 		public User LoggedInUser
 		{
@@ -24,11 +23,6 @@ namespace MyFacebookApp
 		public string AccessToken
 		{
 			get { return m_LoginResult.AccessToken; }
-		}
-
-		public bool RememberUser
-		{
-			get { return m_RememberUser; }
 		}
 
 		public FormLogin()
@@ -43,21 +37,34 @@ namespace MyFacebookApp
 
 		private void onButtonLoginClicked()
 		{
-			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "publish_pages", "user_events");
+			m_LoginResult = FacebookService.Login("419878648523017", 
+				"public_profile", 
+				"email", 
+				"user_friends", 
+				"user_photos", 
+				"user_birthday", 
+				"user_likes", 
+				"manage_pages", 
+				"user_events", 
+				"user_hometown", 
+				"user_posts", 
+				"user_tagged_places", 
+				"user_location", 
+				"publish_actions", 
+				"user_relationships", 
+				"user_relationship_details", 
+				"user_tagged_places");
+
 
 			if (!string.IsNullOrEmpty(m_LoginResult.AccessToken))
 			{
+				this.DialogResult = DialogResult.OK;
                 this.Close();
 			}
 			else
 			{
 				MessageBox.Show(m_LoginResult.ErrorMessage);
 			}
-		}
-
-		private void checkBoxRememberUser_CheckedChanged(object sender, EventArgs e)
-		{
-			m_RememberUser = !m_RememberUser;
 		}
     }
 }

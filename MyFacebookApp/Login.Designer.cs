@@ -29,49 +29,34 @@
 		private void InitializeComponent()
 		{
 			this.buttonLogin = new System.Windows.Forms.Button();
-			this.checkBoxRememberUser = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// buttonLogin
 			// 
-			this.buttonLogin.Location = new System.Drawing.Point(70, 12);
+			this.buttonLogin.Location = new System.Drawing.Point(51, 12);
 			this.buttonLogin.Name = "buttonLogin";
-			this.buttonLogin.Size = new System.Drawing.Size(75, 23);
+			this.buttonLogin.Size = new System.Drawing.Size(108, 45);
 			this.buttonLogin.TabIndex = 0;
-			this.buttonLogin.Text = "Login";
+			this.buttonLogin.Text = "Login Through Facebook";
 			this.buttonLogin.UseVisualStyleBackColor = true;
 			this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
-			// 
-			// checkBoxRememberUser
-			// 
-			this.checkBoxRememberUser.AutoSize = true;
-			this.checkBoxRememberUser.Location = new System.Drawing.Point(70, 52);
-			this.checkBoxRememberUser.Name = "checkBoxRememberUser";
-			this.checkBoxRememberUser.Size = new System.Drawing.Size(101, 17);
-			this.checkBoxRememberUser.TabIndex = 1;
-			this.checkBoxRememberUser.Text = "Remember Me?";
-			this.checkBoxRememberUser.UseVisualStyleBackColor = true;
-			this.checkBoxRememberUser.CheckedChanged += new System.EventHandler(this.checkBoxRememberUser_CheckedChanged);
 			// 
 			// FormLogin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(225, 81);
-			this.Controls.Add(this.checkBoxRememberUser);
+			this.ClientSize = new System.Drawing.Size(211, 73);
 			this.Controls.Add(this.buttonLogin);
 			this.Name = "FormLogin";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Login";
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private System.Windows.Forms.Button buttonLogin;
-		private System.Windows.Forms.CheckBox checkBoxRememberUser;
 	}
 }
 
