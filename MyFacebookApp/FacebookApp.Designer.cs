@@ -37,10 +37,11 @@
             System.Windows.Forms.Label createdTimeLabel;
             System.Windows.Forms.Label descriptionLabel1;
             System.Windows.Forms.Label birthdayLabel;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacebookApp));
-            System.Windows.Forms.Label aboutLabel;
             System.Windows.Forms.Label birthdayLabel2;
             System.Windows.Forms.Label emailLabel2;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacebookApp));
+            System.Windows.Forms.Label createdTimeLabel1;
+            System.Windows.Forms.Label nameLabel;
             this.tabControlGeneral = new System.Windows.Forms.TabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
@@ -89,7 +90,20 @@
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.pictureBoxProfilePicture = new System.Windows.Forms.PictureBox();
             this.tabPageFriendOverview = new System.Windows.Forms.TabPage();
+            this.bindingSourcePictures = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSourceAlbums = new System.Windows.Forms.BindingSource(this.components);
+            this.buttonUplaodMutualPic = new System.Windows.Forms.Button();
+            this.textBoxMutualPicToUploadTitle = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pictureBoxMutualPictureToUpload = new System.Windows.Forms.PictureBox();
+            this.buttonBrowseAPicture = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.labelMutualPictures = new System.Windows.Forms.Label();
             this.panelFriendProfileData = new System.Windows.Forms.Panel();
+            this.birthdayLabel3 = new System.Windows.Forms.Label();
+            this.bindingSourceFriendOverviewPersonalInfo = new System.Windows.Forms.BindingSource(this.components);
+            this.emailLabel3 = new System.Windows.Forms.Label();
+            this.imageNormalPictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControlSubFriendOverview = new System.Windows.Forms.TabControl();
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.dataGridViewFriendOverviewEvents = new System.Windows.Forms.DataGridView();
@@ -104,14 +118,24 @@
             this.tabPageCheckins = new System.Windows.Forms.TabPage();
             this.dataGridViewFriendOvervieCheckins = new System.Windows.Forms.DataGridView();
             this.nameDataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.captionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.placeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fromDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createdTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceFriendOverviewCheckins = new System.Windows.Forms.BindingSource(this.components);
             this.tabPagePosts = new System.Windows.Forms.TabPage();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSourceFriendOverviewPosts = new System.Windows.Forms.BindingSource(this.components);
             this.tabPageGroups = new System.Windows.Forms.TabPage();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionDataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.privacyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ownerDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSourceFriendOverviewGroups = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxChooseAFriend = new System.Windows.Forms.ComboBox();
             this.bindingSourceFriendOverview = new System.Windows.Forms.BindingSource(this.components);
@@ -126,8 +150,6 @@
             this.labelPictureLikes = new System.Windows.Forms.Label();
             this.labelPictures = new System.Windows.Forms.Label();
             this.bindingNavigatorPictures = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingSourcePictures = new System.Windows.Forms.BindingSource(this.components);
-            this.bindingSourceAlbums = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -144,35 +166,17 @@
             this.imageAlbumPictureBox = new System.Windows.Forms.PictureBox();
             this.labelAlbums = new System.Windows.Forms.Label();
             this.comboBoxAlbums = new System.Windows.Forms.ComboBox();
-            this.bindingSourceFriendOverviewPosts = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.placeDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fromDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createdTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingSourceFriendOverviewGroups = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.privacyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ownerDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingSourceFriendOverviewPersonalInfo = new System.Windows.Forms.BindingSource(this.components);
-            this.aboutTextBox = new System.Windows.Forms.TextBox();
-            this.birthdayLabel3 = new System.Windows.Forms.Label();
-            this.emailLabel3 = new System.Windows.Forms.Label();
-            this.imageNormalPictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.bindingSourceFriendOverviewMutualPictures = new System.Windows.Forms.BindingSource(this.components);
+            this.commentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.likedByBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.educationsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.progressBarFriendshipStrength = new System.Windows.Forms.ProgressBar();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.labelUploadMutualPic = new System.Windows.Forms.Label();
+            this.labelFriendActivity = new System.Windows.Forms.Label();
+            this.createdTimeDateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             emailLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
             endTimeLabel = new System.Windows.Forms.Label();
@@ -181,9 +185,10 @@
             createdTimeLabel = new System.Windows.Forms.Label();
             descriptionLabel1 = new System.Windows.Forms.Label();
             birthdayLabel = new System.Windows.Forms.Label();
-            aboutLabel = new System.Windows.Forms.Label();
             birthdayLabel2 = new System.Windows.Forms.Label();
             emailLabel2 = new System.Windows.Forms.Label();
+            createdTimeLabel1 = new System.Windows.Forms.Label();
+            nameLabel = new System.Windows.Forms.Label();
             this.tabControlGeneral.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -199,7 +204,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).BeginInit();
             this.tabPageFriendOverview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePictures)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMutualPictureToUpload)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelFriendProfileData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPersonalInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox1)).BeginInit();
             this.tabControlSubFriendOverview.SuspendLayout();
             this.tabPageEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFriendOverviewEvents)).BeginInit();
@@ -208,23 +219,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFriendOvervieCheckins)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewCheckins)).BeginInit();
             this.tabPagePosts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPosts)).BeginInit();
             this.tabPageGroups.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewGroups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverview)).BeginInit();
             this.tabPageAlbums.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPictures)).BeginInit();
             this.bindingNavigatorPictures.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePictures)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPosts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewGroups)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPersonalInfo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewMutualPictures)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.likedByBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.educationsBindingSource)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // emailLabel
@@ -301,6 +311,24 @@
             birthdayLabel.Size = new System.Drawing.Size(48, 13);
             birthdayLabel.TabIndex = 35;
             birthdayLabel.Text = "Birthday:";
+            // 
+            // birthdayLabel2
+            // 
+            birthdayLabel2.AutoSize = true;
+            birthdayLabel2.Location = new System.Drawing.Point(13, 12);
+            birthdayLabel2.Name = "birthdayLabel2";
+            birthdayLabel2.Size = new System.Drawing.Size(48, 13);
+            birthdayLabel2.TabIndex = 2;
+            birthdayLabel2.Text = "Birthday:";
+            // 
+            // emailLabel2
+            // 
+            emailLabel2.AutoSize = true;
+            emailLabel2.Location = new System.Drawing.Point(13, 35);
+            emailLabel2.Name = "emailLabel2";
+            emailLabel2.Size = new System.Drawing.Size(35, 13);
+            emailLabel2.TabIndex = 4;
+            emailLabel2.Text = "Email:";
             // 
             // tabControlGeneral
             // 
@@ -794,15 +822,19 @@
             // 
             // tabPageFriendOverview
             // 
+            this.tabPageFriendOverview.AutoScroll = true;
+            this.tabPageFriendOverview.Controls.Add(this.labelFriendActivity);
+            this.tabPageFriendOverview.Controls.Add(this.labelUploadMutualPic);
             this.tabPageFriendOverview.Controls.Add(this.label5);
-            this.tabPageFriendOverview.Controls.Add(this.label6);
-            this.tabPageFriendOverview.Controls.Add(this.label7);
-            this.tabPageFriendOverview.Controls.Add(this.label8);
-            this.tabPageFriendOverview.Controls.Add(this.label9);
-            this.tabPageFriendOverview.Controls.Add(this.label10);
-            this.tabPageFriendOverview.Controls.Add(this.label11);
+            this.tabPageFriendOverview.Controls.Add(this.panel1);
+            this.tabPageFriendOverview.Controls.Add(this.progressBarFriendshipStrength);
+            this.tabPageFriendOverview.Controls.Add(this.buttonUplaodMutualPic);
+            this.tabPageFriendOverview.Controls.Add(this.textBoxMutualPicToUploadTitle);
+            this.tabPageFriendOverview.Controls.Add(this.label12);
+            this.tabPageFriendOverview.Controls.Add(this.pictureBoxMutualPictureToUpload);
+            this.tabPageFriendOverview.Controls.Add(this.buttonBrowseAPicture);
             this.tabPageFriendOverview.Controls.Add(this.pictureBox2);
-            this.tabPageFriendOverview.Controls.Add(this.label4);
+            this.tabPageFriendOverview.Controls.Add(this.labelMutualPictures);
             this.tabPageFriendOverview.Controls.Add(this.panelFriendProfileData);
             this.tabPageFriendOverview.Controls.Add(this.tabControlSubFriendOverview);
             this.tabPageFriendOverview.Controls.Add(this.label3);
@@ -814,19 +846,121 @@
             this.tabPageFriendOverview.Text = "Friend Overview";
             this.tabPageFriendOverview.UseVisualStyleBackColor = true;
             // 
+            // bindingSourcePictures
+            // 
+            this.bindingSourcePictures.DataMember = "Photos";
+            this.bindingSourcePictures.DataSource = this.bindingSourceAlbums;
+            this.bindingSourcePictures.CurrentChanged += new System.EventHandler(this.bindingSourcePictures_CurrentChanged);
+            // 
+            // bindingSourceAlbums
+            // 
+            this.bindingSourceAlbums.DataSource = typeof(FacebookWrapper.ObjectModel.Album);
+            // 
+            // buttonUplaodMutualPic
+            // 
+            this.buttonUplaodMutualPic.Location = new System.Drawing.Point(936, 414);
+            this.buttonUplaodMutualPic.Name = "buttonUplaodMutualPic";
+            this.buttonUplaodMutualPic.Size = new System.Drawing.Size(55, 23);
+            this.buttonUplaodMutualPic.TabIndex = 32;
+            this.buttonUplaodMutualPic.Text = "Upload";
+            this.buttonUplaodMutualPic.UseVisualStyleBackColor = true;
+            this.buttonUplaodMutualPic.Click += new System.EventHandler(this.buttonUplaodMutualPic_Click);
+            // 
+            // textBoxMutualPicToUploadTitle
+            // 
+            this.textBoxMutualPicToUploadTitle.Location = new System.Drawing.Point(836, 388);
+            this.textBoxMutualPicToUploadTitle.Name = "textBoxMutualPicToUploadTitle";
+            this.textBoxMutualPicToUploadTitle.Size = new System.Drawing.Size(154, 20);
+            this.textBoxMutualPicToUploadTitle.TabIndex = 31;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(800, 388);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 13);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Title:";
+            // 
+            // pictureBoxMutualPictureToUpload
+            // 
+            this.pictureBoxMutualPictureToUpload.Location = new System.Drawing.Point(836, 457);
+            this.pictureBoxMutualPictureToUpload.Name = "pictureBoxMutualPictureToUpload";
+            this.pictureBoxMutualPictureToUpload.Size = new System.Drawing.Size(140, 126);
+            this.pictureBoxMutualPictureToUpload.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxMutualPictureToUpload.TabIndex = 28;
+            this.pictureBoxMutualPictureToUpload.TabStop = false;
+            // 
+            // buttonBrowseAPicture
+            // 
+            this.buttonBrowseAPicture.Location = new System.Drawing.Point(803, 414);
+            this.buttonBrowseAPicture.Name = "buttonBrowseAPicture";
+            this.buttonBrowseAPicture.Size = new System.Drawing.Size(127, 23);
+            this.buttonBrowseAPicture.TabIndex = 27;
+            this.buttonBrowseAPicture.Text = "Browse a picture";
+            this.buttonBrowseAPicture.UseVisualStyleBackColor = true;
+            this.buttonBrowseAPicture.Click += new System.EventHandler(this.buttonBrowseAPicture_Click_1);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(11, 368);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(152, 127);
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // labelMutualPictures
+            // 
+            this.labelMutualPictures.AutoSize = true;
+            this.labelMutualPictures.Location = new System.Drawing.Point(8, 352);
+            this.labelMutualPictures.Name = "labelMutualPictures";
+            this.labelMutualPictures.Size = new System.Drawing.Size(83, 13);
+            this.labelMutualPictures.TabIndex = 4;
+            this.labelMutualPictures.Text = "Mutual Pictures:";
+            // 
             // panelFriendProfileData
             // 
-            this.panelFriendProfileData.Controls.Add(aboutLabel);
-            this.panelFriendProfileData.Controls.Add(this.aboutTextBox);
             this.panelFriendProfileData.Controls.Add(birthdayLabel2);
             this.panelFriendProfileData.Controls.Add(this.birthdayLabel3);
             this.panelFriendProfileData.Controls.Add(emailLabel2);
             this.panelFriendProfileData.Controls.Add(this.emailLabel3);
             this.panelFriendProfileData.Controls.Add(this.imageNormalPictureBox1);
-            this.panelFriendProfileData.Location = new System.Drawing.Point(11, 45);
+            this.panelFriendProfileData.Location = new System.Drawing.Point(8, 45);
             this.panelFriendProfileData.Name = "panelFriendProfileData";
-            this.panelFriendProfileData.Size = new System.Drawing.Size(322, 294);
+            this.panelFriendProfileData.Size = new System.Drawing.Size(318, 109);
             this.panelFriendProfileData.TabIndex = 3;
+            // 
+            // birthdayLabel3
+            // 
+            this.birthdayLabel3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceFriendOverviewPersonalInfo, "Birthday", true));
+            this.birthdayLabel3.Location = new System.Drawing.Point(94, 12);
+            this.birthdayLabel3.Name = "birthdayLabel3";
+            this.birthdayLabel3.Size = new System.Drawing.Size(100, 23);
+            this.birthdayLabel3.TabIndex = 3;
+            this.birthdayLabel3.Text = "label4";
+            // 
+            // bindingSourceFriendOverviewPersonalInfo
+            // 
+            this.bindingSourceFriendOverviewPersonalInfo.DataSource = typeof(FacebookWrapper.ObjectModel.User);
+            // 
+            // emailLabel3
+            // 
+            this.emailLabel3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceFriendOverviewPersonalInfo, "Email", true));
+            this.emailLabel3.Location = new System.Drawing.Point(94, 35);
+            this.emailLabel3.Name = "emailLabel3";
+            this.emailLabel3.Size = new System.Drawing.Size(100, 23);
+            this.emailLabel3.TabIndex = 5;
+            this.emailLabel3.Text = "label4";
+            // 
+            // imageNormalPictureBox1
+            // 
+            this.imageNormalPictureBox1.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bindingSourceFriendOverviewPersonalInfo, "ImageNormal", true));
+            this.imageNormalPictureBox1.Location = new System.Drawing.Point(209, 3);
+            this.imageNormalPictureBox1.Name = "imageNormalPictureBox1";
+            this.imageNormalPictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.imageNormalPictureBox1.TabIndex = 7;
+            this.imageNormalPictureBox1.TabStop = false;
             // 
             // tabControlSubFriendOverview
             // 
@@ -834,10 +968,10 @@
             this.tabControlSubFriendOverview.Controls.Add(this.tabPageCheckins);
             this.tabControlSubFriendOverview.Controls.Add(this.tabPagePosts);
             this.tabControlSubFriendOverview.Controls.Add(this.tabPageGroups);
-            this.tabControlSubFriendOverview.Location = new System.Drawing.Point(360, 18);
+            this.tabControlSubFriendOverview.Location = new System.Drawing.Point(336, 41);
             this.tabControlSubFriendOverview.Name = "tabControlSubFriendOverview";
             this.tabControlSubFriendOverview.SelectedIndex = 0;
-            this.tabControlSubFriendOverview.Size = new System.Drawing.Size(452, 321);
+            this.tabControlSubFriendOverview.Size = new System.Drawing.Size(720, 321);
             this.tabControlSubFriendOverview.TabIndex = 2;
             // 
             // tabPageEvents
@@ -846,7 +980,7 @@
             this.tabPageEvents.Location = new System.Drawing.Point(4, 22);
             this.tabPageEvents.Name = "tabPageEvents";
             this.tabPageEvents.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEvents.Size = new System.Drawing.Size(444, 295);
+            this.tabPageEvents.Size = new System.Drawing.Size(712, 295);
             this.tabPageEvents.TabIndex = 0;
             this.tabPageEvents.Text = "Events";
             this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -870,7 +1004,7 @@
             this.dataGridViewFriendOverviewEvents.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewFriendOverviewEvents.Name = "dataGridViewFriendOverviewEvents";
             this.dataGridViewFriendOverviewEvents.ReadOnly = true;
-            this.dataGridViewFriendOverviewEvents.Size = new System.Drawing.Size(438, 289);
+            this.dataGridViewFriendOverviewEvents.Size = new System.Drawing.Size(706, 289);
             this.dataGridViewFriendOverviewEvents.TabIndex = 0;
             // 
             // ownerDataGridViewTextBoxColumn
@@ -945,10 +1079,8 @@
             this.dataGridViewFriendOvervieCheckins.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFriendOvervieCheckins.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameDataGridViewTextBoxColumn3,
-            this.captionDataGridViewTextBoxColumn,
-            this.descriptionDataGridViewTextBoxColumn2,
-            this.placeDataGridViewTextBoxColumn1,
-            this.fromDataGridViewTextBoxColumn,
+            this.Column1,
+            this.dataGridViewTextBoxColumn3,
             this.createdTimeDataGridViewTextBoxColumn});
             this.dataGridViewFriendOvervieCheckins.DataSource = this.bindingSourceFriendOverviewCheckins;
             this.dataGridViewFriendOvervieCheckins.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -965,33 +1097,19 @@
             this.nameDataGridViewTextBoxColumn3.Name = "nameDataGridViewTextBoxColumn3";
             this.nameDataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // captionDataGridViewTextBoxColumn
+            // Column1
             // 
-            this.captionDataGridViewTextBoxColumn.DataPropertyName = "Caption";
-            this.captionDataGridViewTextBoxColumn.HeaderText = "Caption";
-            this.captionDataGridViewTextBoxColumn.Name = "captionDataGridViewTextBoxColumn";
-            this.captionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Column1.DataPropertyName = "Message";
+            this.Column1.HeaderText = "Message";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
-            // descriptionDataGridViewTextBoxColumn2
+            // dataGridViewTextBoxColumn3
             // 
-            this.descriptionDataGridViewTextBoxColumn2.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn2.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn2.Name = "descriptionDataGridViewTextBoxColumn2";
-            this.descriptionDataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // placeDataGridViewTextBoxColumn1
-            // 
-            this.placeDataGridViewTextBoxColumn1.DataPropertyName = "Place";
-            this.placeDataGridViewTextBoxColumn1.HeaderText = "Place";
-            this.placeDataGridViewTextBoxColumn1.Name = "placeDataGridViewTextBoxColumn1";
-            this.placeDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // fromDataGridViewTextBoxColumn
-            // 
-            this.fromDataGridViewTextBoxColumn.DataPropertyName = "From";
-            this.fromDataGridViewTextBoxColumn.HeaderText = "From";
-            this.fromDataGridViewTextBoxColumn.Name = "fromDataGridViewTextBoxColumn";
-            this.fromDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Link";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Link";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // createdTimeDataGridViewTextBoxColumn
             // 
@@ -1014,6 +1132,57 @@
             this.tabPagePosts.Text = "Posts";
             this.tabPagePosts.UseVisualStyleBackColor = true;
             // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.AutoGenerateColumns = false;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn4,
+            this.Message,
+            this.dataGridViewTextBoxColumn2,
+            this.createdTimeDataGridViewTextBoxColumn1});
+            this.dataGridView3.DataSource = this.bindingSourceFriendOverviewPosts;
+            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.Size = new System.Drawing.Size(444, 295);
+            this.dataGridView3.TabIndex = 0;
+            // 
+            // nameDataGridViewTextBoxColumn4
+            // 
+            this.nameDataGridViewTextBoxColumn4.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn4.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn4.Name = "nameDataGridViewTextBoxColumn4";
+            this.nameDataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // Message
+            // 
+            this.Message.DataPropertyName = "Message";
+            this.Message.HeaderText = "Message";
+            this.Message.Name = "Message";
+            this.Message.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Link";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Link";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // createdTimeDataGridViewTextBoxColumn1
+            // 
+            this.createdTimeDataGridViewTextBoxColumn1.DataPropertyName = "CreatedTime";
+            this.createdTimeDataGridViewTextBoxColumn1.HeaderText = "CreatedTime";
+            this.createdTimeDataGridViewTextBoxColumn1.Name = "createdTimeDataGridViewTextBoxColumn1";
+            this.createdTimeDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // bindingSourceFriendOverviewPosts
+            // 
+            this.bindingSourceFriendOverviewPosts.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
+            // 
             // tabPageGroups
             // 
             this.tabPageGroups.Controls.Add(this.dataGridView4);
@@ -1023,6 +1192,57 @@
             this.tabPageGroups.TabIndex = 3;
             this.tabPageGroups.Text = "Groups";
             this.tabPageGroups.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.AllowUserToAddRows = false;
+            this.dataGridView4.AllowUserToDeleteRows = false;
+            this.dataGridView4.AutoGenerateColumns = false;
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn5,
+            this.descriptionDataGridViewTextBoxColumn4,
+            this.privacyDataGridViewTextBoxColumn,
+            this.ownerDataGridViewTextBoxColumn1});
+            this.dataGridView4.DataSource = this.bindingSourceFriendOverviewGroups;
+            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.ReadOnly = true;
+            this.dataGridView4.Size = new System.Drawing.Size(444, 295);
+            this.dataGridView4.TabIndex = 0;
+            // 
+            // nameDataGridViewTextBoxColumn5
+            // 
+            this.nameDataGridViewTextBoxColumn5.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn5.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn5.Name = "nameDataGridViewTextBoxColumn5";
+            this.nameDataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // descriptionDataGridViewTextBoxColumn4
+            // 
+            this.descriptionDataGridViewTextBoxColumn4.DataPropertyName = "Description";
+            this.descriptionDataGridViewTextBoxColumn4.HeaderText = "Description";
+            this.descriptionDataGridViewTextBoxColumn4.Name = "descriptionDataGridViewTextBoxColumn4";
+            this.descriptionDataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // privacyDataGridViewTextBoxColumn
+            // 
+            this.privacyDataGridViewTextBoxColumn.DataPropertyName = "Privacy";
+            this.privacyDataGridViewTextBoxColumn.HeaderText = "Privacy";
+            this.privacyDataGridViewTextBoxColumn.Name = "privacyDataGridViewTextBoxColumn";
+            this.privacyDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ownerDataGridViewTextBoxColumn1
+            // 
+            this.ownerDataGridViewTextBoxColumn1.DataPropertyName = "Owner";
+            this.ownerDataGridViewTextBoxColumn1.HeaderText = "Owner";
+            this.ownerDataGridViewTextBoxColumn1.Name = "ownerDataGridViewTextBoxColumn1";
+            this.ownerDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // bindingSourceFriendOverviewGroups
+            // 
+            this.bindingSourceFriendOverviewGroups.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
             // 
             // label3
             // 
@@ -1042,7 +1262,6 @@
             this.comboBoxChooseAFriend.Name = "comboBoxChooseAFriend";
             this.comboBoxChooseAFriend.Size = new System.Drawing.Size(209, 21);
             this.comboBoxChooseAFriend.TabIndex = 0;
-            this.comboBoxChooseAFriend.Text = "Choose a friend to overview";
             this.comboBoxChooseAFriend.SelectedIndexChanged += new System.EventHandler(this.comboBoxChooseAFriend_SelectedIndexChanged);
             this.comboBoxChooseAFriend.TextChanged += new System.EventHandler(this.comboBoxChooseAFriend_TextChanged);
             // 
@@ -1193,16 +1412,6 @@
             this.bindingNavigatorPictures.TabIndex = 11;
             this.bindingNavigatorPictures.Text = "bindingNavigatorPictures";
             // 
-            // bindingSourcePictures
-            // 
-            this.bindingSourcePictures.DataMember = "Photos";
-            this.bindingSourcePictures.DataSource = this.bindingSourceAlbums;
-            this.bindingSourcePictures.CurrentChanged += new System.EventHandler(this.bindingSourcePictures_CurrentChanged);
-            // 
-            // bindingSourceAlbums
-            // 
-            this.bindingSourceAlbums.DataSource = typeof(FacebookWrapper.ObjectModel.Album);
-            // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
@@ -1340,273 +1549,102 @@
             this.comboBoxAlbums.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAlbums.TabIndex = 0;
             // 
-            // bindingSourceFriendOverviewPosts
+            // commentsBindingSource
             // 
-            this.bindingSourceFriendOverviewPosts.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
+            this.commentsBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Comment);
             // 
-            // dataGridView3
+            // likedByBindingSource
             // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.AutoGenerateColumns = false;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn4,
-            this.captionDataGridViewTextBoxColumn1,
-            this.descriptionDataGridViewTextBoxColumn3,
-            this.placeDataGridViewTextBoxColumn2,
-            this.fromDataGridViewTextBoxColumn1,
-            this.createdTimeDataGridViewTextBoxColumn1});
-            this.dataGridView3.DataSource = this.bindingSourceFriendOverviewPosts;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(444, 295);
-            this.dataGridView3.TabIndex = 0;
+            this.likedByBindingSource.DataMember = "LikedBy";
+            this.likedByBindingSource.DataSource = this.bindingSourcePictures;
             // 
-            // nameDataGridViewTextBoxColumn4
+            // educationsBindingSource
             // 
-            this.nameDataGridViewTextBoxColumn4.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn4.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn4.Name = "nameDataGridViewTextBoxColumn4";
-            this.nameDataGridViewTextBoxColumn4.ReadOnly = true;
+            this.educationsBindingSource.DataMember = "Educations";
+            this.educationsBindingSource.DataSource = this.bindingSourceFriendOverviewPersonalInfo;
             // 
-            // captionDataGridViewTextBoxColumn1
+            // progressBarFriendshipStrength
             // 
-            this.captionDataGridViewTextBoxColumn1.DataPropertyName = "Caption";
-            this.captionDataGridViewTextBoxColumn1.HeaderText = "Caption";
-            this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
-            this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.progressBarFriendshipStrength.Location = new System.Drawing.Point(8, 180);
+            this.progressBarFriendshipStrength.Minimum = 10;
+            this.progressBarFriendshipStrength.Name = "progressBarFriendshipStrength";
+            this.progressBarFriendshipStrength.Size = new System.Drawing.Size(318, 23);
+            this.progressBarFriendshipStrength.Step = 5;
+            this.progressBarFriendshipStrength.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBarFriendshipStrength.TabIndex = 34;
+            this.progressBarFriendshipStrength.Value = 15;
             // 
-            // descriptionDataGridViewTextBoxColumn3
+            // panel1
             // 
-            this.descriptionDataGridViewTextBoxColumn3.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn3.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn3.Name = "descriptionDataGridViewTextBoxColumn3";
-            this.descriptionDataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // placeDataGridViewTextBoxColumn2
-            // 
-            this.placeDataGridViewTextBoxColumn2.DataPropertyName = "Place";
-            this.placeDataGridViewTextBoxColumn2.HeaderText = "Place";
-            this.placeDataGridViewTextBoxColumn2.Name = "placeDataGridViewTextBoxColumn2";
-            this.placeDataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // fromDataGridViewTextBoxColumn1
-            // 
-            this.fromDataGridViewTextBoxColumn1.DataPropertyName = "From";
-            this.fromDataGridViewTextBoxColumn1.HeaderText = "From";
-            this.fromDataGridViewTextBoxColumn1.Name = "fromDataGridViewTextBoxColumn1";
-            this.fromDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // createdTimeDataGridViewTextBoxColumn1
-            // 
-            this.createdTimeDataGridViewTextBoxColumn1.DataPropertyName = "CreatedTime";
-            this.createdTimeDataGridViewTextBoxColumn1.HeaderText = "CreatedTime";
-            this.createdTimeDataGridViewTextBoxColumn1.Name = "createdTimeDataGridViewTextBoxColumn1";
-            this.createdTimeDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // bindingSourceFriendOverviewGroups
-            // 
-            this.bindingSourceFriendOverviewGroups.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.AllowUserToAddRows = false;
-            this.dataGridView4.AllowUserToDeleteRows = false;
-            this.dataGridView4.AutoGenerateColumns = false;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn5,
-            this.descriptionDataGridViewTextBoxColumn4,
-            this.privacyDataGridViewTextBoxColumn,
-            this.ownerDataGridViewTextBoxColumn1});
-            this.dataGridView4.DataSource = this.bindingSourceFriendOverviewGroups;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(444, 295);
-            this.dataGridView4.TabIndex = 0;
-            // 
-            // nameDataGridViewTextBoxColumn5
-            // 
-            this.nameDataGridViewTextBoxColumn5.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn5.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn5.Name = "nameDataGridViewTextBoxColumn5";
-            this.nameDataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // descriptionDataGridViewTextBoxColumn4
-            // 
-            this.descriptionDataGridViewTextBoxColumn4.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn4.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn4.Name = "descriptionDataGridViewTextBoxColumn4";
-            this.descriptionDataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // privacyDataGridViewTextBoxColumn
-            // 
-            this.privacyDataGridViewTextBoxColumn.DataPropertyName = "Privacy";
-            this.privacyDataGridViewTextBoxColumn.HeaderText = "Privacy";
-            this.privacyDataGridViewTextBoxColumn.Name = "privacyDataGridViewTextBoxColumn";
-            this.privacyDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ownerDataGridViewTextBoxColumn1
-            // 
-            this.ownerDataGridViewTextBoxColumn1.DataPropertyName = "Owner";
-            this.ownerDataGridViewTextBoxColumn1.HeaderText = "Owner";
-            this.ownerDataGridViewTextBoxColumn1.Name = "ownerDataGridViewTextBoxColumn1";
-            this.ownerDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // bindingSourceFriendOverviewPersonalInfo
-            // 
-            this.bindingSourceFriendOverviewPersonalInfo.DataSource = typeof(FacebookWrapper.ObjectModel.User);
-            // 
-            // aboutLabel
-            // 
-            aboutLabel.AutoSize = true;
-            aboutLabel.Location = new System.Drawing.Point(28, 15);
-            aboutLabel.Name = "aboutLabel";
-            aboutLabel.Size = new System.Drawing.Size(38, 13);
-            aboutLabel.TabIndex = 0;
-            aboutLabel.Text = "About:";
-            // 
-            // aboutTextBox
-            // 
-            this.aboutTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceFriendOverviewPersonalInfo, "About", true));
-            this.aboutTextBox.Location = new System.Drawing.Point(112, 12);
-            this.aboutTextBox.Name = "aboutTextBox";
-            this.aboutTextBox.Size = new System.Drawing.Size(100, 20);
-            this.aboutTextBox.TabIndex = 1;
-            // 
-            // birthdayLabel2
-            // 
-            birthdayLabel2.AutoSize = true;
-            birthdayLabel2.Location = new System.Drawing.Point(31, 54);
-            birthdayLabel2.Name = "birthdayLabel2";
-            birthdayLabel2.Size = new System.Drawing.Size(48, 13);
-            birthdayLabel2.TabIndex = 2;
-            birthdayLabel2.Text = "Birthday:";
-            // 
-            // birthdayLabel3
-            // 
-            this.birthdayLabel3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceFriendOverviewPersonalInfo, "Birthday", true));
-            this.birthdayLabel3.Location = new System.Drawing.Point(112, 54);
-            this.birthdayLabel3.Name = "birthdayLabel3";
-            this.birthdayLabel3.Size = new System.Drawing.Size(100, 23);
-            this.birthdayLabel3.TabIndex = 3;
-            this.birthdayLabel3.Text = "label4";
-            // 
-            // emailLabel2
-            // 
-            emailLabel2.AutoSize = true;
-            emailLabel2.Location = new System.Drawing.Point(31, 77);
-            emailLabel2.Name = "emailLabel2";
-            emailLabel2.Size = new System.Drawing.Size(35, 13);
-            emailLabel2.TabIndex = 4;
-            emailLabel2.Text = "Email:";
-            // 
-            // emailLabel3
-            // 
-            this.emailLabel3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceFriendOverviewPersonalInfo, "Email", true));
-            this.emailLabel3.Location = new System.Drawing.Point(112, 77);
-            this.emailLabel3.Name = "emailLabel3";
-            this.emailLabel3.Size = new System.Drawing.Size(100, 23);
-            this.emailLabel3.TabIndex = 5;
-            this.emailLabel3.Text = "label4";
-            // 
-            // imageNormalPictureBox1
-            // 
-            this.imageNormalPictureBox1.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bindingSourceFriendOverviewPersonalInfo, "ImageNormal", true));
-            this.imageNormalPictureBox1.Location = new System.Drawing.Point(222, 12);
-            this.imageNormalPictureBox1.Name = "imageNormalPictureBox1";
-            this.imageNormalPictureBox1.Size = new System.Drawing.Size(100, 66);
-            this.imageNormalPictureBox1.TabIndex = 7;
-            this.imageNormalPictureBox1.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 361);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Mutual Pictures";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(11, 377);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(320, 288);
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
+            this.panel1.Controls.Add(createdTimeLabel1);
+            this.panel1.Controls.Add(this.createdTimeDateTimePicker1);
+            this.panel1.Controls.Add(nameLabel);
+            this.panel1.Controls.Add(this.nameTextBox);
+            this.panel1.Location = new System.Drawing.Point(179, 368);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(374, 122);
+            this.panel1.TabIndex = 35;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(450, 486);
+            this.label5.Location = new System.Drawing.Point(102, 164);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(10, 13);
-            this.label5.TabIndex = 26;
-            this.label5.Text = "-";
+            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.TabIndex = 36;
+            this.label5.Text = "Friendship meter";
             // 
-            // label6
+            // labelUploadMutualPic
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label6.Location = new System.Drawing.Point(357, 486);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
-            this.label6.TabIndex = 25;
-            this.label6.Text = "Post Date:";
+            this.labelUploadMutualPic.AutoSize = true;
+            this.labelUploadMutualPic.Location = new System.Drawing.Point(815, 368);
+            this.labelUploadMutualPic.Name = "labelUploadMutualPic";
+            this.labelUploadMutualPic.Size = new System.Drawing.Size(162, 13);
+            this.labelUploadMutualPic.TabIndex = 37;
+            this.labelUploadMutualPic.Text = "Upload a picture with your friend!";
             // 
-            // label7
+            // labelFriendActivity
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label7.Location = new System.Drawing.Point(357, 377);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(139, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "Current Picture Details:";
+            this.labelFriendActivity.AutoSize = true;
+            this.labelFriendActivity.Location = new System.Drawing.Point(340, 21);
+            this.labelFriendActivity.Name = "labelFriendActivity";
+            this.labelFriendActivity.Size = new System.Drawing.Size(97, 13);
+            this.labelFriendActivity.TabIndex = 38;
+            this.labelFriendActivity.Text = "Your friend activity:";
             // 
-            // label8
+            // createdTimeLabel1
             // 
-            this.label8.AutoEllipsis = true;
-            this.label8.Location = new System.Drawing.Point(450, 404);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(371, 48);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "-";
+            createdTimeLabel1.AutoSize = true;
+            createdTimeLabel1.Location = new System.Drawing.Point(3, 20);
+            createdTimeLabel1.Name = "createdTimeLabel1";
+            createdTimeLabel1.Size = new System.Drawing.Size(73, 13);
+            createdTimeLabel1.TabIndex = 0;
+            createdTimeLabel1.Text = "Created Time:";
             // 
-            // label9
+            // createdTimeDateTimePicker1
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label9.Location = new System.Drawing.Point(357, 404);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(87, 13);
-            this.label9.TabIndex = 22;
-            this.label9.Text = "Picture Name:";
+            this.createdTimeDateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSourcePictures, "CreatedTime", true));
+            this.createdTimeDateTimePicker1.Location = new System.Drawing.Point(82, 16);
+            this.createdTimeDateTimePicker1.Name = "createdTimeDateTimePicker1";
+            this.createdTimeDateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.createdTimeDateTimePicker1.TabIndex = 1;
             // 
-            // label10
+            // nameLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label10.Location = new System.Drawing.Point(357, 463);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
-            this.label10.TabIndex = 21;
-            this.label10.Text = "Likes:";
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new System.Drawing.Point(3, 45);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new System.Drawing.Size(38, 13);
+            nameLabel.TabIndex = 2;
+            nameLabel.Text = "Name:";
             // 
-            // label11
+            // nameTextBox
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(450, 463);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(10, 13);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "-";
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourcePictures, "Name", true));
+            this.nameTextBox.Location = new System.Drawing.Point(82, 42);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(200, 20);
+            this.nameTextBox.TabIndex = 3;
             // 
             // FacebookApp
             // 
@@ -1639,8 +1677,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).EndInit();
             this.tabPageFriendOverview.ResumeLayout(false);
             this.tabPageFriendOverview.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePictures)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMutualPictureToUpload)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelFriendProfileData.ResumeLayout(false);
             this.panelFriendProfileData.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPersonalInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox1)).EndInit();
             this.tabControlSubFriendOverview.ResumeLayout(false);
             this.tabPageEvents.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFriendOverviewEvents)).EndInit();
@@ -1649,25 +1693,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFriendOvervieCheckins)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewCheckins)).EndInit();
             this.tabPagePosts.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPosts)).EndInit();
             this.tabPageGroups.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewGroups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverview)).EndInit();
             this.tabPageAlbums.ResumeLayout(false);
             this.tabPageAlbums.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPictures)).EndInit();
             this.bindingNavigatorPictures.ResumeLayout(false);
             this.bindingNavigatorPictures.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePictures)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceAlbums)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPosts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewGroups)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewPersonalInfo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewMutualPictures)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.likedByBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.educationsBindingSource)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -1758,7 +1802,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPagePosts;
         private System.Windows.Forms.TabPage tabPageGroups;
-        private System.Windows.Forms.ComboBox comboBoxChooseAFriend;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverview;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewEvents;
         private System.Windows.Forms.DataGridView dataGridViewFriendOverviewEvents;
@@ -1771,20 +1814,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn linkToFacebookDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewCheckins;
         private System.Windows.Forms.DataGridView dataGridViewFriendOvervieCheckins;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn captionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn placeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fromDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn createdTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewPosts;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn captionDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn placeDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fromDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn createdTimeDataGridViewTextBoxColumn1;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewGroups;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn5;
@@ -1792,19 +1823,35 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn privacyDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ownerDataGridViewTextBoxColumn1;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewPersonalInfo;
-        private System.Windows.Forms.TextBox aboutTextBox;
         private System.Windows.Forms.Label birthdayLabel3;
         private System.Windows.Forms.Label emailLabel3;
         private System.Windows.Forms.PictureBox imageNormalPictureBox1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelMutualPictures;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.BindingSource bindingSourceFriendOverviewMutualPictures;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Message;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createdTimeDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createdTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ComboBox comboBoxChooseAFriend;
+        private System.Windows.Forms.Button buttonBrowseAPicture;
+        private System.Windows.Forms.PictureBox pictureBoxMutualPictureToUpload;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBoxMutualPicToUploadTitle;
+        private System.Windows.Forms.Button buttonUplaodMutualPic;
+        private System.Windows.Forms.ProgressBar progressBarFriendshipStrength;
+        private System.Windows.Forms.BindingSource likedByBindingSource;
+        private System.Windows.Forms.BindingSource commentsBindingSource;
+        private System.Windows.Forms.BindingSource educationsBindingSource;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label labelUploadMutualPic;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label labelFriendActivity;
+        private System.Windows.Forms.DateTimePicker createdTimeDateTimePicker1;
+        private System.Windows.Forms.TextBox nameTextBox;
     }
 }

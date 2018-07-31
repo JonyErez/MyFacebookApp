@@ -37,6 +37,7 @@ namespace MyFacebookApp
 			{
 				FormLogin login = new FormLogin();
 				DialogResult loginResult = login.ShowDialog();
+
 				if (loginResult == DialogResult.OK)
 				{
 					m_RememberUser = false;
@@ -229,31 +230,51 @@ namespace MyFacebookApp
         private void populateTabFriendOverview()
         {
             bindingSourceFriendOverview.DataSource = m_LoggedInUser.Friends;
+            comboBoxChooseAFriend.SelectedText = "Choose a friend to overview";
+            
         }
 
         private void comboBoxChooseAFriend_SelectedIndexChanged(object sender, EventArgs e)
         {
             User selectedFriend = comboBoxChooseAFriend.SelectedItem as User;
 
-            populatePersonalInfo(selectedFriend);
-          //  populateMutualPictures(selectedFriend);
-            populateSubTabFriendEvents(selectedFriend);
-            populateSubTabFriendCheckins(selectedFriend);
-            populateSubTabFriendPosts(selectedFriend);
-            populateSubTabFriendGroups(selectedFriend);
+            if (selectedFriend != null)
+            {
+                populateTitles(selectedFriend);
+                populatePersonalInfo(selectedFriend);
+                populateMutualPictures(selectedFriend);
+                populateSubTabFriendEvents(selectedFriend);
+                populateSubTabFriendCheckins(selectedFriend);
+                populateSubTabFriendPosts(selectedFriend);
+                populateSubTabFriendGroups(selectedFriend);
+            }
         }
 
-        //private void populateMutualPictures(User i_selectedFriend)
-        //{
-        //    bindingSourceFriendOverviewMutualPictures.Clear();
+        private void populateTitles(User i_selectedFriend)
+        {
+            String title = String.Format("{0} activity:", i_selectedFriend.Name);
+            labelFriendActivity.Text = title;
 
-        //    Type enumOfTypes = null;
-        //    PicturesColleciton mutualPicturesData = new PicturesColleciton(i_selectedFriend, enumOfTypes, true);
-        //  //  bindingSourceFriendOverviewMutualPictures.DataSource = i_selectedFriend.Pictures;
-            
-            
-            
-        //}
+            title = String.Format("Upload a picture with {0}!", i_selectedFriend.FirstName);
+            labelUploadMutualPic.Text = title;
+
+            title = String.Format("Pictures of you and {0}:", i_selectedFriend.FirstName);
+            labelMutualPictures.Text = title;
+        }
+
+        private void populateMutualPictures(User i_selectedFriend)
+        {
+            bindingSourceFriendOverviewMutualPictures.Clear();
+
+            foreach(Photo photo in i_selectedFriend.PhotosTaggedIn)
+            {
+                if (m_LoggedInUser.PhotosTaggedIn.Contains(photo))
+                {
+                    bindingSourceFriendOverviewMutualPictures.Add(photo);
+                    progressBarFriendshipStrength.PerformStep();
+                }
+            }
+        }
 
         private void populatePersonalInfo(User i_selectedFriend)
         {
@@ -277,9 +298,13 @@ namespace MyFacebookApp
         {
             bindingSourceFriendOverviewCheckins.Clear();
 
-            if (i_selectedFriend.Checkins != null) // TODO: throws an exception at the end of the program
+            try
             {
                 bindingSourceFriendOverviewCheckins.DataSource = i_selectedFriend.Checkins;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Coudn't fetch your friend checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -294,7 +319,7 @@ namespace MyFacebookApp
             catch (Exception ex)
             {
                 //Always throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
-                MessageBox.Show("Couldn't fetch user events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Couldn't fetch your friend events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -308,6 +333,40 @@ namespace MyFacebookApp
             else
             {
                 comboBoxChooseAFriend.Text = comboBoxChooseAFriend.SelectedText;
+            }
+        }
+
+        private void buttonUplaodMutualPic_Click(object sender, EventArgs e)
+        {// TODO: add a tag of both logged in and friend
+            // always will fail because publish_actions permissions doesnt work
+            try
+            {
+                m_LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text, null, null);
+                bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't upload your picture :(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonBrowseAPicture_Click_1(object sender, EventArgs e)
+        {
+            OpenFileDialog pictureBrowse = new OpenFileDialog();
+
+            pictureBrowse.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png";
+
+            try
+            {
+                if (pictureBrowse.ShowDialog() == DialogResult.OK)
+                {
+                    string picturePath = pictureBrowse.FileName;
+                    pictureBoxMutualPictureToUpload.ImageLocation = picturePath;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't load image!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

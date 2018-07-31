@@ -96,9 +96,34 @@
       </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="Languages" Version="1.0">
          <TypeInfo>FacebookWrapper.ObjectModel.Page, FbGraphApiWrapper, Version=6.8.0.17, Culture=neutral, PublicKeyToken=null</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="User.Educations.Degree">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows.Forms:Form">
+                        <BindableControlInfo Name="[None]" Type="Microsoft.VSDesigner.Data.BindManager.NoneControlPlaceHolder" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
       </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="WorkExperiences" Version="1.0">
          <TypeInfo>FacebookWrapper.ObjectModel.WorkExperience, FbGraphApiWrapper, Version=6.8.0.17, Culture=neutral, PublicKeyToken=null</TypeInfo>
+      </GenericObjectDataSource>
+      <GenericObjectDataSource DisplayName="Educations" Version="1.0">
+         <TypeInfo>FacebookWrapper.ObjectModel.Education, FbGraphApiWrapper, Version=6.8.0.17, Culture=neutral, PublicKeyToken=null</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="Id">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows.Forms:Form">
+                        <BindableControlInfo Name="[None]" Type="Microsoft.VSDesigner.Data.BindManager.NoneControlPlaceHolder" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
       </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="Albums" Version="1.0">
          <TypeInfo>FacebookWrapper.ObjectModel.Album, FbGraphApiWrapper, Version=6.8.0.17, Culture=neutral, PublicKeyToken=null</TypeInfo>
