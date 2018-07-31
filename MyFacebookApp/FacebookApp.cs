@@ -61,12 +61,16 @@ namespace MyFacebookApp
 
         private void fetchUserInfo()
         {
-            Text = "Welcome " + m_LoggedInUser.FirstName + " " + m_LoggedInUser.LastName + "!";
+            Text = "FB Keep Up"; // App name
+            labelWelcomeUser.Text = String.Format("Hello {0} !", m_LoggedInUser.Name);
             pictureBoxProfilePicture.LoadAsync(m_LoggedInUser.PictureNormalURL);
+            pictureBoxProfilePicture.BringToFront();
+
             if (m_LoggedInUser.Cover?.SourceURL != null)
             {
                 pictureBoxCover.LoadAsync(m_LoggedInUser.Cover.SourceURL);
-            }
+            }          
+
             populateFields();
         }
 
@@ -78,9 +82,7 @@ namespace MyFacebookApp
             populateWallPosts();
             populateFriendList();
             populateLikedPages();
-            ////////////
         }
-
 
 
         private void populateLikedPages()
@@ -112,11 +114,14 @@ namespace MyFacebookApp
             foreach (User friend in m_LoggedInUser.Friends)
             {
                 string formattedBirthday = friend.Birthday;
+
                 if (formattedBirthday.Length <= 5)
                 {
                     formattedBirthday += "/" + DateTime.Now.Year;
                 }
+
                 DateTime.TryParseExact(formattedBirthday, "MM/dd/yyyy", new DateTimeFormatInfo(), DateTimeStyles.AdjustToUniversal, out DateTime birthday);
+
                 if (birthday != null)
                 {
                     birthday.AddYears(DateTime.Now.Year - birthday.Year);
@@ -283,6 +288,9 @@ namespace MyFacebookApp
         {
             bindingSourceFriendOverviewPersonalInfo.Clear();
             bindingSourceFriendOverviewPersonalInfo.DataSource = m_CurrentOverviewedFriend;
+            labelNumberOfFriends.Text = m_CurrentOverviewedFriend.Friends.Count.ToString();
+            labelRelationshipStatus.Text = m_CurrentOverviewedFriend.RelationshipStatus.ToString();
+            labelOnlineStatus.Text = m_CurrentOverviewedFriend.OnlineStatus.ToString();
         }
 
         private void populateSubTabFriendGroups()

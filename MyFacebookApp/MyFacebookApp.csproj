@@ -102,5 +102,11 @@
   <ItemGroup>
     <None Include="Resources\facebookBanner.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\None.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\none.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
