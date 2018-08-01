@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -13,7 +7,7 @@ namespace MyFacebookApp
 {
 	public partial class FormLogin : Form
 	{
-        private LoginResult m_LoginResult;
+		private LoginResult m_LoginResult;
 
 		public User LoggedInUser
 		{
@@ -30,38 +24,23 @@ namespace MyFacebookApp
 			InitializeComponent();
 		}
 
-		private void buttonLogin_Click(object sender, EventArgs e)
+		private void buttonLogin_Click(object i_Sender, EventArgs i_EventArgs)
 		{
 			onButtonLoginClicked();
-        }
+		}
 
 		private void onButtonLoginClicked()
 		{
-			m_LoginResult = FacebookService.Login("419878648523017", 
-				"public_profile", 
-				"email", 
-				"user_friends", 
-				"user_photos", 
-				"user_birthday", 
-				"user_likes", 
-				"manage_pages", 
-				"user_events", 
-				"user_hometown", 
-				"user_posts", 
-				"user_tagged_places", 
-				"user_location", 
-				"user_tagged_places");
-
-
+			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "user_events", "user_hometown", "user_posts", "user_tagged_places", "user_location");
 			if (!string.IsNullOrEmpty(m_LoginResult.AccessToken))
 			{
-				this.DialogResult = DialogResult.OK;
-                this.Close();
+				DialogResult = DialogResult.OK;
+				Close();
 			}
 			else
 			{
 				MessageBox.Show(m_LoginResult.ErrorMessage);
 			}
 		}
-    }
+	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace MyFacebookApp
 {
-	partial class FormLogin
+	public partial class FormLogin
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -17,6 +17,7 @@
 			{
 				components.Dispose();
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -51,7 +52,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Login";
 			this.ResumeLayout(false);
-
 		}
 
 		#endregion
@@ -59,4 +59,3 @@
 		private System.Windows.Forms.Button buttonLogin;
 	}
 }
-
