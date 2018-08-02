@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
+using MyFacebookApp.Properties;
 
 namespace MyFacebookApp
 {
@@ -22,9 +24,11 @@ namespace MyFacebookApp
 		public FormLogin()
 		{
 			InitializeComponent();
-		}
+            setFBAppIcon();
 
-		private void buttonLogin_Click(object i_Sender, EventArgs i_EventArgs)
+        }
+
+        private void buttonLogin_Click(object i_Sender, EventArgs i_EventArgs)
 		{
 			onButtonLoginClicked();
 		}
@@ -42,5 +46,14 @@ namespace MyFacebookApp
 				MessageBox.Show(Result.ErrorMessage);
 			}
 		}
-	}
+
+        private void setFBAppIcon()
+        {
+            Bitmap bitIcon = (Bitmap)Resources.FBicon;
+            IntPtr pIcon = bitIcon.GetHicon();
+            Icon iconFrom = Icon.FromHandle(pIcon);
+            this.Icon = iconFrom;
+        }
+
+    }
 }
