@@ -367,7 +367,7 @@ namespace MyFacebookApp
             }
         }
 
-        private void buttonBrowseAPicture_Click_1(object i_Sender, EventArgs i_EventArgs)
+        private void buttonBrowseAPicture_Click(object i_Sender, EventArgs i_EventArgs)
         {
 			OpenFileDialog pictureBrowse = new OpenFileDialog
 			{

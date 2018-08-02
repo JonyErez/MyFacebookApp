@@ -1342,7 +1342,7 @@
 			this.buttonBrowseAPicture.TabIndex = 27;
 			this.buttonBrowseAPicture.Text = "Browse a picture";
 			this.buttonBrowseAPicture.UseVisualStyleBackColor = false;
-			this.buttonBrowseAPicture.Click += new System.EventHandler(this.buttonBrowseAPicture_Click_1);
+			this.buttonBrowseAPicture.Click += new System.EventHandler(this.buttonBrowseAPicture_Click);
 			// 
 			// pictureBoxMutualPictures
 			// 
