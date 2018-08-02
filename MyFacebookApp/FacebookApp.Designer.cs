@@ -1322,7 +1322,7 @@
 			// 
 			// pictureBoxMutualPictureToUpload
 			// 
-			this.pictureBoxMutualPictureToUpload.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pictureBoxMutualPictureToUpload.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBoxMutualPictureToUpload.Location = new System.Drawing.Point(819, 533);
 			this.pictureBoxMutualPictureToUpload.Name = "pictureBoxMutualPictureToUpload";
 			this.pictureBoxMutualPictureToUpload.Size = new System.Drawing.Size(140, 126);
@@ -1902,6 +1902,7 @@
 			// 
 			// panelStatisticsPosts
 			// 
+			this.panelStatisticsPosts.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panelStatisticsPosts.Controls.Add(this.labelStatisticsPostsMostLikes);
 			this.panelStatisticsPosts.Controls.Add(this.label39);
 			this.panelStatisticsPosts.Controls.Add(this.richTextBoxMostLikedPost);
@@ -2118,6 +2119,7 @@
 			// panelStatisticsGeneral
 			// 
 			this.panelStatisticsGeneral.BackColor = System.Drawing.Color.Transparent;
+			this.panelStatisticsGeneral.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panelStatisticsGeneral.Controls.Add(this.labelStatisticsGeneralPosts);
 			this.panelStatisticsGeneral.Controls.Add(this.label26);
 			this.panelStatisticsGeneral.Controls.Add(this.labelStatisticsGeneralGroups);
@@ -2246,6 +2248,7 @@
 			// 
 			// panelStatisticsPhotos
 			// 
+			this.panelStatisticsPhotos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panelStatisticsPhotos.Controls.Add(this.labelStatisticsUploadedAlbums);
 			this.panelStatisticsPhotos.Controls.Add(this.label21);
 			this.panelStatisticsPhotos.Controls.Add(this.labelMostMutualPhotosWithCount);
@@ -2463,10 +2466,10 @@
 			// 
 			// buttonCalculateStatistics
 			// 
-			this.buttonCalculateStatistics.BackColor = System.Drawing.Color.LimeGreen;
+			this.buttonCalculateStatistics.BackColor = System.Drawing.Color.SteelBlue;
 			this.buttonCalculateStatistics.Dock = System.Windows.Forms.DockStyle.Top;
 			this.buttonCalculateStatistics.FlatAppearance.BorderSize = 0;
-			this.buttonCalculateStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonCalculateStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.buttonCalculateStatistics.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.buttonCalculateStatistics.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.buttonCalculateStatistics.Location = new System.Drawing.Point(3, 3);
@@ -2689,7 +2692,7 @@
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBox1.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bindingSourcePictures, "ImageNormal", true));
 			this.pictureBox1.Location = new System.Drawing.Point(14, 234);
 			this.pictureBox1.Name = "pictureBox1";
@@ -2728,7 +2731,7 @@
 			// 
 			// imageAlbumPictureBox
 			// 
-			this.imageAlbumPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.imageAlbumPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.imageAlbumPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bindingSourceAlbums, "ImageAlbum", true));
 			this.imageAlbumPictureBox.Location = new System.Drawing.Point(397, 23);
 			this.imageAlbumPictureBox.Name = "imageAlbumPictureBox";
