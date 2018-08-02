@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -27,17 +26,17 @@ namespace MyFacebookApp
         public FacebookApp()
         {
             InitializeComponent();
-            // set Icon
-            setFBAppIcon();
 
+            // Set Icon
+            setFacebookAppIcon();
         }
 
-        private void setFBAppIcon()
+        private void setFacebookAppIcon()
         {
-            Bitmap bitIcon = (Bitmap)Resources.FBicon;
+            Bitmap bitIcon = Resources.FBicon;
             IntPtr pIcon = bitIcon.GetHicon();
             Icon iconFrom = Icon.FromHandle(pIcon);
-            this.Icon = iconFrom;
+            Icon = iconFrom;
         }
 
         private void facebookApp_Load(object i_Sender, EventArgs i_EventArgs)
@@ -79,7 +78,7 @@ namespace MyFacebookApp
             }
             else
             {
-                pictureBoxCover.Image = Properties.Resources.facebookBanner;
+                pictureBoxCover.Image = Resources.facebookBanner;
             }
 
             populateFields();
@@ -263,7 +262,8 @@ namespace MyFacebookApp
                 populateSubTabFriendCheckins();
                 populateSubTabFriendPosts();
                 populateSubTabFriendGroups();
-            }
+				MessageBox.Show("Friend data has been retrieved!");
+			}
         }
 
         private void populateTitles()
@@ -359,8 +359,9 @@ namespace MyFacebookApp
                 Post imageToUpload = LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text);
                 imageToUpload.TaggedUsers.Add(CurrentOverviewedFriend);
                 bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
-            }
-            catch (Exception)
+				MessageBox.Show("Image uploaded successfully!");
+			}
+			catch (Exception)
             {
                 MessageBox.Show("Couldn't upload your picture :(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -368,9 +369,11 @@ namespace MyFacebookApp
 
         private void buttonBrowseAPicture_Click_1(object i_Sender, EventArgs i_EventArgs)
         {
-            OpenFileDialog pictureBrowse = new OpenFileDialog();
-            pictureBrowse.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png";
-            try
+			OpenFileDialog pictureBrowse = new OpenFileDialog
+			{
+				Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png"
+			};
+			try
             {
                 if (pictureBrowse.ShowDialog() == DialogResult.OK)
                 {
@@ -389,7 +392,8 @@ namespace MyFacebookApp
             generateGeneralStatistics();
             generatePhotoStatistics();
             generatePostStatistics();
-        }
+			MessageBox.Show("Your account statistics have been updated!");
+		}
 
         private void generatePostStatistics()
         {
@@ -438,19 +442,19 @@ namespace MyFacebookApp
             }
         }
 
-        private void generateUserPostsData(Dictionary<User, int> i_MostLikesBy, out Post i_MostLikedPost, out int i_MostLikedCount, out int i_TotalLikes)
+        private void generateUserPostsData(Dictionary<User, int> i_MostLikesBy, out Post o_MostLikedPost, out int io_MostLikedCount, out int o_TotalLikes)
         {
-            i_MostLikedPost = null;
-            i_MostLikedCount = 0;
-            i_TotalLikes = 0;
+            o_MostLikedPost = null;
+            io_MostLikedCount = 0;
+            o_TotalLikes = 0;
             foreach (Post post in LoggedInUser.Posts)
             {
-                i_TotalLikes += post.LikedBy.Count;
+                o_TotalLikes += post.LikedBy.Count;
                 addLikesForCurrentPost(i_MostLikesBy, post);
-                if (post.LikedBy.Count > i_MostLikedCount)
+                if (post.LikedBy.Count > io_MostLikedCount)
                 {
-                    i_MostLikedCount = post.LikedBy.Count;
-                    i_MostLikedPost = post;
+                    io_MostLikedCount = post.LikedBy.Count;
+                    o_MostLikedPost = post;
                 }
             }
         }
@@ -507,18 +511,18 @@ namespace MyFacebookApp
             updateLikeStatistics(totalLikes, mostLikes, mostLikedPhoto, maxMutualPhotosUser, maxMutualPhotosCount, maxLikedByUser, maxLikedByCount);
         }
 
-        private void generatePhotoData(Dictionary<User, int> i_MostLikesBy, Dictionary<User, int> i_MostPhotosWith, out Photo i_MostLikedPhoto, out int i_TotalLikes, out int i_MostLikes)
+        private void generatePhotoData(Dictionary<User, int> i_MostLikesBy, Dictionary<User, int> i_MostPhotosWith, out Photo o_MostLikedPhoto, out int o_TotalLikes, out int io_MostLikes)
         {
-            i_TotalLikes = 0;
-            i_MostLikes = 0;
-            i_MostLikedPhoto = null;
+            o_TotalLikes = 0;
+            io_MostLikes = 0;
+            o_MostLikedPhoto = null;
             foreach (Photo photo in LoggedInUser.PhotosTaggedIn)
             {
-                i_TotalLikes += photo.LikedBy.Count;
-                if (photo.LikedBy.Count > i_MostLikes)
+                o_TotalLikes += photo.LikedBy.Count;
+                if (photo.LikedBy.Count > io_MostLikes)
                 {
-                    i_MostLikes = photo.LikedBy.Count;
-                    i_MostLikedPhoto = photo;
+                    io_MostLikes = photo.LikedBy.Count;
+                    o_MostLikedPhoto = photo;
                 }
 
                 addLikesForCurrentPhoto(i_MostLikesBy, photo);
@@ -539,15 +543,15 @@ namespace MyFacebookApp
             labelStatisticsUploadedAlbums.Text = LoggedInUser.Albums.Count.ToString();
         }
 
-        private void findMaxCountAndUser(Dictionary<User, int> i_MostPhotosWith, out User o_User, out int o_MaxCount)
+        private void findMaxCountAndUser(Dictionary<User, int> i_MostPhotosWith, out User o_User, out int io_MaxCount)
         {
             o_User = null;
-            o_MaxCount = 0;
+            io_MaxCount = 0;
             foreach (KeyValuePair<User, int> keyValuePair in i_MostPhotosWith)
             {
-                if (o_MaxCount < keyValuePair.Value)
+                if (io_MaxCount < keyValuePair.Value)
                 {
-                    o_MaxCount = keyValuePair.Value;
+                    io_MaxCount = keyValuePair.Value;
                     o_User = keyValuePair.Key;
                 }
             }

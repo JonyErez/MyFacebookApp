@@ -24,8 +24,7 @@ namespace MyFacebookApp
 		public FormLogin()
 		{
 			InitializeComponent();
-            setFBAppIcon();
-
+            setFacebookAppIcon();
         }
 
         private void buttonLogin_Click(object i_Sender, EventArgs i_EventArgs)
@@ -47,13 +46,12 @@ namespace MyFacebookApp
 			}
 		}
 
-        private void setFBAppIcon()
+        private void setFacebookAppIcon()
         {
-            Bitmap bitIcon = (Bitmap)Resources.FBicon;
+            Bitmap bitIcon = Resources.FBicon;
             IntPtr pIcon = bitIcon.GetHicon();
             Icon iconFrom = Icon.FromHandle(pIcon);
-            this.Icon = iconFrom;
+            Icon = iconFrom;
         }
-
     }
 }
