@@ -2417,7 +2417,7 @@
 			// pictureBoxMostLikedPhoto
 			// 
 			this.pictureBoxMostLikedPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.pictureBoxMostLikedPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pictureBoxMostLikedPhoto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBoxMostLikedPhoto.Location = new System.Drawing.Point(386, 47);
 			this.pictureBoxMostLikedPhoto.Name = "pictureBoxMostLikedPhoto";
 			this.pictureBoxMostLikedPhoto.Size = new System.Drawing.Size(280, 280);
