@@ -7,16 +7,16 @@ namespace MyFacebookApp
 {
 	public partial class FormLogin : Form
 	{
-		private LoginResult m_LoginResult;
+		public LoginResult Result { get; private set; }
 
 		public User LoggedInUser
 		{
-			get { return m_LoginResult.LoggedInUser; }
+			get { return Result.LoggedInUser; }
 		}
 
 		public string AccessToken
 		{
-			get { return m_LoginResult.AccessToken; }
+			get { return Result.AccessToken; }
 		}
 
 		public FormLogin()
@@ -31,15 +31,15 @@ namespace MyFacebookApp
 
 		private void onButtonLoginClicked()
 		{
-			m_LoginResult = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "user_events", "user_hometown", "user_posts", "user_tagged_places", "user_location");
-			if (!string.IsNullOrEmpty(m_LoginResult.AccessToken))
+			Result = FacebookService.Login("419878648523017", "public_profile", "email", "user_friends", "user_photos", "user_birthday", "user_likes", "manage_pages", "user_events", "user_hometown", "user_posts", "user_tagged_places", "user_location");
+			if (!string.IsNullOrEmpty(Result.AccessToken))
 			{
 				DialogResult = DialogResult.OK;
 				Close();
 			}
 			else
 			{
-				MessageBox.Show(m_LoginResult.ErrorMessage);
+				MessageBox.Show(Result.ErrorMessage);
 			}
 		}
 	}

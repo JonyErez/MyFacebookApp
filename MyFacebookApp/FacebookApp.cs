@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -9,12 +10,17 @@ namespace MyFacebookApp
 {
 	public partial class FacebookApp : Form
 	{
-		private AppSettings m_AppSettings;
-		private User m_LoggedInUser;
-		private string m_AccessToken;
-		private bool m_RememberUser;
-		private int m_WallPostAgeInMonths = 3;
-		private User m_CurrentOverviewedFriend;
+		public AppSettings Settings { get; private set; }
+
+		public User LoggedInUser { get; private set; }
+
+		public string AccessToken { get; private set; }
+
+		public bool RememberUser { get; private set; }
+
+		public int WallPostAgeInMonths { get; private set; } = 3;
+
+		public User CurrentOverviewedFriend { get; private set; }
 
 		public FacebookApp()
 		{
@@ -23,17 +29,17 @@ namespace MyFacebookApp
 
 		private void facebookApp_Load(object i_Sender, EventArgs i_EventArgs)
 		{
-			m_AppSettings = AppSettings.LoadAppSettings();
-			Location = m_AppSettings.Location;
-			if (!m_AppSettings.RememberUser)
+			Settings = AppSettings.LoadAppSettings();
+			Location = Settings.Location;
+			if (!Settings.RememberUser)
 			{
 				FormLogin login = new FormLogin();
 				DialogResult loginResult = login.ShowDialog();
 				if (loginResult == DialogResult.OK)
 				{
-					m_RememberUser = false;
-					m_LoggedInUser = login.LoggedInUser;
-					m_AccessToken = login.AccessToken;
+					RememberUser = false;
+					LoggedInUser = login.LoggedInUser;
+					AccessToken = login.AccessToken;
 				}
 				else
 				{
@@ -42,21 +48,21 @@ namespace MyFacebookApp
 			}
 			else
 			{
-				m_AccessToken = m_AppSettings.LastAccessToken;
-				LoginResult loginResult = FacebookService.Connect(m_AccessToken);
-				m_LoggedInUser = loginResult.LoggedInUser;
-				m_RememberUser = checkBoxRememberUser.Checked = m_AppSettings.RememberUser;
+				AccessToken = Settings.LastAccessToken;
+				LoginResult loginResult = FacebookService.Connect(AccessToken);
+				LoggedInUser = loginResult.LoggedInUser;
+				RememberUser = checkBoxRememberUser.Checked = Settings.RememberUser;
 			}
 		}
 
 		private void fetchUserInfo()
 		{
-			labelWelcomeUser.Text = string.Format("Hello {0} !", m_LoggedInUser.Name);
-			pictureBoxProfilePicture.LoadAsync(m_LoggedInUser.PictureNormalURL);
+			labelWelcomeUser.Text = string.Format("Hello {0} !", LoggedInUser.Name);
+			pictureBoxProfilePicture.LoadAsync(LoggedInUser.PictureNormalURL);
 			pictureBoxProfilePicture.BringToFront();
-			if (m_LoggedInUser.Cover?.SourceURL != null)
+			if (LoggedInUser.Cover?.SourceURL != null)
 			{
-				pictureBoxCover.LoadAsync(m_LoggedInUser.Cover.SourceURL);
+				pictureBoxCover.LoadAsync(LoggedInUser.Cover.SourceURL);
 			}
 			else
 			{
@@ -80,7 +86,7 @@ namespace MyFacebookApp
 		{
 			try
 			{
-				bindingSourceLikedPages.DataSource = m_LoggedInUser.LikedPages;
+				bindingSourceLikedPages.DataSource = LoggedInUser.LikedPages;
 			}
 			catch (Exception)
 			{
@@ -91,9 +97,9 @@ namespace MyFacebookApp
 
 		private void populateWallPosts()
 		{
-			foreach (Post wallPost in m_LoggedInUser.WallPosts)
+			foreach (Post wallPost in LoggedInUser.WallPosts)
 			{
-				if (wallPost.CreatedTime >= DateTime.Now.AddMonths(-m_WallPostAgeInMonths))
+				if (wallPost.CreatedTime >= DateTime.Now.AddMonths(-WallPostAgeInMonths))
 				{
 					bindingSourceWallPosts.Add(wallPost);
 				}
@@ -102,7 +108,7 @@ namespace MyFacebookApp
 
 		private void populateBirthdays()
 		{
-			foreach (User friend in m_LoggedInUser.Friends)
+			foreach (User friend in LoggedInUser.Friends)
 			{
 				string formattedBirthday = friend.Birthday;
 				if (formattedBirthday.Length <= 5)
@@ -124,14 +130,14 @@ namespace MyFacebookApp
 
 		private void populateAlbums()
 		{
-			bindingSourceAlbums.DataSource = m_LoggedInUser.Albums;
+			bindingSourceAlbums.DataSource = LoggedInUser.Albums;
 		}
 
 		private void populateEventsList()
 		{
 			try
 			{
-				bindingSourceEvents.DataSource = m_LoggedInUser.Events;
+				bindingSourceEvents.DataSource = LoggedInUser.Events;
 			}
 			catch (Exception)
 			{
@@ -142,15 +148,15 @@ namespace MyFacebookApp
 
 		private void populateFriendList()
 		{
-			bindingSourceFriends.DataSource = m_LoggedInUser.Friends;
+			bindingSourceFriends.DataSource = LoggedInUser.Friends;
 		}
 
 		private void facebookApp_FormClosing(object i_Sender, FormClosingEventArgs i_EventArgs)
 		{
-			m_AppSettings.Location = Location;
-			m_AppSettings.RememberUser = m_RememberUser;
-			m_AppSettings.LastAccessToken = m_RememberUser ? m_AccessToken : string.Empty;
-			m_AppSettings.SaveAppSettings();
+			Settings.Location = Location;
+			Settings.RememberUser = RememberUser;
+			Settings.LastAccessToken = RememberUser ? AccessToken : string.Empty;
+			Settings.SaveAppSettings();
 		}
 
 		private void facebookApp_Shown(object i_Sender, EventArgs i_EventArgs)
@@ -164,7 +170,7 @@ namespace MyFacebookApp
 			if (logout == DialogResult.Yes)
 			{
 				FacebookService.Logout(null);
-				m_RememberUser = false;
+				RememberUser = false;
 				Close();
 			}
 		}
@@ -190,14 +196,14 @@ namespace MyFacebookApp
 
 		private void checkBoxRememberUser_CheckedChanged(object i_Sender, EventArgs i_EventArgs)
 		{
-			m_RememberUser = checkBoxRememberUser.Checked;
+			RememberUser = checkBoxRememberUser.Checked;
 		}
 
 		private void buttonPost_Click(object i_Sender, EventArgs i_EventArgs)
 		{
 			try
 			{
-				m_LoggedInUser.PostStatus(textBoxPost.Text);
+				LoggedInUser.PostStatus(textBoxPost.Text);
 				MessageBox.Show("Status posted successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (Exception)
@@ -209,7 +215,7 @@ namespace MyFacebookApp
 		private void comboBoxWallPostAge_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
 		{
 			bindingSourceWallPosts.Clear();
-			m_WallPostAgeInMonths = comboBoxWallPostAge.SelectedIndex + 1;
+			WallPostAgeInMonths = comboBoxWallPostAge.SelectedIndex + 1;
 			populateWallPosts();
 		}
 
@@ -228,14 +234,14 @@ namespace MyFacebookApp
 
 		private void populateTabFriendOverview()
 		{
-			bindingSourceFriendOverview.DataSource = m_LoggedInUser.Friends;
+			bindingSourceFriendOverview.DataSource = LoggedInUser.Friends;
 			comboBoxChooseAFriend.SelectedText = "Choose a friend to overview";
 		}
 
 		private void comboBoxChooseAFriend_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
 		{
-			m_CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-			if (m_CurrentOverviewedFriend != null)
+			CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+			if (CurrentOverviewedFriend != null)
 			{
 				populateTitles();
 				populatePersonalInfo();
@@ -249,22 +255,22 @@ namespace MyFacebookApp
 
 		private void populateTitles()
 		{
-			string title = string.Format("{0}s activity:", m_CurrentOverviewedFriend.Name);
+			string title = string.Format("{0}s activity:", CurrentOverviewedFriend.Name);
 			labelFriendActivity.Text = title;
-			title = string.Format("Upload a picture with {0}!", m_CurrentOverviewedFriend.FirstName);
+			title = string.Format("Upload a picture with {0}!", CurrentOverviewedFriend.FirstName);
 			labelUploadMutualPic.Text = title;
-			title = string.Format("Pictures of you and {0}:", m_CurrentOverviewedFriend.FirstName);
+			title = string.Format("Pictures of you and {0}:", CurrentOverviewedFriend.FirstName);
 			labelMutualPictures.Text = title;
-			title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, m_CurrentOverviewedFriend.FirstName);
+			title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, CurrentOverviewedFriend.FirstName);
 			labelUploadMutualPicDescription.Text = title;
 		}
 
 		private void populateMutualPictures()
 		{
 			bindingSourceFriendOverviewMutualPictures.Clear();
-			foreach (Photo photo in m_CurrentOverviewedFriend.PhotosTaggedIn)
+			foreach (Photo photo in CurrentOverviewedFriend.PhotosTaggedIn)
 			{
-				if (m_LoggedInUser.PhotosTaggedIn.Contains(photo))
+				if (LoggedInUser.PhotosTaggedIn.Contains(photo))
 				{
 					bindingSourceFriendOverviewMutualPictures.Add(photo);
 					progressBarFriendshipStrength.PerformStep();
@@ -275,22 +281,22 @@ namespace MyFacebookApp
 		private void populatePersonalInfo()
 		{
 			bindingSourceFriendOverviewPersonalInfo.Clear();
-			bindingSourceFriendOverviewPersonalInfo.DataSource = m_CurrentOverviewedFriend;
-			labelNumberOfFriends.Text = m_CurrentOverviewedFriend.Friends.Count.ToString();
-			labelRelationshipStatus.Text = m_CurrentOverviewedFriend.RelationshipStatus.ToString();
-			labelOnlineStatus.Text = m_CurrentOverviewedFriend.OnlineStatus.ToString();
+			bindingSourceFriendOverviewPersonalInfo.DataSource = CurrentOverviewedFriend;
+			labelNumberOfFriends.Text = CurrentOverviewedFriend.Friends.Count.ToString();
+			labelRelationshipStatus.Text = CurrentOverviewedFriend.RelationshipStatus.ToString();
+			labelOnlineStatus.Text = CurrentOverviewedFriend.OnlineStatus.ToString();
 		}
 
 		private void populateSubTabFriendGroups()
 		{
 			bindingSourceFriendOverviewGroups.Clear();
-			bindingSourceFriendOverviewGroups.DataSource = m_CurrentOverviewedFriend.Groups;
+			bindingSourceFriendOverviewGroups.DataSource = CurrentOverviewedFriend.Groups;
 		}
 
 		private void populateSubTabFriendPosts()
 		{
 			bindingSourceFriendOverviewPosts.Clear();
-			bindingSourceFriendOverviewPosts.DataSource = m_CurrentOverviewedFriend.Posts;
+			bindingSourceFriendOverviewPosts.DataSource = CurrentOverviewedFriend.Posts;
 		}
 
 		private void populateSubTabFriendCheckins()
@@ -298,7 +304,7 @@ namespace MyFacebookApp
 			bindingSourceFriendOverviewCheckins.Clear();
 			try
 			{
-				bindingSourceFriendOverviewCheckins.DataSource = m_CurrentOverviewedFriend.Checkins;
+				bindingSourceFriendOverviewCheckins.DataSource = CurrentOverviewedFriend.Checkins;
 			}
 			catch (Exception)
 			{
@@ -311,7 +317,7 @@ namespace MyFacebookApp
 			bindingSourceFriendOverviewEvents.Clear();
 			try
 			{
-				bindingSourceFriendOverviewEvents.DataSource = m_CurrentOverviewedFriend.Events;
+				bindingSourceFriendOverviewEvents.DataSource = CurrentOverviewedFriend.Events;
 			}
 			catch (Exception)
 			{
@@ -337,8 +343,8 @@ namespace MyFacebookApp
 			// always will fail because publish_actions permissions doesnt work
 			try
 			{
-				Post imageToUpload = m_LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text);
-				imageToUpload.TaggedUsers.Add(m_CurrentOverviewedFriend);
+				Post imageToUpload = LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text);
+				imageToUpload.TaggedUsers.Add(CurrentOverviewedFriend);
 				bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
 			}
 			catch (Exception)
@@ -385,8 +391,8 @@ namespace MyFacebookApp
 
 		private void updatePostStatistics(User i_MostLikesByUser, int i_MostLikesByCount, User i_MaxMutualPostsUser, int i_MaxMutualPostsCount, Post i_MostLikedPost, int i_MostLikedCount, int i_TotalLikes)
 		{
-			labelStatisticsPostsTotal.Text = m_LoggedInUser.Posts.Count.ToString();
-			labelStatisticsPostsPostsTaggedIn.Text = m_LoggedInUser.PostsTaggedIn.Count.ToString();
+			labelStatisticsPostsTotal.Text = LoggedInUser.Posts.Count.ToString();
+			labelStatisticsPostsPostsTaggedIn.Text = LoggedInUser.PostsTaggedIn.Count.ToString();
 			labelStatisticsPostsMostLikes.Text = i_MostLikedCount.ToString();
 			labelStatisticsPostsMostLikesByUserCount.Text = i_MostLikesByCount.ToString();
 			labelStatisticsPostsMostLikesByUserName.Text = i_MostLikesByUser?.Name;
@@ -398,7 +404,7 @@ namespace MyFacebookApp
 
 		private void generateTaggedPostsData(Dictionary<User, int> i_MostPostsWith)
 		{
-			foreach (Post post in m_LoggedInUser.Posts)
+			foreach (Post post in LoggedInUser.Posts)
 			{
 				addMutualPostCountForCurrentPost(i_MostPostsWith, post);
 			}
@@ -412,7 +418,7 @@ namespace MyFacebookApp
 				{
 					i_MostPostsWith[user]++;
 				}
-				else if (user.Id != m_LoggedInUser.Id)
+				else if (user.Id != LoggedInUser.Id)
 				{
 					i_MostPostsWith.Add(user, 1);
 				}
@@ -424,7 +430,7 @@ namespace MyFacebookApp
 			i_MostLikedPost = null;
 			i_MostLikedCount = 0;
 			i_TotalLikes = 0;
-			foreach (Post post in m_LoggedInUser.Posts)
+			foreach (Post post in LoggedInUser.Posts)
 			{
 				i_TotalLikes += post.LikedBy.Count;
 				addLikesForCurrentPost(i_MostLikesBy, post);
@@ -444,7 +450,7 @@ namespace MyFacebookApp
 				{
 					i_MostLikesBy[user]++;
 				}
-				else if (user.Id != m_LoggedInUser.Id)
+				else if (user.Id != LoggedInUser.Id)
 				{
 					i_MostLikesBy.Add(user, 1);
 				}
@@ -455,7 +461,7 @@ namespace MyFacebookApp
 		{
 			try
 			{
-				labelStatisticsGeneralEventsCreated.Text = m_LoggedInUser.EventsCreated.Count.ToString();
+				labelStatisticsGeneralEventsCreated.Text = LoggedInUser.EventsCreated.Count.ToString();
 			}
 			catch (Exception)
 			{
@@ -465,7 +471,7 @@ namespace MyFacebookApp
 
 			try
 			{
-				labelStatisticsGeneralGroups.Text = m_LoggedInUser.Groups.Count.ToString();
+				labelStatisticsGeneralGroups.Text = LoggedInUser.Groups.Count.ToString();
 			}
 			catch (Exception)
 			{
@@ -473,9 +479,9 @@ namespace MyFacebookApp
 				MessageBox.Show("Couldn't fetch your groups!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
-			labelStatisticsGeneralFriends.Text = m_LoggedInUser.Friends.Count.ToString();
-			labelStatisticsGeneralCheckins.Text = m_LoggedInUser.Checkins.Count.ToString();
-			labelStatisticsGeneralPosts.Text = m_LoggedInUser.Posts.Count.ToString();
+			labelStatisticsGeneralFriends.Text = LoggedInUser.Friends.Count.ToString();
+			labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString();
+			labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString();
 		}
 
 		private void generatePhotoStatistics()
@@ -493,7 +499,7 @@ namespace MyFacebookApp
 			i_TotalLikes = 0;
 			i_MostLikes = 0;
 			i_MostLikedPhoto = null;
-			foreach (Photo photo in m_LoggedInUser.PhotosTaggedIn)
+			foreach (Photo photo in LoggedInUser.PhotosTaggedIn)
 			{
 				i_TotalLikes += photo.LikedBy.Count;
 				if (photo.LikedBy.Count > i_MostLikes)
@@ -513,11 +519,11 @@ namespace MyFacebookApp
 			labelMostMutualPhotosWithName.Text = i_MaxMutualPhotosUser?.Name;
 			labelMostLikesByUserCount.Text = i_MaxLikedByCount.ToString();
 			labelMostLikesByUserName.Text = i_MaxLikedByUser?.Name;
-			labelPhotosTaggedIn.Text = m_LoggedInUser.PhotosTaggedIn.Count.ToString();
+			labelPhotosTaggedIn.Text = LoggedInUser.PhotosTaggedIn.Count.ToString();
 			labelMostLikedPhotoLikes.Text = i_MostLikes.ToString();
 			labelTotalLikes.Text = i_TotalLikes.ToString();
 			pictureBoxMostLikedPhoto.Image = i_MostLikedPhoto?.ImageNormal;
-			labelStatisticsUploadedAlbums.Text = m_LoggedInUser.Albums.Count.ToString();
+			labelStatisticsUploadedAlbums.Text = LoggedInUser.Albums.Count.ToString();
 		}
 
 		private void findMaxCountAndUser(Dictionary<User, int> i_MostPhotosWith, out User o_User, out int o_MaxCount)
@@ -542,7 +548,7 @@ namespace MyFacebookApp
 				{
 					i_MostPhotosWith[photoTag.User]++;
 				}
-				else if (photoTag.User.Id != m_LoggedInUser.Id)
+				else if (photoTag.User.Id != LoggedInUser.Id)
 				{
 					i_MostPhotosWith.Add(photoTag.User, 1);
 				}
@@ -557,7 +563,7 @@ namespace MyFacebookApp
 				{
 					i_MostLikesBy[user]++;
 				}
-				else if (user.Id != m_LoggedInUser.Id)
+				else if (user.Id != LoggedInUser.Id)
 				{
 					i_MostLikesBy.Add(user, 1);
 				}
