@@ -57,6 +57,7 @@
     <Compile Include="FacebookApp.Designer.cs">
       <DependentUpon>FacebookApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Friend.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

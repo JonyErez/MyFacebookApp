@@ -21,7 +21,7 @@ namespace MyFacebookApp
 
         public int WallPostAgeInMonths { get; private set; } = 3;
 
-        public User CurrentOverviewedFriend { get; private set; }
+        public Friend CurrentOverviewedFriend { get; private set; }
 
         public FacebookApp()
         {
@@ -247,48 +247,100 @@ namespace MyFacebookApp
         private void populateTabFriendOverview()
         {
             bindingSourceFriendOverview.DataSource = LoggedInUser.Friends;
+
             comboBoxChooseAFriend.SelectedText = "Choose a friend to overview";
         }
 
         private void comboBoxChooseAFriend_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
         {
-            CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+            CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as Friend;
+
             if (CurrentOverviewedFriend != null)
             {
-                populateTitles();
-                populatePersonalInfo();
-                populateMutualPictures();
-                populateSubTabFriendEvents();
-                populateSubTabFriendCheckins();
-                populateSubTabFriendPosts();
-                populateSubTabFriendGroups();
-				MessageBox.Show("Friend data has been retrieved!");
-			}
+                CurrentOverviewedFriend.SetFriendOfProperties(LoggedInUser); populateTitles();
+                populateGeneralInfo();
+                populateMutualInfo();
+
+                MessageBox.Show("Friend data has been retrieved!");
+            }
+        }
+
+        private void populateMutualInfo()
+        {
+            populateSubTabMutualEvents();
+            populateSubTabMutualCheckins();
+            populateSubTabPostsTaggedMe();
+            populateSubTabMutualGroups();
+            populateSubTabMutualPictures();
+
+        }
+
+        private void populateSubTabMutualGroups()
+        {
+            bindingSourceFriendOverviewMutualGroups.Clear();
+            bindingSourceFriendOverviewMutualGroups.DataSource = CurrentOverviewedFriend.MutualGroups;
+        }
+
+        private void populateSubTabPostsTaggedMe()
+        {
+            bindingSourceFriendOverviewPostsTaggedMe.Clear();
+            bindingSourceFriendOverviewPostsTaggedMe.DataSource = CurrentOverviewedFriend.PostsFriendTaggedUser;
+        }
+
+        private void populateSubTabMutualCheckins()
+        {
+            bindingSourceFriendOverviewMutualCheckins.Clear();
+            try
+            {
+                bindingSourceFriendOverviewMutualCheckins.DataSource = CurrentOverviewedFriend.MutualCheckins;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Coudn't fetch mutual checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void populateSubTabMutualEvents()
+        {
+            bindingSourceFriendOverviewMutualEvents.Clear();
+
+            try
+            {
+                bindingSourceFriendOverviewMutualEvents.DataSource = CurrentOverviewedFriend.MutualEvents;
+            }
+            catch (Exception)
+            {
+                // Always throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
+                MessageBox.Show("Couldn't fetch mutual events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void populateGeneralInfo()
+        {
+            populatePersonalInfo();
+            populateSubTabFriendEvents();
+            populateSubTabFriendCheckins();
+            populateSubTabFriendPosts();
+            populateSubTabFriendGroups();
         }
 
         private void populateTitles()
         {
             string title = string.Format("{0}s activity:", CurrentOverviewedFriend.Name);
-            labelFriendActivity.Text = title;
+            //labelFriendActivity.Text = title;
             title = string.Format("Upload a picture with {0}!", CurrentOverviewedFriend.FirstName);
             labelUploadMutualPic.Text = title;
             title = string.Format("Pictures of you and {0}:", CurrentOverviewedFriend.FirstName);
-            labelMutualPictures.Text = title;
+            //  labelMutualPictures.Text = title;
             title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, CurrentOverviewedFriend.FirstName);
             labelUploadMutualPicDescription.Text = title;
         }
 
-        private void populateMutualPictures()
+        private void populateSubTabMutualPictures()
         {
             bindingSourceFriendOverviewMutualPictures.Clear();
-            foreach (Photo photo in CurrentOverviewedFriend.PhotosTaggedIn)
-            {
-                if (LoggedInUser.PhotosTaggedIn.Contains(photo))
-                {
-                    bindingSourceFriendOverviewMutualPictures.Add(photo);
-                    progressBarFriendshipStrength.PerformStep();
-                }
-            }
+            bindingSourceFriendOverviewMutualPictures.DataSource = CurrentOverviewedFriend.MutualPictures;
+            progressBarFriendshipStrength.Increment(CurrentOverviewedFriend.MutualPictures.Count);
         }
 
         private void populatePersonalInfo()
@@ -359,9 +411,9 @@ namespace MyFacebookApp
                 Post imageToUpload = LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text);
                 imageToUpload.TaggedUsers.Add(CurrentOverviewedFriend);
                 bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
-				MessageBox.Show("Image uploaded successfully!");
-			}
-			catch (Exception)
+                MessageBox.Show("Image uploaded successfully!");
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Couldn't upload your picture :(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -369,11 +421,11 @@ namespace MyFacebookApp
 
         private void buttonBrowseAPicture_Click(object i_Sender, EventArgs i_EventArgs)
         {
-			OpenFileDialog pictureBrowse = new OpenFileDialog
-			{
-				Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png"
-			};
-			try
+            OpenFileDialog pictureBrowse = new OpenFileDialog
+            {
+                Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png"
+            };
+            try
             {
                 if (pictureBrowse.ShowDialog() == DialogResult.OK)
                 {
@@ -392,8 +444,8 @@ namespace MyFacebookApp
             generateGeneralStatistics();
             generatePhotoStatistics();
             generatePostStatistics();
-			MessageBox.Show("Your account statistics have been updated!");
-		}
+            MessageBox.Show("Your account statistics have been updated!");
+        }
 
         private void generatePostStatistics()
         {
@@ -591,5 +643,7 @@ namespace MyFacebookApp
         {
             generateStatistics();
         }
+
+
     }
 }
