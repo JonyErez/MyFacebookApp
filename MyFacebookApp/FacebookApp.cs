@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -43,10 +44,12 @@ namespace MyFacebookApp
         {
             Settings = AppSettings.LoadAppSettings();
             Location = Settings.Location;
+
             if (!Settings.RememberUser)
             {
                 FormLogin login = new FormLogin();
                 DialogResult loginResult = login.ShowDialog();
+
                 if (loginResult == DialogResult.OK)
                 {
                     RememberUser = false;
@@ -71,7 +74,8 @@ namespace MyFacebookApp
         {
             labelWelcomeUser.Text = string.Format("Hello {0} !", LoggedInUser.Name);
             pictureBoxProfilePicture.LoadAsync(LoggedInUser.PictureNormalURL);
-            pictureBoxProfilePicture.BringToFront();
+         //   pictureBoxProfilePicture.BringToFront();
+
             if (LoggedInUser.Cover?.SourceURL != null)
             {
                 pictureBoxCover.LoadAsync(LoggedInUser.Cover.SourceURL);
@@ -81,17 +85,18 @@ namespace MyFacebookApp
                 pictureBoxCover.Image = Resources.facebookBanner;
             }
 
+            //  new Thread(populateFields).Start();
             populateFields();
         }
 
         private void populateFields()
         {
-            populateAlbums();
-            populateBirthdays();
-            populateEventsList();
+            new Thread(populateAlbums).Start();
+            new Thread(populateBirthdays).Start();
+            new Thread(populateEventsList).Start();
             populateWallPosts();
-            populateFriendList();
-            populateLikedPages();
+            new Thread(populateFriendList).Start();
+            new Thread(populateLikedPages).Start();
         }
 
         private void populateLikedPages()
@@ -228,6 +233,7 @@ namespace MyFacebookApp
         {
             bindingSourceWallPosts.Clear();
             WallPostAgeInMonths = comboBoxWallPostAge.SelectedIndex + 1;
+           // comboBoxWallPostAge.Invoke(new Action(populateWallPosts));
             populateWallPosts();
         }
 
@@ -445,6 +451,10 @@ namespace MyFacebookApp
             generatePhotoStatistics();
             generatePostStatistics();
             MessageBox.Show("Your account statistics have been updated!");
+            //new Thread(generateGeneralStatistics).Start();
+            //generatePhotoStatistics();
+            //new Thread(generatePostStatistics).Start();
+            //  MessageBox.Show("Your account statistics have been updated!");
         }
 
         private void generatePostStatistics()
@@ -551,6 +561,10 @@ namespace MyFacebookApp
             labelStatisticsGeneralFriends.Text = LoggedInUser.Friends.Count.ToString();
             labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString();
             labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString();
+
+            //    labelStatisticsGeneralFriends.Invoke(new Action(() => labelStatisticsGeneralFriends.Text = LoggedInUser.Friends.Count.ToString()));
+            //    labelStatisticsGeneralCheckins.Invoke(new Action(() => labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString()));
+            //    labelStatisticsGeneralPosts.Invoke(new Action(() => labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString()));
         }
 
         private void generatePhotoStatistics()
@@ -644,6 +658,6 @@ namespace MyFacebookApp
             generateStatistics();
         }
 
-
+      
     }
 }
