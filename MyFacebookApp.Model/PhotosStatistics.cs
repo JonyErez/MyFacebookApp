@@ -12,8 +12,6 @@ namespace MyFacebookApp.Model
 		{
 		}
 
-		private readonly User r_LoggedInUser;
-
 		public override PostedItem MostLiked
 		{
 			get { return m_MostLiked as Photo; }
@@ -44,7 +42,7 @@ namespace MyFacebookApp.Model
 		{
 			Dictionary<User, int> mostPhotosWith = new Dictionary<User, int>();
 
-			foreach (Photo photo in r_LoggedInUser.PhotosTaggedIn)
+			foreach (Photo photo in LoggedInUser.PhotosTaggedIn)
 			{
 				addMutualPictureCountForCurrentPhoto(mostPhotosWith, photo);
 			}
@@ -73,7 +71,7 @@ namespace MyFacebookApp.Model
 				{
 					i_MostPhotosWith[photoTag.User]++;
 				}
-				else if (photoTag.User.Id != r_LoggedInUser.Id)
+				else if (photoTag.User.Id != LoggedInUser.Id)
 				{
 					i_MostPhotosWith.Add(photoTag.User, 1);
 				}
