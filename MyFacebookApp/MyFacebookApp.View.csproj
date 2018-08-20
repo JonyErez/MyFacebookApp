@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0A7B43A8-73D8-41C3-A235-DA06C01260F4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MyFacebookApp</RootNamespace>
-    <AssemblyName>MyFacebookApp</AssemblyName>
+    <RootNamespace>MyFacebookApp.View</RootNamespace>
+    <AssemblyName>MyFacebookApp.View</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

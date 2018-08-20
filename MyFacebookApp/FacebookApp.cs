@@ -6,9 +6,9 @@ using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using MyFacebookApp.Properties;
+using MyFacebookApp.View.Properties;
 
-namespace MyFacebookApp
+namespace MyFacebookApp.View
 {
     public partial class FacebookApp : Form
     {

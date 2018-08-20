@@ -1,4 +1,4 @@
-﻿namespace MyFacebookApp
+﻿namespace MyFacebookApp.View
 {
 	public partial class FacebookApp
 	{

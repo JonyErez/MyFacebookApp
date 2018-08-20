@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFacebookApp", "MyFacebookApp\MyFacebookApp.csproj", "{0A7B43A8-73D8-41C3-A235-DA06C01260F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFacebookApp.View", "MyFacebookApp\MyFacebookApp.View.csproj", "{0A7B43A8-73D8-41C3-A235-DA06C01260F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0C3033-B12C-4E1A-86A4-ED317FB1505C}"
 	ProjectSection(SolutionItems) = preProject
 		Diagrams And Feature Explenation.docx = Diagrams And Feature Explenation.docx
 		ExerciseCheckingReport.txt = ExerciseCheckingReport.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFacebookApp.Model", "MyFacebookApp.Model\MyFacebookApp.Model.csproj", "{5E075709-1C46-47D0-8C93-53C6F1D0B15A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0A7B43A8-73D8-41C3-A235-DA06C01260F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7B43A8-73D8-41C3-A235-DA06C01260F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A7B43A8-73D8-41C3-A235-DA06C01260F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E075709-1C46-47D0-8C93-53C6F1D0B15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E075709-1C46-47D0-8C93-53C6F1D0B15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E075709-1C46-47D0-8C93-53C6F1D0B15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E075709-1C46-47D0-8C93-53C6F1D0B15A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

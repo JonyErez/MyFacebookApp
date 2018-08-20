@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using MyFacebookApp.Properties;
+using MyFacebookApp.View.Properties;
 
 
-namespace MyFacebookApp
+namespace MyFacebookApp.View
 {
     public class Friend : User
     {
