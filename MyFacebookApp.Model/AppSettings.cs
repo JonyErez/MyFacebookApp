@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace MyFacebookApp.Model
+namespace MyFacebookApp.View
 {
     public class AppSettings
 	{

@@ -22,8 +22,6 @@ namespace MyFacebookApp.View
 
         public int WallPostAgeInMonths { get; private set; } = 3;
 
-        public Friend CurrentOverviewedFriend { get; private set; }
-
         public FacebookApp()
         {
             InitializeComponent();
@@ -74,7 +72,7 @@ namespace MyFacebookApp.View
         {
             labelWelcomeUser.Text = string.Format("Hello {0} !", LoggedInUser.Name);
             pictureBoxProfilePicture.LoadAsync(LoggedInUser.PictureNormalURL);
-         //   pictureBoxProfilePicture.BringToFront();
+            //   pictureBoxProfilePicture.BringToFront();
 
             if (LoggedInUser.Cover?.SourceURL != null)
             {
@@ -127,22 +125,21 @@ namespace MyFacebookApp.View
         {
             foreach (User friend in LoggedInUser.Friends)
             {
-                string formattedBirthday = friend.Birthday;
-                if (formattedBirthday.Length <= 5)
-                {
-                    formattedBirthday += "/" + DateTime.Now.Year;
-                }
+                FacebookBirthdayAdapter friendBirthday = new FacebookBirthdayAdapter { Birthday = friend.Birthday };
+                DateTime dateTimeBirthday = friendBirthday.ToDateTime();
 
-                DateTime.TryParseExact(formattedBirthday, "MM/dd/yyyy", new DateTimeFormatInfo(), DateTimeStyles.AdjustToUniversal, out DateTime birthday);
-                if (birthday != null)
+                if (dateTimeBirthday != null && birthdayIsUpcoming(dateTimeBirthday))
                 {
-                    birthday.AddYears(DateTime.Now.Year - birthday.Year);
-                    if (birthday <= DateTime.Now.AddDays(7) && birthday >= DateTime.Now)
-                    {
-                        bindingSourceBirthdays.Add(friend);
-                    }
+                    bindingSourceBirthdays.Add(friend);
                 }
             }
+        }
+
+        private bool birthdayIsUpcoming(DateTime i_DateTimeBirthday)
+        {
+            i_DateTimeBirthday.AddYears(DateTime.Now.Year - i_DateTimeBirthday.Year);
+
+            return i_DateTimeBirthday <= DateTime.Now.AddDays(7) && i_DateTimeBirthday >= DateTime.Now;
         }
 
         private void populateAlbums()
@@ -233,7 +230,7 @@ namespace MyFacebookApp.View
         {
             bindingSourceWallPosts.Clear();
             WallPostAgeInMonths = comboBoxWallPostAge.SelectedIndex + 1;
-           // comboBoxWallPostAge.Invoke(new Action(populateWallPosts));
+            // comboBoxWallPostAge.Invoke(new Action(populateWallPosts));
             populateWallPosts();
         }
 
@@ -252,22 +249,27 @@ namespace MyFacebookApp.View
 
         private void populateTabFriendOverview()
         {
-            bindingSourceFriendOverview.DataSource = LoggedInUser.Friends;
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
+            bindingSourceFriendOverview.DataSource = extendedLoggedInUser.Friends();
 
             comboBoxChooseAFriend.SelectedText = "Choose a friend to overview";
         }
 
+
+
+
         private void comboBoxChooseAFriend_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
         {
-            CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as Friend;
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
 
-            if (CurrentOverviewedFriend != null)
+            if (currentOverviewedFriend != null)
             {
-                CurrentOverviewedFriend.SetFriendOfProperties(LoggedInUser); populateTitles();
+                populateTitles();
                 populateGeneralInfo();
                 populateMutualInfo();
 
-                MessageBox.Show("Friend data has been retrieved!");
+                //  MessageBox.Show("Friend data has been retrieved!");
             }
         }
 
@@ -278,27 +280,33 @@ namespace MyFacebookApp.View
             populateSubTabPostsTaggedMe();
             populateSubTabMutualGroups();
             populateSubTabMutualPictures();
-
         }
 
         private void populateSubTabMutualGroups()
         {
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
             bindingSourceFriendOverviewMutualGroups.Clear();
-            bindingSourceFriendOverviewMutualGroups.DataSource = CurrentOverviewedFriend.MutualGroups;
+            bindingSourceFriendOverviewMutualGroups.DataSource = extendedLoggedInUser.GetMutualGroups(comboBoxChooseAFriend.SelectedItem as User);
         }
 
         private void populateSubTabPostsTaggedMe()
         {
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
             bindingSourceFriendOverviewPostsTaggedMe.Clear();
-            bindingSourceFriendOverviewPostsTaggedMe.DataSource = CurrentOverviewedFriend.PostsFriendTaggedUser;
+            bindingSourceFriendOverviewPostsTaggedMe.DataSource = extendedLoggedInUser.GetPostsFriendTaggedUser(comboBoxChooseAFriend.SelectedItem as User);
         }
 
         private void populateSubTabMutualCheckins()
         {
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
             bindingSourceFriendOverviewMutualCheckins.Clear();
+
             try
             {
-                bindingSourceFriendOverviewMutualCheckins.DataSource = CurrentOverviewedFriend.MutualCheckins;
+                bindingSourceFriendOverviewMutualCheckins.DataSource = extendedLoggedInUser.GetMutualCheckins(comboBoxChooseAFriend.SelectedItem as User);
             }
             catch (Exception)
             {
@@ -308,11 +316,13 @@ namespace MyFacebookApp.View
 
         private void populateSubTabMutualEvents()
         {
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
             bindingSourceFriendOverviewMutualEvents.Clear();
 
             try
             {
-                bindingSourceFriendOverviewMutualEvents.DataSource = CurrentOverviewedFriend.MutualEvents;
+                 bindingSourceFriendOverviewMutualEvents.DataSource = extendedLoggedInUser.GetMutualEvents(comboBoxChooseAFriend.SelectedItem as User);
             }
             catch (Exception)
             {
@@ -332,50 +342,61 @@ namespace MyFacebookApp.View
 
         private void populateTitles()
         {
-            string title = string.Format("{0}s activity:", CurrentOverviewedFriend.Name);
-            //labelFriendActivity.Text = title;
-            title = string.Format("Upload a picture with {0}!", CurrentOverviewedFriend.FirstName);
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
+            string title = string.Format("{0}s activity:", currentOverviewedFriend.Name);
+            title = string.Format("Upload a picture with {0}!", currentOverviewedFriend.FirstName);
             labelUploadMutualPic.Text = title;
-            title = string.Format("Pictures of you and {0}:", CurrentOverviewedFriend.FirstName);
-            //  labelMutualPictures.Text = title;
-            title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, CurrentOverviewedFriend.FirstName);
+            title = string.Format("Pictures of you and {0}:", currentOverviewedFriend.FirstName);
+            title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, currentOverviewedFriend.FirstName);
             labelUploadMutualPicDescription.Text = title;
         }
 
         private void populateSubTabMutualPictures()
         {
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+
             bindingSourceFriendOverviewMutualPictures.Clear();
-            bindingSourceFriendOverviewMutualPictures.DataSource = CurrentOverviewedFriend.MutualPictures;
-            progressBarFriendshipStrength.Increment(CurrentOverviewedFriend.MutualPictures.Count);
+            bindingSourceFriendOverviewMutualPictures.DataSource = extendedLoggedInUser.GetMutualPictures(comboBoxChooseAFriend.SelectedItem as User);
+            //progressBarFriendshipStrength.Increment();
         }
 
         private void populatePersonalInfo()
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             bindingSourceFriendOverviewPersonalInfo.Clear();
-            bindingSourceFriendOverviewPersonalInfo.DataSource = CurrentOverviewedFriend;
-            labelNumberOfFriends.Text = CurrentOverviewedFriend.Friends.Count.ToString();
-            labelRelationshipStatus.Text = CurrentOverviewedFriend.RelationshipStatus.ToString();
-            labelOnlineStatus.Text = CurrentOverviewedFriend.OnlineStatus.ToString();
+            bindingSourceFriendOverviewPersonalInfo.DataSource = currentOverviewedFriend;
+            labelNumberOfFriends.Text = currentOverviewedFriend.Friends.Count.ToString();
+            labelRelationshipStatus.Text = currentOverviewedFriend.RelationshipStatus.ToString();
+            labelOnlineStatus.Text = currentOverviewedFriend.OnlineStatus.ToString();
         }
 
         private void populateSubTabFriendGroups()
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             bindingSourceFriendOverviewGroups.Clear();
-            bindingSourceFriendOverviewGroups.DataSource = CurrentOverviewedFriend.Groups;
+            bindingSourceFriendOverviewGroups.DataSource = currentOverviewedFriend.Groups;
         }
 
         private void populateSubTabFriendPosts()
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             bindingSourceFriendOverviewPosts.Clear();
-            bindingSourceFriendOverviewPosts.DataSource = CurrentOverviewedFriend.Posts;
+            bindingSourceFriendOverviewPosts.DataSource = currentOverviewedFriend.Posts;
         }
 
         private void populateSubTabFriendCheckins()
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             bindingSourceFriendOverviewCheckins.Clear();
+
             try
             {
-                bindingSourceFriendOverviewCheckins.DataSource = CurrentOverviewedFriend.Checkins;
+                bindingSourceFriendOverviewCheckins.DataSource = currentOverviewedFriend.Checkins;
             }
             catch (Exception)
             {
@@ -385,10 +406,13 @@ namespace MyFacebookApp.View
 
         private void populateSubTabFriendEvents()
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             bindingSourceFriendOverviewEvents.Clear();
+
             try
             {
-                bindingSourceFriendOverviewEvents.DataSource = CurrentOverviewedFriend.Events;
+                bindingSourceFriendOverviewEvents.DataSource = currentOverviewedFriend.Events;
             }
             catch (Exception)
             {
@@ -411,12 +435,15 @@ namespace MyFacebookApp.View
 
         private void buttonUplaodMutualPic_Click(object i_Sender, EventArgs i_EventArgs)
         {
+            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
             // always will fail because publish_actions permissions doesnt work
             try
             {
                 Post imageToUpload = LoggedInUser.PostPhoto(pictureBoxMutualPictureToUpload.ImageLocation, textBoxMutualPicToUploadTitle.Text);
-                imageToUpload.TaggedUsers.Add(CurrentOverviewedFriend);
+
+                imageToUpload.TaggedUsers.Add(currentOverviewedFriend);
                 bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
+
                 MessageBox.Show("Image uploaded successfully!");
             }
             catch (Exception)
@@ -658,6 +685,6 @@ namespace MyFacebookApp.View
             generateStatistics();
         }
 
-      
+
     }
 }

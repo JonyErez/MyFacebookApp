@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FacebookWrapper.ObjectModel;
 
-namespace MyFacebookApp.Model
+namespace MyFacebookApp.View
 {
 	public class PhotosStatistics : Statistics
 	{

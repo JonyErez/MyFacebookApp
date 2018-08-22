@@ -6,7 +6,7 @@ using System.Text;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
-namespace MyFacebookApp.Model
+namespace MyFacebookApp.View
 {
 	internal class AppData
 	{
@@ -24,10 +24,10 @@ namespace MyFacebookApp.Model
 
 		public PhotosStatistics PhotosStatistics { get; private set; }
 
-
 		public void Login()
 		{
 			Settings = AppSettings.LoadAppSettings();
+
 			if (Settings.RememberUser && !string.IsNullOrEmpty(Settings.LastAccessToken))
 			{
 				autoLogin();
@@ -55,15 +55,18 @@ namespace MyFacebookApp.Model
 			foreach (User friend in LoggedInUser.Friends)
 			{
 				string formattedBirthday = friend.Birthday;
-				if (formattedBirthday.Length <= 5)
+
+                if (formattedBirthday.Length <= 5)
 				{
 					formattedBirthday += "/" + DateTime.Now.Year;
 				}
 
 				DateTime.TryParseExact(formattedBirthday, "MM/dd/yyyy", new DateTimeFormatInfo(), DateTimeStyles.AdjustToUniversal, out DateTime birthday);
-				if (birthday != null)
+
+                if (birthday != null)
 				{
 					birthday.AddYears(DateTime.Now.Year - birthday.Year);
+
 					if (birthday <= DateTime.Now.AddDays(7) && birthday >= DateTime.Now)
 					{
 						upcomingBirthdays.Add(friend);
@@ -112,8 +115,7 @@ namespace MyFacebookApp.Model
 
 			return PhotosStatistics;
 		}
-
-
+    
 		//private void generateGeneralStatistics()
 		//{
 		//	try
