@@ -77,6 +77,7 @@ namespace MyFacebookApp.Model
 				FacebookDateAdapter facebookDate = new FacebookDateAdapter();
 				try
 				{
+					facebookDate.Date = friend.Birthday;
 					DateTime birthday = facebookDate.ToDateTime();
 					birthday.AddYears(DateTime.Now.Year - birthday.Year);
 
@@ -85,9 +86,9 @@ namespace MyFacebookApp.Model
 						upcomingBirthdays.Add(friend);
 					}
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
-					// Couldnt parse current friends birthday
+					throw ex;
 				}
 			}
 
