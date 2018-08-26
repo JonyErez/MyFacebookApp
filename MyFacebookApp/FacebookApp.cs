@@ -27,7 +27,7 @@ namespace MyFacebookApp.Model
 
         public int WallPostAgeInMonths { get; private set; } = 3;
 
-      //  public AppDomain CurrentDomain { get; private set; } = AppDomain.CurrentDomain;
+        //  public AppDomain CurrentDomain { get; private set; } = AppDomain.CurrentDomain;
 
 
         // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
@@ -36,7 +36,7 @@ namespace MyFacebookApp.Model
         {
             InitializeComponent();
 
-           // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+            // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
 
             // Set Icon
             setFacebookAppIcon();
@@ -280,47 +280,53 @@ namespace MyFacebookApp.Model
 
             if (CurrentOverviewedFriend != null)
             {
-                try
-                {
+                //try
+                //{
                     populateTitles();
                     populateGeneralInfo();
                     populateMutualInfo();
-                }
+               // }
 
-                catch (Exception)
-                {
-                    //throw new Exception("Error fatching data.");
-                    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //catch (Exception)
+                //{
+                //    //throw new Exception("Error fatching data.");
+                //    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                }
+                //}
             }
         }
 
         private void populateMutualInfo()
         {
             UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-            Exception ex = null;
+            //  Exception ex = null;
 
-            new Thread(() => SafeExecute(() => populateSubTabMutualEvents(extendedLoggedInUser), out ex)).Start();
-            new Thread(() => SafeExecute(() => populateSubTabMutualCheckins(extendedLoggedInUser), out ex)).Start();
-            new Thread(() => SafeExecute(() => populateSubTabPostsTaggedMe(extendedLoggedInUser), out ex)).Start();
-            new Thread(() => SafeExecute(() => populateSubTabMutualGroups(extendedLoggedInUser), out ex)).Start();
-            new Thread(() => SafeExecute(() => populateSubTabMutualPictures(extendedLoggedInUser), out ex)).Start();
+            //new Thread(() => SafeExecute(() => populateSubTabMutualEvents(extendedLoggedInUser), out ex)).Start();
+            //new Thread(() => SafeExecute(() => populateSubTabMutualCheckins(extendedLoggedInUser), out ex)).Start();
+            //new Thread(() => SafeExecute(() => populateSubTabPostsTaggedMe(extendedLoggedInUser), out ex)).Start();
+            //new Thread(() => SafeExecute(() => populateSubTabMutualGroups(extendedLoggedInUser), out ex)).Start();
+            //new Thread(() => SafeExecute(() => populateSubTabMutualPictures(extendedLoggedInUser), out ex)).Start();
+
+            new Thread(() => populateSubTabMutualEvents(extendedLoggedInUser)).Start();
+            new Thread(() => populateSubTabMutualCheckins(extendedLoggedInUser)).Start();
+            new Thread(() => populateSubTabPostsTaggedMe(extendedLoggedInUser)).Start();
+            new Thread(() => populateSubTabMutualGroups(extendedLoggedInUser)).Start();
+            new Thread(() => populateSubTabMutualPictures(extendedLoggedInUser)).Start();
         }
 
-        private static void SafeExecute(Action i_Action, out Exception ex)
-        {
-            ex = null;
+        //private static void SafeExecute(Action i_Action, out Exception ex)
+        //{
+        //    ex = null;
 
-            try
-            {
-                i_Action.Invoke();
-            }
-            catch (Exception exception)
-            {
-                ex = exception;
-            }
-        }
+        //    try
+        //    {
+        //        i_Action.Invoke();
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        ex = exception;
+        //    }
+        //}
 
         private void populateSubTabMutualGroups(UserFriendsExtension i_ExtendedLoggedInUser)
         {
@@ -334,14 +340,19 @@ namespace MyFacebookApp.Model
 
         private void populateSubTabMutualCheckins(UserFriendsExtension i_ExtendedLoggedInUser)
         {
-            try
+
+            dataGridViewMutualCheckins.Invoke(new Action(() =>
             {
-                dataGridViewMutualCheckins.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewMutualCheckins, i_ExtendedLoggedInUser.GetMutualCheckins(CurrentOverviewedFriend))));
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Coudn't fetch mutual checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                try
+                {
+                    clearAndAttachBindingSource(bindingSourceFriendOverviewMutualCheckins, i_ExtendedLoggedInUser.GetMutualCheckins(CurrentOverviewedFriend));
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Coudn't fetch mutual checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
         }
 
         private void populateSubTabMutualEvents(UserFriendsExtension i_extendedLoggedInUser)
@@ -382,33 +393,33 @@ namespace MyFacebookApp.Model
 
         private void populateSubTabMutualPictures(UserFriendsExtension i_ExtendedLoggedInUser)
         {
-            try
-            {
+            //try
+            //{
                 clearAndAttachBindingSource(bindingSourceFriendOverviewMutualPictures, i_ExtendedLoggedInUser.GetMutualPictures(CurrentOverviewedFriend));
-            }
-            catch (Exception)
-            {
+            //}
+            //catch (Exception)
+            //{
                 //throw new Exception("Error fatching data.");
-                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             //progressBarFriendshipStrength.Increment();
         }
 
         private void populatePersonalInfo()
         {
-            try
-            {
+           // try
+            //{
                 panelFriendProfileData.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewPersonalInfo, CurrentOverviewedFriend)));
                 labelNumberOfFriends.Invoke(new Action(() => labelNumberOfFriends.Text = CurrentOverviewedFriend.Friends.Count.ToString()));
                 labelRelationshipStatus.Invoke(new Action(() => labelRelationshipStatus.Text = CurrentOverviewedFriend.RelationshipStatus.ToString()));
                 labelOnlineStatus.Invoke(new Action(() => labelOnlineStatus.Text = CurrentOverviewedFriend.OnlineStatus.ToString()));
 
-            }
-            catch (Exception)
-            {
-                //throw new Exception("Error fatching data.");
-                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           // }
+            //catch (Exception)
+            //{
+            //    //throw new Exception("Error fatching data.");
+            //    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
         private void clearAndAttachBindingSource(BindingSource i_BindingSource, object i_DataSource)
         {
@@ -418,53 +429,76 @@ namespace MyFacebookApp.Model
 
         private void populateSubTabFriendGroups()
         {
-            try
+            dataGridViewFriendOverviewGroups.Invoke(new Action(() =>
             {
-                dataGridViewFriendOverviewGroups.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewGroups, CurrentOverviewedFriend.Groups)));
-            }
-            catch (Exception)
-            {
-                //throw new Exception("Error fatching data.");
-                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                try
+                {
+                    clearAndAttachBindingSource(bindingSourceFriendOverviewGroups, CurrentOverviewedFriend.Groups);
+                }
+
+                catch (Exception)
+                {
+                    //throw new Exception("Error fatching data.");
+                    MessageBox.Show("There was an error factching data. (436)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
         }
 
         private void populateSubTabFriendPosts()
         {
-            try
+
+            dataGridViewPostsTaggedMe.Invoke(new Action(() =>
             {
-                dataGridViewPostsTaggedMe.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewPosts, CurrentOverviewedFriend.Posts)));
-            }
-            catch (Exception)
-            {
-                //  throw new Exception("Error fatching data.");
-                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                try
+                {
+                    clearAndAttachBindingSource(bindingSourceFriendOverviewPosts, CurrentOverviewedFriend.Posts);
+                }
+                catch (Exception)
+                {
+                    //  throw new Exception("Error fatching data.");
+                    MessageBox.Show("There was an error factching data.(453)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
         }
 
         private void populateSubTabFriendCheckins()
         {
-            try
+            //try
+            //{
+            dataGridViewFriendOvervieCheckins.Invoke(new Action(() =>
             {
-                dataGridViewFriendOvervieCheckins.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewCheckins, CurrentOverviewedFriend.Checkins)));
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Coudn't fetch your friend checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                try
+                {
+                    clearAndAttachBindingSource(bindingSourceFriendOverviewCheckins, CurrentOverviewedFriend.Checkins);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Coudn't fetch your friend checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Coudn't fetch your friend checkins!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void populateSubTabFriendEvents()
         {
-            try
+            dataGridViewFriendOverviewEvents.Invoke(new Action(() =>
             {
-                dataGridViewFriendOverviewEvents.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewEvents, CurrentOverviewedFriend.Events)));
-            }
-            catch (Exception)
-            {
-                // Always throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
-                MessageBox.Show("Couldn't fetch your friend events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                try
+                {
+                    clearAndAttachBindingSource(bindingSourceFriendOverviewEvents, CurrentOverviewedFriend.Events);
+
+                }
+
+                catch (Exception)
+                {
+                    // Always throws Auth Error: field 'location' has been depreciated since version 2.5 of the API
+                    MessageBox.Show("Couldn't fetch your friend events!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
         }
 
         private void comboBoxChooseAFriend_TextChanged(object i_Sender, EventArgs i_EventArgs)
