@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FacebookWrapper.ObjectModel;
 
 namespace MyFacebookApp.Model
 {
 	public abstract class Statistics
 	{
-		internal Statistics(User i_LoggedInUser) { LoggedInUser = i_LoggedInUser; }
+		internal Statistics(User i_LoggedInUser)
+		{
+			LoggedInUser = i_LoggedInUser;
+		}
 
 		protected PostedItem m_MostLiked;
 
@@ -25,7 +26,6 @@ namespace MyFacebookApp.Model
 		public User UserWithMostLikes { get; set; }
 
 		public Dictionary<User, int> UsersLikesCounts { get; set; }
-
 
 		public virtual void GenerateStatistics()
 		{
@@ -45,16 +45,24 @@ namespace MyFacebookApp.Model
 				UsersLikesCounts.Clear();
 			}
 
-			foreach (Post post in LoggedInUser.Posts)
+			try
 			{
-				TotalLikes += post.LikedBy.Count;
-				addLikesForCurrentItem(post);
-				if (post.LikedBy.Count > MostLikedCount)
+				foreach (Post post in LoggedInUser.Posts)
 				{
-					MostLikedCount = post.LikedBy.Count;
-					MostLiked = post;
+					TotalLikes += post.LikedBy.Count;
+					addLikesForCurrentItem(post);
+					if (post.LikedBy.Count > MostLikedCount)
+					{
+						MostLikedCount = post.LikedBy.Count;
+						MostLiked = post;
+					}
 				}
 			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+
 			findUserWithMostLikes();
 		}
 

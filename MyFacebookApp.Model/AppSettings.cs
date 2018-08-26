@@ -7,13 +7,13 @@ namespace MyFacebookApp.Model
 {
     public class AppSettings
 	{
-		public static AppSettings Settings { get; private set;	} = null;
+		public static AppSettings Settings { get; private set;	}
 
 		private AppSettings()
 		{
 		}
 
-		public string LastAccessToken { get; set;} = string.Empty;
+		public string LastAccessToken { get; set; } = string.Empty;
 
 		public Point Location {	get; set; } = new Point(10, 10);
 

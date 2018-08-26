@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FacebookWrapper.ObjectModel;
 
 namespace MyFacebookApp.Model
@@ -32,6 +29,7 @@ namespace MyFacebookApp.Model
             {
                 throw new Exception("Couldn't fetch mutual events! (UserFriendsExtension");
             }
+
             return mutualEvents;
         }
 
@@ -68,6 +66,7 @@ namespace MyFacebookApp.Model
             {
                 throw new Exception("Couldn't fetch mutual checkins! (UserFriendsExtension");
             }
+
             return mutualCheckin;
         }
 
