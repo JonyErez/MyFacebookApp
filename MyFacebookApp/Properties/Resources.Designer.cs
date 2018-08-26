@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyFacebookApp.View.Properties {
+namespace MyFacebookApp.Model.Properties {
     using System;
     
     

@@ -57,8 +57,6 @@
     <Compile Include="FacebookApp.Designer.cs">
       <DependentUpon>FacebookApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="FacebookBirthdayAdapter.cs" />
-    <Compile Include="UserFriendsExtension.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FBicon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyFacebookApp.Model\MyFacebookApp.Model.csproj">
+      <Project>{5e075709-1c46-47d0-8c93-53c6f1d0b15a}</Project>
+      <Name>MyFacebookApp.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

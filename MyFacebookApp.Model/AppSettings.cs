@@ -3,37 +3,21 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
     public class AppSettings
 	{
-		public static AppSettings Settings
-		{
-			get;
-			private set;
-		} = null;
+		public static AppSettings Settings { get; private set;	} = null;
 
 		private AppSettings()
 		{
 		}
 
-		public string LastAccessToken
-		{
-			get;
-			set;
-		} = string.Empty;
+		public string LastAccessToken { get; set;} = string.Empty;
 
-		public Point Location
-		{
-			get;
-			set;
-		} = new Point(10, 10);
+		public Point Location {	get; set; } = new Point(10, 10);
 
-		public bool RememberUser
-		{
-			get;
-			set;
-		}
+		public bool RememberUser { get;	set; }
 
 		public static AppSettings LoadAppSettings()
 		{

@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using MyFacebookApp.View.Properties;
+using MyFacebookApp.Model.Properties;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
 	public partial class FormLogin : Form
 	{

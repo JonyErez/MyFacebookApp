@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FacebookWrapper.ObjectModel;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
     public class UserFriendsExtension
     {
@@ -18,15 +18,20 @@ namespace MyFacebookApp.View
         public FacebookObjectCollection<Event> GetMutualEvents(User i_Friend)
         {
             FacebookObjectCollection<Event> mutualEvents = new FacebookObjectCollection<Event>();
-
-            foreach (Event currEvent in User.Events)
+            try
             {
-                if (i_Friend.Events.Contains(currEvent))
+                foreach (Event currEvent in User.Events)
                 {
-                    mutualEvents.Add(currEvent);
+                    if (i_Friend.Events.Contains(currEvent))
+                    {
+                        mutualEvents.Add(currEvent);
+                    }
                 }
             }
-
+            catch(Exception)
+            {
+                throw new Exception("Couldn't fetch mutual events! (UserFriendsExtension");
+            }
             return mutualEvents;
         }
 
@@ -49,14 +54,20 @@ namespace MyFacebookApp.View
         {
             FacebookObjectCollection<Checkin> mutualCheckin = new FacebookObjectCollection<Checkin>();
 
-            foreach (Checkin checkin in User.Checkins)
+            try
             {
-                if (i_Friend.Checkins.Contains(checkin))
+                foreach (Checkin checkin in User.Checkins)
                 {
-                    mutualCheckin.Add(checkin);
+                    if (i_Friend.Checkins.Contains(checkin))
+                    {
+                        mutualCheckin.Add(checkin);
+                    }
                 }
             }
-
+            catch(Exception)
+            {
+                throw new Exception("Couldn't fetch mutual checkins! (UserFriendsExtension");
+            }
             return mutualCheckin;
         }
 

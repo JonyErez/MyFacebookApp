@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
 	public static class Program
 	{

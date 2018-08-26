@@ -6,15 +6,20 @@ using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using MyFacebookApp.View.Properties;
+using MyFacebookApp.Model.Properties;
+using MyFacebookApp.Model;
+using System.Security.Permissions;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
+    [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
     public partial class FacebookApp : Form
     {
         public AppSettings Settings { get; private set; }
 
         public User LoggedInUser { get; private set; }
+
+        public User CurrentOverviewedFriend { get; private set; }
 
         public string AccessToken { get; private set; }
 
@@ -22,13 +27,25 @@ namespace MyFacebookApp.View
 
         public int WallPostAgeInMonths { get; private set; } = 3;
 
+      //  public AppDomain CurrentDomain { get; private set; } = AppDomain.CurrentDomain;
+
+
+        // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+
         public FacebookApp()
         {
             InitializeComponent();
 
+           // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+
             // Set Icon
             setFacebookAppIcon();
         }
+
+        //private void MyHandler(object sender, UnhandledExceptionEventArgs e)
+        //{
+        //    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
 
         private void setFacebookAppIcon()
         {
@@ -72,7 +89,6 @@ namespace MyFacebookApp.View
         {
             labelWelcomeUser.Text = string.Format("Hello {0} !", LoggedInUser.Name);
             pictureBoxProfilePicture.LoadAsync(LoggedInUser.PictureNormalURL);
-            //   pictureBoxProfilePicture.BringToFront();
 
             if (LoggedInUser.Cover?.SourceURL != null)
             {
@@ -83,16 +99,16 @@ namespace MyFacebookApp.View
                 pictureBoxCover.Image = Resources.facebookBanner;
             }
 
-            //  new Thread(populateFields).Start();
             populateFields();
         }
 
+        // ----------------------------- Tab General --------------------------------/
         private void populateFields()
         {
             new Thread(populateAlbums).Start();
             new Thread(populateBirthdays).Start();
             new Thread(populateEventsList).Start();
-            populateWallPosts();
+            new Thread(populateWallPosts).Start();
             new Thread(populateFriendList).Start();
             new Thread(populateLikedPages).Start();
         }
@@ -116,7 +132,7 @@ namespace MyFacebookApp.View
             {
                 if (wallPost.CreatedTime >= DateTime.Now.AddMonths(-WallPostAgeInMonths))
                 {
-                    bindingSourceWallPosts.Add(wallPost);
+                    DataGridViewRecentWallPosts.Invoke(new Action(() => bindingSourceWallPosts.Add(wallPost)));
                 }
             }
         }
@@ -125,7 +141,7 @@ namespace MyFacebookApp.View
         {
             foreach (User friend in LoggedInUser.Friends)
             {
-                FacebookBirthdayAdapter friendBirthday = new FacebookBirthdayAdapter { Birthday = friend.Birthday };
+                FacebookDateAdapter friendBirthday = new FacebookDateAdapter { Date = friend.Birthday };
                 DateTime dateTimeBirthday = friendBirthday.ToDateTime();
 
                 if (dateTimeBirthday != null && birthdayIsUpcoming(dateTimeBirthday))
@@ -247,6 +263,8 @@ namespace MyFacebookApp.View
             }
         }
 
+        // ----------------------------- Tab Friend Overview --------------------------------/
+
         private void populateTabFriendOverview()
         {
             UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
@@ -256,57 +274,69 @@ namespace MyFacebookApp.View
             comboBoxChooseAFriend.SelectedText = "Choose a friend to overview";
         }
 
-
-
-
         private void comboBoxChooseAFriend_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+            CurrentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
 
-            if (currentOverviewedFriend != null)
+            if (CurrentOverviewedFriend != null)
             {
-                populateTitles();
-                populateGeneralInfo();
-                populateMutualInfo();
+                try
+                {
+                    populateTitles();
+                    populateGeneralInfo();
+                    populateMutualInfo();
+                }
 
-                //  MessageBox.Show("Friend data has been retrieved!");
+                catch (Exception)
+                {
+                    //throw new Exception("Error fatching data.");
+                    MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
             }
         }
 
         private void populateMutualInfo()
         {
-            populateSubTabMutualEvents();
-            populateSubTabMutualCheckins();
-            populateSubTabPostsTaggedMe();
-            populateSubTabMutualGroups();
-            populateSubTabMutualPictures();
+            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
+            Exception ex = null;
+
+            new Thread(() => SafeExecute(() => populateSubTabMutualEvents(extendedLoggedInUser), out ex)).Start();
+            new Thread(() => SafeExecute(() => populateSubTabMutualCheckins(extendedLoggedInUser), out ex)).Start();
+            new Thread(() => SafeExecute(() => populateSubTabPostsTaggedMe(extendedLoggedInUser), out ex)).Start();
+            new Thread(() => SafeExecute(() => populateSubTabMutualGroups(extendedLoggedInUser), out ex)).Start();
+            new Thread(() => SafeExecute(() => populateSubTabMutualPictures(extendedLoggedInUser), out ex)).Start();
         }
 
-        private void populateSubTabMutualGroups()
+        private static void SafeExecute(Action i_Action, out Exception ex)
         {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-
-            bindingSourceFriendOverviewMutualGroups.Clear();
-            bindingSourceFriendOverviewMutualGroups.DataSource = extendedLoggedInUser.GetMutualGroups(comboBoxChooseAFriend.SelectedItem as User);
-        }
-
-        private void populateSubTabPostsTaggedMe()
-        {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-
-            bindingSourceFriendOverviewPostsTaggedMe.Clear();
-            bindingSourceFriendOverviewPostsTaggedMe.DataSource = extendedLoggedInUser.GetPostsFriendTaggedUser(comboBoxChooseAFriend.SelectedItem as User);
-        }
-
-        private void populateSubTabMutualCheckins()
-        {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-
-            bindingSourceFriendOverviewMutualCheckins.Clear();
+            ex = null;
 
             try
             {
-                bindingSourceFriendOverviewMutualCheckins.DataSource = extendedLoggedInUser.GetMutualCheckins(comboBoxChooseAFriend.SelectedItem as User);
+                i_Action.Invoke();
+            }
+            catch (Exception exception)
+            {
+                ex = exception;
+            }
+        }
+
+        private void populateSubTabMutualGroups(UserFriendsExtension i_ExtendedLoggedInUser)
+        {
+            clearAndAttachBindingSource(bindingSourceFriendOverviewMutualGroups, i_ExtendedLoggedInUser.GetMutualGroups(CurrentOverviewedFriend));
+        }
+
+        private void populateSubTabPostsTaggedMe(UserFriendsExtension i_ExtendedLoggedInUser)
+        {
+            clearAndAttachBindingSource(bindingSourceFriendOverviewPostsTaggedMe, i_ExtendedLoggedInUser.GetPostsFriendTaggedUser(CurrentOverviewedFriend));
+        }
+
+        private void populateSubTabMutualCheckins(UserFriendsExtension i_ExtendedLoggedInUser)
+        {
+            try
+            {
+                dataGridViewMutualCheckins.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewMutualCheckins, i_ExtendedLoggedInUser.GetMutualCheckins(CurrentOverviewedFriend))));
             }
             catch (Exception)
             {
@@ -314,15 +344,11 @@ namespace MyFacebookApp.View
             }
         }
 
-        private void populateSubTabMutualEvents()
+        private void populateSubTabMutualEvents(UserFriendsExtension i_extendedLoggedInUser)
         {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-
-            bindingSourceFriendOverviewMutualEvents.Clear();
-
             try
             {
-                 bindingSourceFriendOverviewMutualEvents.DataSource = extendedLoggedInUser.GetMutualEvents(comboBoxChooseAFriend.SelectedItem as User);
+                dataGridViewMutualEvents.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewMutualEvents, i_extendedLoggedInUser.GetMutualEvents(CurrentOverviewedFriend))));
             }
             catch (Exception)
             {
@@ -333,70 +359,94 @@ namespace MyFacebookApp.View
 
         private void populateGeneralInfo()
         {
-            populatePersonalInfo();
-            populateSubTabFriendEvents();
-            populateSubTabFriendCheckins();
-            populateSubTabFriendPosts();
-            populateSubTabFriendGroups();
+
+            new Thread(populatePersonalInfo).Start();
+            new Thread(populateSubTabFriendEvents).Start();
+            new Thread(populateSubTabFriendCheckins).Start();
+            new Thread(populateSubTabFriendPosts).Start();
+            new Thread(populateSubTabFriendGroups).Start();
+
         }
 
         private void populateTitles()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
-            string title = string.Format("{0}s activity:", currentOverviewedFriend.Name);
-            title = string.Format("Upload a picture with {0}!", currentOverviewedFriend.FirstName);
+            string title = string.Format("Upload a picture with {0}!", CurrentOverviewedFriend.FirstName);
             labelUploadMutualPic.Text = title;
-            title = string.Format("Pictures of you and {0}:", currentOverviewedFriend.FirstName);
-            title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, currentOverviewedFriend.FirstName);
+            title = string.Format("Description: the picture you will choose{0}will automatically tag {1}.", Environment.NewLine, CurrentOverviewedFriend.FirstName);
             labelUploadMutualPicDescription.Text = title;
+            title = string.Format("Information about {0}", CurrentOverviewedFriend.Name);
+            labelGeneralFriendInfo.Text = title;
+            title = string.Format("Check out your mutuals with {0}", CurrentOverviewedFriend.FirstName);
+            labelMutualInfo.Text = title;
         }
 
-        private void populateSubTabMutualPictures()
+        private void populateSubTabMutualPictures(UserFriendsExtension i_ExtendedLoggedInUser)
         {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = LoggedInUser };
-
-            bindingSourceFriendOverviewMutualPictures.Clear();
-            bindingSourceFriendOverviewMutualPictures.DataSource = extendedLoggedInUser.GetMutualPictures(comboBoxChooseAFriend.SelectedItem as User);
+            try
+            {
+                clearAndAttachBindingSource(bindingSourceFriendOverviewMutualPictures, i_ExtendedLoggedInUser.GetMutualPictures(CurrentOverviewedFriend));
+            }
+            catch (Exception)
+            {
+                //throw new Exception("Error fatching data.");
+                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             //progressBarFriendshipStrength.Increment();
         }
 
         private void populatePersonalInfo()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+            try
+            {
+                panelFriendProfileData.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewPersonalInfo, CurrentOverviewedFriend)));
+                labelNumberOfFriends.Invoke(new Action(() => labelNumberOfFriends.Text = CurrentOverviewedFriend.Friends.Count.ToString()));
+                labelRelationshipStatus.Invoke(new Action(() => labelRelationshipStatus.Text = CurrentOverviewedFriend.RelationshipStatus.ToString()));
+                labelOnlineStatus.Invoke(new Action(() => labelOnlineStatus.Text = CurrentOverviewedFriend.OnlineStatus.ToString()));
 
-            bindingSourceFriendOverviewPersonalInfo.Clear();
-            bindingSourceFriendOverviewPersonalInfo.DataSource = currentOverviewedFriend;
-            labelNumberOfFriends.Text = currentOverviewedFriend.Friends.Count.ToString();
-            labelRelationshipStatus.Text = currentOverviewedFriend.RelationshipStatus.ToString();
-            labelOnlineStatus.Text = currentOverviewedFriend.OnlineStatus.ToString();
+            }
+            catch (Exception)
+            {
+                //throw new Exception("Error fatching data.");
+                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void clearAndAttachBindingSource(BindingSource i_BindingSource, object i_DataSource)
+        {
+            i_BindingSource.Clear();
+            i_BindingSource.DataSource = i_DataSource;
         }
 
         private void populateSubTabFriendGroups()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
-            bindingSourceFriendOverviewGroups.Clear();
-            bindingSourceFriendOverviewGroups.DataSource = currentOverviewedFriend.Groups;
+            try
+            {
+                dataGridViewFriendOverviewGroups.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewGroups, CurrentOverviewedFriend.Groups)));
+            }
+            catch (Exception)
+            {
+                //throw new Exception("Error fatching data.");
+                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void populateSubTabFriendPosts()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
-            bindingSourceFriendOverviewPosts.Clear();
-            bindingSourceFriendOverviewPosts.DataSource = currentOverviewedFriend.Posts;
+            try
+            {
+                dataGridViewPostsTaggedMe.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewPosts, CurrentOverviewedFriend.Posts)));
+            }
+            catch (Exception)
+            {
+                //  throw new Exception("Error fatching data.");
+                MessageBox.Show("There was an error factching data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void populateSubTabFriendCheckins()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
-            bindingSourceFriendOverviewCheckins.Clear();
-
             try
             {
-                bindingSourceFriendOverviewCheckins.DataSource = currentOverviewedFriend.Checkins;
+                dataGridViewFriendOvervieCheckins.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewCheckins, CurrentOverviewedFriend.Checkins)));
             }
             catch (Exception)
             {
@@ -406,13 +456,9 @@ namespace MyFacebookApp.View
 
         private void populateSubTabFriendEvents()
         {
-            User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
-            bindingSourceFriendOverviewEvents.Clear();
-
             try
             {
-                bindingSourceFriendOverviewEvents.DataSource = currentOverviewedFriend.Events;
+                dataGridViewFriendOverviewEvents.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewEvents, CurrentOverviewedFriend.Events)));
             }
             catch (Exception)
             {
@@ -472,16 +518,13 @@ namespace MyFacebookApp.View
             }
         }
 
+        // ----------------------------- Tab Friend Overview --------------------------------/
+
         private void generateStatistics()
         {
             generateGeneralStatistics();
-            generatePhotoStatistics();
-            generatePostStatistics();
-            MessageBox.Show("Your account statistics have been updated!");
-            //new Thread(generateGeneralStatistics).Start();
-            //generatePhotoStatistics();
-            //new Thread(generatePostStatistics).Start();
-            //  MessageBox.Show("Your account statistics have been updated!");
+            new Thread(generatePhotoStatistics).Start();
+            new Thread(generatePostStatistics).Start();
         }
 
         private void generatePostStatistics()
@@ -492,7 +535,8 @@ namespace MyFacebookApp.View
             generateTaggedPostsData(mostPostsWith);
             findMaxCountAndUser(mostLikesBy, out User mostLikesByUser, out int mostLikesByCount);
             findMaxCountAndUser(mostPostsWith, out User maxMutualPostsUser, out int maxMutualPostsCount);
-            updatePostStatistics(mostLikesByUser, mostLikesByCount, maxMutualPostsUser, maxMutualPostsCount, mostLikedPost, mostLikedCount, totalLikes);
+            // 
+            panelStatisticsPosts.Invoke(new Action(() => updatePostStatistics(mostLikesByUser, mostLikesByCount, maxMutualPostsUser, maxMutualPostsCount, mostLikedPost, mostLikedCount, totalLikes)));
         }
 
         private void updatePostStatistics(User i_MostLikesByUser, int i_MostLikesByCount, User i_MaxMutualPostsUser, int i_MaxMutualPostsCount, Post i_MostLikedPost, int i_MostLikedCount, int i_TotalLikes)
@@ -589,9 +633,9 @@ namespace MyFacebookApp.View
             labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString();
             labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString();
 
-            //    labelStatisticsGeneralFriends.Invoke(new Action(() => labelStatisticsGeneralFriends.Text = LoggedInUser.Friends.Count.ToString()));
-            //    labelStatisticsGeneralCheckins.Invoke(new Action(() => labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString()));
-            //    labelStatisticsGeneralPosts.Invoke(new Action(() => labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString()));
+            //labelStatisticsGeneralFriends.Invoke(new Action(() => labelStatisticsGeneralFriends.Text = LoggedInUser.Friends.Count.ToString()));
+            //labelStatisticsGeneralCheckins.Invoke(new Action(() => labelStatisticsGeneralCheckins.Text = LoggedInUser.Checkins.Count.ToString()));
+            //labelStatisticsGeneralPosts.Invoke(new Action(() => labelStatisticsGeneralPosts.Text = LoggedInUser.Posts.Count.ToString()));
         }
 
         private void generatePhotoStatistics()
@@ -601,7 +645,8 @@ namespace MyFacebookApp.View
             generatePhotoData(mostLikesBy, mostPhotosWith, out Photo mostLikedPhoto, out int totalLikes, out int mostLikes);
             findMaxCountAndUser(mostPhotosWith, out User maxMutualPhotosUser, out int maxMutualPhotosCount);
             findMaxCountAndUser(mostLikesBy, out User maxLikedByUser, out int maxLikedByCount);
-            updateLikeStatistics(totalLikes, mostLikes, mostLikedPhoto, maxMutualPhotosUser, maxMutualPhotosCount, maxLikedByUser, maxLikedByCount);
+            // invoke
+            panelStatisticsPhotos.Invoke(new Action(() => updateLikeStatistics(totalLikes, mostLikes, mostLikedPhoto, maxMutualPhotosUser, maxMutualPhotosCount, maxLikedByUser, maxLikedByCount)));
         }
 
         private void generatePhotoData(Dictionary<User, int> i_MostLikesBy, Dictionary<User, int> i_MostPhotosWith, out Photo o_MostLikedPhoto, out int o_TotalLikes, out int io_MostLikes)
@@ -622,7 +667,7 @@ namespace MyFacebookApp.View
                 addMutualPictureCountForCurrentPhoto(i_MostPhotosWith, photo);
             }
         }
-
+        // invokes
         private void updateLikeStatistics(int i_TotalLikes, int i_MostLikes, Photo i_MostLikedPhoto, User i_MaxMutualPhotosUser, int i_MaxMutualPhotosCount, User i_MaxLikedByUser, int i_MaxLikedByCount)
         {
             labelMostMutualPhotosWithCount.Text = i_MaxMutualPhotosCount.ToString();

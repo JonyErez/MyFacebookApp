@@ -1,4 +1,4 @@
-﻿namespace MyFacebookApp.View
+﻿namespace MyFacebookApp.Model
 {
 	public partial class FormLogin
 	{

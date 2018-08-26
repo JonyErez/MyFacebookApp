@@ -6,7 +6,7 @@ using System.Text;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
-namespace MyFacebookApp.View
+namespace MyFacebookApp.Model
 {
 	internal class AppData
 	{
@@ -17,8 +17,6 @@ namespace MyFacebookApp.View
 		public string AccessToken { get; private set; }
 
 		public bool RememberUser { get; private set; } = false;
-
-		public Friend CurrentOverviewedFriend { get; private set; }
 
 		public PostsStatistics PostsStatistics { get; private set; }
 

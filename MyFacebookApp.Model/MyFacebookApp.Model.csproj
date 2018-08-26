@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="AppData.cs" />
     <Compile Include="AppSettings.cs" />
-    <Compile Include="FacebookBirthdayAdapter.cs" />
+    <Compile Include="FacebookDateAdapter.cs" />
     <Compile Include="UserFriendsExtension.cs" />
     <Compile Include="PhotosStatistics.cs" />
     <Compile Include="PostsStatistics.cs" />
