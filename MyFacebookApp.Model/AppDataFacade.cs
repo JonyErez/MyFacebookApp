@@ -38,12 +38,16 @@ namespace MyFacebookApp.Model
 
 		public void Login()
 		{
-			AppData.Login(); 
-		}
+			AppSettings appSettings = AppSettings.LoadAppSettings();
 
-		public void AutoLogin()
-		{
-			AppData.AutoLogin();
+			if (!appSettings.RememberUser)
+			{
+				AppData.Login();
+			}
+			else
+			{
+				AppData.AutoLogin();
+			}
 		}
 
 		public FacebookObjectCollection<Post> GetRecentWallPosts(int i_WallPostAgeInMonths)

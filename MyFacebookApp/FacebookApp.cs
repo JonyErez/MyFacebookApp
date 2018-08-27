@@ -75,16 +75,7 @@ namespace MyFacebookApp.View
 
 		private void facebookApp_Shown(object i_Sender, EventArgs i_EventArgs)
 		{
-			AppSettings appSettings = r_AppData.GetAppSettings();
-
-			if (!appSettings.RememberUser)
-			{
-				r_AppData.Login();
-			}
-			else
-			{
-				r_AppData.AutoLogin();
-			}
+			r_AppData.Login();
 
 			new Thread(fetchUserInfo).Start();
 		}
