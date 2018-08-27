@@ -3,7 +3,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace MyFacebookApp.Model
 {
-    public class UserFriendsExtension
+    public class UserFriendExtension
     {
         public User User { get; set; }
         

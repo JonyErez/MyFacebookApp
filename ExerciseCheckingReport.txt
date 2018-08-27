@@ -1,8 +1,8 @@
 ==========================Exercise Checking Report==========================
-Exercise No...........: 01
+Exercise No...........: 02
 First Student Details.: 312535644 - Gal Nahum
 Second Student Details: 204883359 - Jonathan Erez
-Delivery Date.........: 02/08/2018
+Delivery Date.........: 27/08/2018
 Delivered In Delay....: No
 Delay Reason..........: -
 Comments..............: -

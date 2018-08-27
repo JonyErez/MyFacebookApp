@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFacebookApp.View", "MyFac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0C3033-B12C-4E1A-86A4-ED317FB1505C}"
 	ProjectSection(SolutionItems) = preProject
-		Diagrams And Feature Explenation.docx = Diagrams And Feature Explenation.docx
+		..\..\..\Documents\המסמכים שלי\לימודים\שנה ב\סמסטר קיץ\Design Patterns\DP_MTA_2018C_Ex02\DP_Ex02.docx = ..\..\..\Documents\המסמכים שלי\לימודים\שנה ב\סמסטר קיץ\Design Patterns\DP_MTA_2018C_Ex02\DP_Ex02.docx
 		ExerciseCheckingReport.txt = ExerciseCheckingReport.txt
 	EndProjectSection
 EndProject

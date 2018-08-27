@@ -10,7 +10,6 @@ using MyFacebookApp.Model;
 
 namespace MyFacebookApp.View
 {
-    [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
     public partial class FacebookApp : Form
 	{
 		private readonly AppDataFacade r_AppData = new AppDataFacade();
@@ -22,8 +21,6 @@ namespace MyFacebookApp.View
         public FacebookApp()
         {
             InitializeComponent();
-
-            // CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
 
             // Set Icon
             setFacebookAppIcon();
@@ -194,6 +191,15 @@ namespace MyFacebookApp.View
 		private void populateFriendList()
         {
             listBoxFriends.Invoke(new Action(() => bindingSourceFriends.DataSource = r_AppData.LoggedInUser.Friends));
+            labelGeneralFriendBirthday.Invoke(new Action(() => customBirthday(labelGeneralFriendBirthday)));
+        }
+
+        private void customBirthday(Label i_facebookBirthdayLabel)
+        {
+            FacebookDateAdapter birthday = new FacebookDateAdapter { Date = i_facebookBirthdayLabel.Text };
+
+            birthday.ToDateTime();
+            i_facebookBirthdayLabel.Text = birthday.Date;
         }
 
         private void buttonLogout_Click(object i_Sender, EventArgs i_EventArgs)
@@ -252,7 +258,7 @@ namespace MyFacebookApp.View
 		// ----------------------------- Tab Friend Overview --------------------------------/
 		private void populateTabFriendOverview()
         {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = r_AppData.LoggedInUser };
+            UserFriendExtension extendedLoggedInUser = new UserFriendExtension { User = r_AppData.LoggedInUser };
 
             bindingSourceFriendOverview.DataSource = extendedLoggedInUser.Friends();
 
@@ -273,7 +279,7 @@ namespace MyFacebookApp.View
 
         private void populateMutualInfo()
         {
-            UserFriendsExtension extendedLoggedInUser = new UserFriendsExtension { User = r_AppData.LoggedInUser };
+            UserFriendExtension extendedLoggedInUser = new UserFriendExtension { User = r_AppData.LoggedInUser };
 
             new Thread(() => populateSubTabMutualEvents(extendedLoggedInUser)).Start();
             new Thread(() => populateSubTabMutualCheckins(extendedLoggedInUser)).Start();
@@ -282,22 +288,22 @@ namespace MyFacebookApp.View
             new Thread(() => populateSubTabMutualPictures(extendedLoggedInUser)).Start();
         }
 
-        private void populateSubTabMutualGroups(UserFriendsExtension i_ExtendedLoggedInUser)
+        private void populateSubTabMutualGroups(UserFriendExtension i_ExtendedLoggedInUser)
         {
             clearAndAttachBindingSource(bindingSourceFriendOverviewMutualGroups, i_ExtendedLoggedInUser.GetMutualGroups(CurrentOverviewedFriend));
         }
 
-        private void populateSubTabPostsTaggedMe(UserFriendsExtension i_ExtendedLoggedInUser)
+        private void populateSubTabPostsTaggedMe(UserFriendExtension i_ExtendedLoggedInUser)
         {
             clearAndAttachBindingSource(bindingSourceFriendOverviewPostsTaggedMe, i_ExtendedLoggedInUser.GetPostsFriendTaggedUser(CurrentOverviewedFriend));
         }
 
-        private void populateSubTabMutualCheckins(UserFriendsExtension i_ExtendedLoggedInUser)
+        private void populateSubTabMutualCheckins(UserFriendExtension i_ExtendedLoggedInUser)
         {
 			dataGridViewMutualCheckins.Invoke(new Action(() => getMutualCheckins(i_ExtendedLoggedInUser)));
         }
 
-		private void getMutualCheckins(UserFriendsExtension i_ExtendedLoggedInUser)
+		private void getMutualCheckins(UserFriendExtension i_ExtendedLoggedInUser)
 		{
 			try
 			{
@@ -309,7 +315,7 @@ namespace MyFacebookApp.View
 			}
 		}
 
-		private void populateSubTabMutualEvents(UserFriendsExtension i_extendedLoggedInUser)
+		private void populateSubTabMutualEvents(UserFriendExtension i_extendedLoggedInUser)
         {
             try
             {
@@ -343,7 +349,7 @@ namespace MyFacebookApp.View
             labelMutualInfo.Text = title;
         }
 
-		private void populateSubTabMutualPictures(UserFriendsExtension i_ExtendedLoggedInUser)
+		private void populateSubTabMutualPictures(UserFriendExtension i_ExtendedLoggedInUser)
 		{
 			clearAndAttachBindingSource(bindingSourceFriendOverviewMutualPictures, i_ExtendedLoggedInUser.GetMutualPictures(CurrentOverviewedFriend));
 		}
@@ -354,7 +360,8 @@ namespace MyFacebookApp.View
 			labelNumberOfFriends.Invoke(new Action(() => labelNumberOfFriends.Text = CurrentOverviewedFriend.Friends.Count.ToString()));
 			labelRelationshipStatus.Invoke(new Action(() => labelRelationshipStatus.Text = CurrentOverviewedFriend.RelationshipStatus.ToString()));
 			labelOnlineStatus.Invoke(new Action(() => labelOnlineStatus.Text = CurrentOverviewedFriend.OnlineStatus.ToString()));
-		}
+            labelFriendOverviewBirthday.Invoke(new Action(() => customBirthday(labelFriendOverviewBirthday)));
+        }
 
 		private void clearAndAttachBindingSource(BindingSource i_BindingSource, object i_DataSource)
         {
@@ -375,8 +382,7 @@ namespace MyFacebookApp.View
 			}
 			catch (Exception)
 			{
-				// Throw new Exception("Error fatching data.");
-				MessageBox.Show("There was an error factching data. (436)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("There was an error fetching data. (375)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -393,8 +399,7 @@ namespace MyFacebookApp.View
 			}
 			catch (Exception)
 			{
-				// Throw new Exception("Error fatching data.");
-				MessageBox.Show("There was an error factching data.(453)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("There was an error fetching data. (392)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
