@@ -247,11 +247,7 @@ namespace MyFacebookApp.View
 
 			if (tabControlGeneral.SelectedTab == tabControlGeneral.TabPages["tabPageTaggedPhotos"])
 			{
-				foreach (string searchStrategy in r_AppData.GetSearchStrategys())
-				{
-					comboBoxTaggedPhotoSelectStrategys.Items.Add(searchStrategy);
-				}
-
+				comboBoxTaggedPhotoSelectStrategys.DataSource = r_AppData.GetSearchStrategys();
 				comboBoxTaggedPhotoSelectStrategys.SelectedIndex = 0;
 			}
         }
@@ -652,13 +648,15 @@ namespace MyFacebookApp.View
 			}
 			else
 			{
-				r_AppData.TaggedPhotoFilterAmmountParam = int.Parse(textBoxAmmounts.Text);
+				if (!string.IsNullOrEmpty(textBoxAmmounts.Text))
+				{
+					r_AppData.TaggedPhotoFilterAmmountParam = int.Parse(textBoxAmmounts.Text);
+				}
 			}
 		}
 
 		private void buttonGetTaggedPhotos_Click(object sender, EventArgs e)
 		{
-			r_AppData.TaggedInPhotoTest = r_AppData.StrategyList[comboBoxTaggedPhotoSelectStrategys.SelectedIndex];
 			bindingSourceTaggedPhotos.Clear();
 			foreach (Photo taggedInPhoto in r_AppData.GetTaggedInPhotos())
 			{
@@ -668,7 +666,8 @@ namespace MyFacebookApp.View
 
 		private void comboBoxTaggedPhotoSelectStrategys_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			textBoxAmmounts.Enabled = comboBoxTaggedPhotoSelectStrategys.SelectedValue as string != "None";
+			textBoxAmmounts.Enabled = (comboBoxTaggedPhotoSelectStrategys.SelectedValue as PhotoSearchStrategy)?.Name != "None";
+			r_AppData.TaggedInPhotoTest = (comboBoxTaggedPhotoSelectStrategys.SelectedItem as PhotoSearchStrategy)?.Strategy;
 		}
 
 		#endregion

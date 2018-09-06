@@ -351,10 +351,10 @@
 			this.label23 = new System.Windows.Forms.Label();
 			this.label18 = new System.Windows.Forms.Label();
 			this.comboBoxTaggedPhotoSelectStrategys = new System.Windows.Forms.ComboBox();
+			this.bindingSourceTaggedPhotosSearchStrategys = new System.Windows.Forms.BindingSource(this.components);
 			this.bindingSourceFriendOverviewEvents = new System.Windows.Forms.BindingSource(this.components);
 			this.commentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.bindingSourceLikedBy = new System.Windows.Forms.BindingSource(this.components);
-			this.bindingSourceTaggedPhotosSearchStrategys = new System.Windows.Forms.BindingSource(this.components);
 			labelFriendEmailTitle = new System.Windows.Forms.Label();
 			descriptionLabel = new System.Windows.Forms.Label();
 			endTimeLabel = new System.Windows.Forms.Label();
@@ -456,10 +456,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaggedPhotos)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorTaggedPhotos)).BeginInit();
 			this.bindingNavigatorTaggedPhotos.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaggedPhotosSearchStrategys)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewEvents)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceLikedBy)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaggedPhotosSearchStrategys)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelFriendEmailTitle
@@ -3952,12 +3952,19 @@
 			// 
 			// comboBoxTaggedPhotoSelectStrategys
 			// 
+			this.comboBoxTaggedPhotoSelectStrategys.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceTaggedPhotosSearchStrategys, "Name", true));
+			this.comboBoxTaggedPhotoSelectStrategys.DataSource = this.bindingSourceTaggedPhotosSearchStrategys;
+			this.comboBoxTaggedPhotoSelectStrategys.DisplayMember = "Name";
 			this.comboBoxTaggedPhotoSelectStrategys.FormattingEnabled = true;
 			this.comboBoxTaggedPhotoSelectStrategys.Location = new System.Drawing.Point(93, 29);
 			this.comboBoxTaggedPhotoSelectStrategys.Name = "comboBoxTaggedPhotoSelectStrategys";
 			this.comboBoxTaggedPhotoSelectStrategys.Size = new System.Drawing.Size(188, 26);
 			this.comboBoxTaggedPhotoSelectStrategys.TabIndex = 0;
 			this.comboBoxTaggedPhotoSelectStrategys.SelectedIndexChanged += new System.EventHandler(this.comboBoxTaggedPhotoSelectStrategys_SelectedIndexChanged);
+			// 
+			// bindingSourceTaggedPhotosSearchStrategys
+			// 
+			this.bindingSourceTaggedPhotosSearchStrategys.DataSource = typeof(MyFacebookApp.Model.PhotoSearchStrategy);
 			// 
 			// bindingSourceFriendOverviewEvents
 			// 
@@ -4093,10 +4100,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorTaggedPhotos)).EndInit();
 			this.bindingNavigatorTaggedPhotos.ResumeLayout(false);
 			this.bindingNavigatorTaggedPhotos.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaggedPhotosSearchStrategys)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceFriendOverviewEvents)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceLikedBy)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaggedPhotosSearchStrategys)).EndInit();
 			this.ResumeLayout(false);
 
 		}

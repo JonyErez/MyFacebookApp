@@ -21,8 +21,6 @@ namespace MyFacebookApp.Model
 
 		public int TaggedPhotoFilterAmmountParam { get; set; }
 
-		public List<Func<Photo, bool>> StrategyList { get; private set; }
-
 		public User LoggedInUser
 		{
 			get
@@ -133,18 +131,21 @@ namespace MyFacebookApp.Model
 			}
 		}
 
-		public List<string> GetSearchStrategys()
+		public List<PhotoSearchStrategy> GetSearchStrategys()
 		{
-			StrategyList = new List<Func<Photo, bool>>();
-			List<string> userInterfaceStrategyList = new List<string>();
+			List<PhotoSearchStrategy> userInterfaceStrategyList = new List<PhotoSearchStrategy>();
 
 			Type strategyMethods = typeof(AppDataFacade);
 			foreach (MethodInfo methodInfo in strategyMethods.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
 			{
 				foreach (TaggedPhotoSearchStrategy customAttribute in methodInfo.GetCustomAttributes(typeof(TaggedPhotoSearchStrategy), false))
 				{
-					StrategyList.Add((Func<Photo, bool>)Delegate.CreateDelegate(typeof(Func<Photo, bool>), this, methodInfo, true));
-					userInterfaceStrategyList.Add(customAttribute.DisplayName);
+					userInterfaceStrategyList.Add(
+						new PhotoSearchStrategy()
+						{
+							Name = customAttribute.DisplayName,
+							Strategy = (Func<Photo, bool>)Delegate.CreateDelegate(typeof(Func<Photo, bool>), this, methodInfo, true)
+						});
 				}
 			}
 
