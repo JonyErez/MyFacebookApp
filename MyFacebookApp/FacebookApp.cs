@@ -336,6 +336,17 @@ namespace MyFacebookApp.View
             new Thread(populateSubTabFriendCheckins).Start();
             new Thread(populateSubTabFriendPosts).Start();
             new Thread(populateSubTabFriendGroups).Start();
+            new Thread(populateFriendshipProgressBar).Start();
+        }
+
+        private void populateFriendshipProgressBar()
+        {
+            progressBarFriendshipStrength.Invoke(new Action(() => excelerateFriendshipProgressBar()));
+        }
+
+        private void excelerateFriendshipProgressBar()
+        {
+            progressBarFriendshipStrength.Value = r_AppData.GetFriendshipProgress(CurrentOverviewedFriend);
         }
 
         private void populateTitles()
@@ -447,7 +458,6 @@ namespace MyFacebookApp.View
         private void buttonUplaodMutualPic_Click(object i_Sender, EventArgs i_EventArgs)
         {
             User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
-
             // Always will fail because publish_actions permissions doesnt work
             try
             {
@@ -455,6 +465,7 @@ namespace MyFacebookApp.View
 
                 imageToUpload.TaggedUsers.Add(currentOverviewedFriend);
                 bindingSourceFriendOverviewMutualPictures.Add(pictureBoxMutualPictureToUpload);
+                excelerateFriendshipProgressBar();
 
                 MessageBox.Show("Image uploaded successfully!");
             }
@@ -670,6 +681,6 @@ namespace MyFacebookApp.View
 			r_AppData.TaggedInPhotoTest = (comboBoxTaggedPhotoSelectStrategys.SelectedItem as PhotoSearchStrategy)?.Strategy;
 		}
 
-		#endregion
-	}
+        #endregion
+    }
 }

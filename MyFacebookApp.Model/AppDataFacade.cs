@@ -10,7 +10,9 @@ namespace MyFacebookApp.Model
 {
 	public class AppDataFacade
 	{
-		public AppDataFacade()
+        private const int k_ValueToIncreaseProgressBy = 10;
+
+        public AppDataFacade()
 		{
 			AppData = new AppData();
 		}
@@ -104,6 +106,13 @@ namespace MyFacebookApp.Model
 
 			return upcomingBirthdays;
 		}
+
+        public int GetFriendshipProgress(User i_Friend)
+        {
+            MutualPicturesExcelerator mutualPicturesExcelerator = new MutualPicturesExcelerator();
+
+            return mutualPicturesExcelerator.IncreaseValue(LoggedInUser, i_Friend, k_ValueToIncreaseProgressBy);
+        }
 
 		public PostsStatistics GetPostsStatistics()
 		{

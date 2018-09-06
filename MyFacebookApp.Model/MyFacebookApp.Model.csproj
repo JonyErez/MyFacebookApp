@@ -50,6 +50,7 @@
     <Compile Include="AppDataFacade.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="FacebookDateAdapter.cs" />
+    <Compile Include="ProgressExcelerator.cs" />
     <Compile Include="PhotoSearchStrategy.cs" />
     <Compile Include="UserFriendExtension.cs" />
     <Compile Include="PhotosStatistics.cs" />
