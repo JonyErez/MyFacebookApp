@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using System.Security.Permissions;
+using System.Text.RegularExpressions;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 using MyFacebookApp.Model.Properties;
@@ -15,6 +17,8 @@ namespace MyFacebookApp.View
 		private readonly AppDataFacade r_AppData = new AppDataFacade();
 
 		private User CurrentOverviewedFriend { get; set; }
+
+		private ErrorProvider m_ErrorProvider;
 
 		private int WallPostAgeInMonths { get; set; } = 3;
 
@@ -240,6 +244,16 @@ namespace MyFacebookApp.View
             {
                 populateTabFriendOverview();
             }
+
+			if (tabControlGeneral.SelectedTab == tabControlGeneral.TabPages["tabPageTaggedPhotos"])
+			{
+				foreach (string searchStrategy in r_AppData.GetSearchStrategys())
+				{
+					comboBoxTaggedPhotoSelectStrategys.Items.Add(searchStrategy);
+				}
+
+				comboBoxTaggedPhotoSelectStrategys.SelectedIndex = 0;
+			}
         }
 
 		#endregion
@@ -608,5 +622,51 @@ namespace MyFacebookApp.View
 		}
 
 		#endregion
+
+		private void textBoxAmmounts_TextChanged(object sender, EventArgs e)
+		{
+			Regex validation = new Regex(@"^([0-9]*)$");
+			if (!validation.IsMatch(textBoxAmmounts.Text))
+			{
+				if (m_ErrorProvider == null)
+				{
+					m_ErrorProvider = new ErrorProvider();
+					m_ErrorProvider.SetError(textBoxAmmounts, "Invalid input! Must be positive number!");
+				}
+			}
+			else
+			{
+				m_ErrorProvider?.Dispose();
+				m_ErrorProvider = null;
+			}
+		}
+
+		private void textBoxAmmounts_Leave(object sender, EventArgs e)
+		{
+			if (m_ErrorProvider != null)
+			{
+				textBoxAmmounts.Text = "0";
+				MessageBox.Show("Invalid ammount entered!\nAmmount reset to 0!", "Error");
+			}
+			else
+			{
+				r_AppData.TaggedPhotoFilterAmmountParam = int.Parse(textBoxAmmounts.Text);
+			}
+		}
+
+		private void buttonGetTaggedPhotos_Click(object sender, EventArgs e)
+		{
+			r_AppData.TaggedInPhotoTest = r_AppData.StrategyList[comboBoxTaggedPhotoSelectStrategys.SelectedIndex];
+			bindingSourceTaggedPhotos.Clear();
+			foreach (Photo taggedInPhoto in r_AppData.GetTaggedInPhotos())
+			{
+				bindingSourceTaggedPhotos.Add(taggedInPhoto);
+			}
+		}
+
+		private void comboBoxTaggedPhotoSelectStrategys_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			textBoxAmmounts.Enabled = comboBoxTaggedPhotoSelectStrategys.SelectedValue as string != "None";
+		}
 	}
 }
