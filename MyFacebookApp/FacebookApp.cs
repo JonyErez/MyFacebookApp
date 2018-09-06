@@ -623,6 +623,8 @@ namespace MyFacebookApp.View
 
 		#endregion
 
+		#region Tagged Photos Tab
+
 		private void textBoxAmmounts_TextChanged(object sender, EventArgs e)
 		{
 			Regex validation = new Regex(@"^([0-9]*)$");
@@ -668,5 +670,7 @@ namespace MyFacebookApp.View
 		{
 			textBoxAmmounts.Enabled = comboBoxTaggedPhotoSelectStrategys.SelectedValue as string != "None";
 		}
+
+		#endregion
 	}
 }
