@@ -1,12 +1,8 @@
 ﻿using FacebookWrapper.ObjectModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MyFacebookApp.Model
 {
-    abstract class ProgressExcelerator
+    internal abstract class ProgressExcelerator
     {
         public int IncreaseValue(User i_MainUser, User i_TestUser, int i_QuantityToIncreaseBy)
         {
@@ -24,13 +20,5 @@ namespace MyFacebookApp.Model
         }
 
         protected abstract bool excelerateBy(Photo i_MainUserPhoto, User i_TestUser);       
-    }
-
-    internal class MutualPicturesExcelerator : ProgressExcelerator
-    {
-        protected override bool excelerateBy(Photo i_MainUserPhoto, User i_TestUser)
-        {
-            return i_TestUser.PhotosTaggedIn.Contains(i_MainUserPhoto);
-        }
     }
 }

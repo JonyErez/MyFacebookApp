@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -50,7 +48,7 @@ namespace MyFacebookApp.View
 
         private void fetchUserInfo()
 		{
-			this.Invoke(new Action(updateGeneralAppInterface));
+			Invoke(new Action(updateGeneralAppInterface));
 			populateFields();
 		}
 
@@ -189,12 +187,12 @@ namespace MyFacebookApp.View
             labelGeneralFriendBirthday.Invoke(new Action(() => customBirthday(labelGeneralFriendBirthday)));
         }
 
-        private void customBirthday(Label i_facebookBirthdayLabel)
+        private void customBirthday(Label i_FacebookBirthdayLabel)
         {
-            FacebookDateAdapter birthday = new FacebookDateAdapter { Date = i_facebookBirthdayLabel.Text };
+            FacebookDateAdapter birthday = new FacebookDateAdapter { Date = i_FacebookBirthdayLabel.Text };
 
             birthday.ToDateTime();
-            i_facebookBirthdayLabel.Text = birthday.Date;
+            i_FacebookBirthdayLabel.Text = birthday.Date;
         }
 
         private void buttonLogout_Click(object i_Sender, EventArgs i_EventArgs)
@@ -316,11 +314,11 @@ namespace MyFacebookApp.View
 			}
 		}
 
-		private void populateSubTabMutualEvents(UserFriendExtension i_extendedLoggedInUser)
+		private void populateSubTabMutualEvents(UserFriendExtension i_ExtendedLoggedInUser)
         {
             try
             {
-                dataGridViewMutualEvents.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewMutualEvents, i_extendedLoggedInUser.GetMutualEvents(CurrentOverviewedFriend))));
+                dataGridViewMutualEvents.Invoke(new Action(() => clearAndAttachBindingSource(bindingSourceFriendOverviewMutualEvents, i_ExtendedLoggedInUser.GetMutualEvents(CurrentOverviewedFriend))));
             }
             catch (Exception)
             {
@@ -458,6 +456,7 @@ namespace MyFacebookApp.View
         private void buttonUplaodMutualPic_Click(object i_Sender, EventArgs i_EventArgs)
         {
             User currentOverviewedFriend = comboBoxChooseAFriend.SelectedItem as User;
+
             // Always will fail because publish_actions permissions doesnt work
             try
             {
@@ -632,7 +631,7 @@ namespace MyFacebookApp.View
 
 		#region Tagged Photos Tab
 
-		private void textBoxAmmounts_TextChanged(object sender, EventArgs e)
+		private void textBoxAmmounts_TextChanged(object i_Sender, EventArgs i_EventArgs)
 		{
 			Regex validation = new Regex(@"^([0-9]*)$");
 			if (!validation.IsMatch(textBoxAmmounts.Text))
@@ -650,7 +649,7 @@ namespace MyFacebookApp.View
 			}
 		}
 
-		private void textBoxAmmounts_Leave(object sender, EventArgs e)
+		private void textBoxAmmounts_Leave(object i_Sender, EventArgs i_EventArgs)
 		{
 			if (m_ErrorProvider != null)
 			{
@@ -666,7 +665,7 @@ namespace MyFacebookApp.View
 			}
 		}
 
-		private void buttonGetTaggedPhotos_Click(object sender, EventArgs e)
+		private void buttonGetTaggedPhotos_Click(object i_Sender, EventArgs i_EventArgs)
 		{
 			bindingSourceTaggedPhotos.Clear();
 			foreach (Photo taggedInPhoto in r_AppData.GetTaggedInPhotos())
@@ -675,7 +674,7 @@ namespace MyFacebookApp.View
 			}
 		}
 
-		private void comboBoxTaggedPhotoSelectStrategys_SelectedIndexChanged(object sender, EventArgs e)
+		private void comboBoxTaggedPhotoSelectStrategys_SelectedIndexChanged(object i_Sender, EventArgs i_EventArgs)
 		{
 			textBoxAmmounts.Enabled = (comboBoxTaggedPhotoSelectStrategys.SelectedValue as PhotoSearchStrategy)?.Name != "None";
 			r_AppData.TaggedInPhotoTest = (comboBoxTaggedPhotoSelectStrategys.SelectedItem as PhotoSearchStrategy)?.Strategy;

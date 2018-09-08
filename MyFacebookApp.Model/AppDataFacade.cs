@@ -1,9 +1,6 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using FacebookWrapper.ObjectModel;
 
 namespace MyFacebookApp.Model
@@ -188,7 +185,7 @@ namespace MyFacebookApp.Model
 		}
 
 		[AttributeUsage(AttributeTargets.Method)]
-		public class TaggedPhotoSearchStrategy : Attribute
+		private class TaggedPhotoSearchStrategy : Attribute
 		{
 			public string DisplayName { get; set; }
 		}
