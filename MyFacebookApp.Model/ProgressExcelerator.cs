@@ -10,27 +10,27 @@ namespace MyFacebookApp.Model
     {
         public int IncreaseValue(User i_MainUser, User i_TestUser, int i_QuantityToIncreaseBy)
         {
-            return excelerator(i_MainUser, i_TestUser, i_QuantityToIncreaseBy);
+            int valueToReturn = 0;
+
+            foreach (Photo photoOfMainUser in i_MainUser.PhotosTaggedIn)
+            {
+                if (excelerateBy(photoOfMainUser, i_TestUser))
+                {
+                    valueToReturn += i_QuantityToIncreaseBy; 
+                }
+            }
+
+            return valueToReturn;
         }
 
-        protected abstract int excelerator(User i_MainUser, User i_TestUser, int i_Increaser);       
+        protected abstract bool excelerateBy(Photo i_MainUserPhoto, User i_TestUser);       
     }
 
     internal class MutualPicturesExcelerator : ProgressExcelerator
     {
-        protected override int excelerator(User i_MainUser, User i_TestUser, int i_IncreaseValue)
+        protected override bool excelerateBy(Photo i_MainUserPhoto, User i_TestUser)
         {
-            int exceleratedValue = 0;
-
-            foreach(Photo photoOfMainUser in i_MainUser.PhotosTaggedIn)
-            {
-                if (i_TestUser.PhotosTaggedIn.Contains(photoOfMainUser))
-                {
-                    exceleratedValue += i_IncreaseValue;
-                }
-            }
-
-            return exceleratedValue;
+            return i_TestUser.PhotosTaggedIn.Contains(i_MainUserPhoto);
         }
     }
 }
